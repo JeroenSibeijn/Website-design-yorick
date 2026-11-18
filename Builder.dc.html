@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<title>Schaatskompas – Training bouwen</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap">
+<style>
+body{margin:0;background:#F3F6F8}
+a{color:#1D4ED8}a:hover{color:#1E3A8A}
+.pill{font:inherit;font-size:14px;font-weight:600;min-height:44px;padding:0 14px;border-radius:999px;cursor:pointer;border:1px solid #94A3B8;background:#FFFFFF;color:#0F1E2E}.pill.on{border-color:#0F1E2E;background:#0F1E2E;color:#FFFFFF}
+.chip{font-size:12px;font-weight:600;padding:3px 8px;border-radius:999px}.chip-plezier{background:#FFEDD5;color:#7C2D12}.chip-houding{background:#DBEAFE;color:#1E3A8A}.chip-techniek{background:#CCFBF1;color:#134E4A}.chip-snelheid{background:#F3E8FF;color:#581C87}
+.block-box{border-radius:16px;padding:14px 16px;display:flex;flex-direction:column;gap:8px;background:#FFFFFF;border:1px solid #DCE3EA}.block-box.target{background:#EEF4FF;border:2px solid #1D4ED8}
+.block-minutes{font-size:13px;font-weight:700;padding:6px 10px;border-radius:999px;background:#E2E8F0;color:#334155}.block-minutes.over{background:#FFEDD5;color:#7C2D12}
+.dot{flex:none;border-radius:999px}.dot-plezier{width:12px;height:12px;background:#F97316}.dot-houding{width:12px;height:12px;background:#3B82F6}.dot-techniek{width:12px;height:12px;background:#14B8A6}.dot-snelheid{width:12px;height:12px;background:#A855F7}.dot-status{width:10px;height:10px;margin-top:6px;background:#22C55E}.dot-advice{width:10px;height:10px;margin-top:6px}
+.bar{height:18px;width:0}.pct-1{width:10%}.pct-2{width:20%}.pct-3{width:30%}.pct-4{width:40%}.pct-5{width:50%}.pct-6{width:60%}.pct-7{width:70%}.pct-8{width:80%}.pct-9{width:90%}.pct-10{width:100%}.bar-plezier{background:#F97316}.bar-houding{background:#3B82F6}.bar-techniek{background:#14B8A6}.bar-snelheid{background:#A855F7}
+.legend-dot{width:12px;height:12px}
+</style>
+</helmet>
+<div style="font-family: Inter, system-ui, sans-serif; color: #0F1E2E; background: #F3F6F8; min-height: 100vh">
+
+<header style="background: #0F1E2E; color: #FFFFFF">
+<div style="max-width: 1360px; margin: 0 auto; padding: 16px 32px; display: flex; flex-wrap: wrap; align-items: center; gap: 24px">
+<div style="display: flex; align-items: center; gap: 10px">
+<svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="14" fill="none" stroke="#7DD3FC" stroke-width="2.5"></circle><path d="M9 20 C13 12, 19 12, 23 20" fill="none" stroke="#FDBA74" stroke-width="2.5" stroke-linecap="round"></path></svg>
+<span style="font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 20px">Schaatskompas</span>
+</div>
+<nav aria-label="Hoofdmenu" style="display: flex; flex-wrap: wrap; gap: 4px; flex: 1 1 auto">
+<a href="Main.dc.html" style="color: #CBD5E1; text-decoration: none; padding: 10px 14px; border-radius: 8px; font-size: 15px">Seizoen</a>
+<a href="Builder.dc.html" style="color: #FFFFFF; text-decoration: none; padding: 10px 14px; border-radius: 8px; background: #1F3247; font-weight: 600; font-size: 15px">Training bouwen</a>
+<a href="Oefening.dc.html" style="color: #CBD5E1; text-decoration: none; padding: 10px 14px; border-radius: 8px; font-size: 15px">Oefeningen</a>
+</nav>
+<a href="OpHetIjs.dc.html" style="display: inline-flex; align-items: center; gap: 8px; background: #F97316; color: #0F1E2E; text-decoration: none; font-weight: 700; padding: 12px 18px; border-radius: 999px; font-size: 15px">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><polygon points="6 4 20 12 6 20 6 4"></polygon></svg>
+Op het ijs</a>
+</div>
+</header>
+
+<main style="max-width: 1360px; margin: 0 auto; padding: 32px; display: flex; flex-direction: column; gap: 24px">
+
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span style="font-size: 14px; color: #4A5B6C">Donderdag 17:30 · Groep Leren schaatsen</span>
+<h1 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 36px; line-height: 1.1">Week 8 · Inzet schaats</h1>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<button type="button" style="font: inherit; font-size: 15px; font-weight: 600; padding: 12px 16px; border-radius: 10px; border: 1px solid #94A3B8; background: #FFFFFF; color: #0F1E2E; cursor: pointer">Delen met mede-trainer</button>
+<button type="button" style="font: inherit; font-size: 15px; font-weight: 600; padding: 12px 16px; border-radius: 10px; border: 1px solid #94A3B8; background: #FFFFFF; color: #0F1E2E; cursor: pointer">Print als ijskaart</button>
+<button type="button" style="font: inherit; font-size: 15px; font-weight: 600; padding: 12px 16px; border-radius: 10px; border: none; background: #0F1E2E; color: #FFFFFF; cursor: pointer">Opslaan</button>
+</div>
+</div>
+
+<div role="group" aria-label="Fase van de groep" style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center">
+<span style="font-size: 14px; font-weight: 600; color: #334155; margin-right: 4px">Fase:</span>
+<div id="ageFilters"></div>
+</div>
+
+<div style="display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start">
+
+<section aria-labelledby="bib" style="flex: 1 1 320px; min-width: 0; background: #FFFFFF; border: 1px solid #DCE3EA; border-radius: 18px; padding: 20px; display: flex; flex-direction: column; gap: 14px">
+<h2 id="bib" style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 20px">Oefeningen</h2>
+<label for="zoek" style="font-size: 13px; font-weight: 600; color: #334155">Zoek op naam of leerdoel</label>
+<input id="zoek" type="search" placeholder="bijv. bijhaal, tikkertje, start" style="font: inherit; font-size: 15px; padding: 12px 14px; border-radius: 10px; border: 1px solid #94A3B8; color: #0F1E2E; background: #FFFFFF">
+<div role="group" aria-label="Filter op soort" style="display: flex; flex-wrap: wrap; gap: 6px">
+<div id="exerciseFilters" style="display: flex; flex-wrap: wrap; gap: 6px"></div>
+</div>
+<p style="margin: 0; font-size: 13px; color: #4A5B6C">Klik op <strong>+</strong> om toe te voegen aan <strong id="targetLabel"></strong></p>
+<div id="exerciseList" style="display: flex; flex-direction: column; gap: 8px"></div>
+</section>
+
+<section aria-labelledby="plan" style="flex: 999 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 12px">
+<h2 id="plan" style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 20px">Jouw training</h2>
+<div id="planBlocks"></div>
+</section>
+
+<aside aria-labelledby="balans" style="flex: 1 1 300px; min-width: 0; background: #0F1E2E; color: #FFFFFF; border-radius: 18px; padding: 22px; display: flex; flex-direction: column; gap: 16px">
+<h2 id="balans" style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 20px">Balansmeter</h2>
+<div style="display: flex; align-items: baseline; gap: 8px"><span id="totalMinutes" style="font-family: 'Space Grotesk', sans-serif; font-size: 44px; font-weight: 700">0</span><span style="font-size: 15px; color: #CBD5E1">van ca. 75 minuten ijstijd</span></div>
+<div id="balanceBars" aria-hidden="true" style="display: flex; height: 18px; border-radius: 999px; overflow: hidden; background: #1F3247"></div>
+<div id="balanceDetails" style="display: flex; flex-direction: column; gap: 10px"></div>
+<div style="border-top: 1px solid #334155; padding-top: 14px; display: flex; flex-direction: column; gap: 10px">
+<span style="font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #7DD3FC">Slimme check</span>
+<div id="adviceList"></div>
+</div>
+</aside>
+
+</div>
+</main>
+</div>
+</x-dc>
+<script>
+(function () {
+  var state = {
+    target: 'kern2', filter: 'alle', q: '', age: 'ls',
+    plan: { inlopen: ['droog'], warmup: ['inrijden', 'herhaal'], kern1: ['stoeltje', 'inzet'], kern2: [], afsluit: ['uitrijden'] }
+  };
+
+  var CAT = {
+    plezier: { label: 'Plezier & spel', color: '#F97316' },
+    houding: { label: 'Houding', color: '#3B82F6' },
+    techniek: { label: 'Techniek', color: '#14B8A6' },
+    snelheid: { label: 'Snelheid', color: '#A855F7' }
+  };
+
+  var EX = {
+    droog: { naam: 'Joggen, knieheffen, schaatspassen', cat: 'houding', min: 10, uitleg: 'Droog inlopen naast de baan' },
+    inrijden: { naam: 'Rustig inrijden in subgroepjes', cat: 'houding', min: 6, uitleg: 'Op niveau, niemand met de tong op de schaatsen' },
+    herhaal: { naam: 'Herhaling: bijhaal-ballet', cat: 'techniek', min: 4, uitleg: 'Knie laten hangen, schaats loodrecht' },
+    pinguin: { naam: 'Pinguïnloop', cat: 'plezier', min: 5, uitleg: 'Kleine pasjes, armen langs het lijf' },
+    stoplicht: { naam: 'Schaatsstoplicht', cat: 'plezier', min: 8, uitleg: 'Rood = stoeltje, oranje = één been, groen = rijden' },
+    slalom: { naam: 'Slalom door pionnen', cat: 'techniek', min: 8, uitleg: 'Sturen met de knieën, niet met de schouders' },
+    stoeltje: { naam: 'Stoeltje-glijden', cat: 'houding', min: 6, uitleg: 'Diep zitten, kont naar beneden, bolle rug' },
+    inzet: { naam: 'Inzet op de lijn', cat: 'techniek', min: 10, uitleg: 'Half voetje voor, schaats op de buitenkant' },
+    pionnen: { naam: 'Pionnenrace', cat: 'snelheid', min: 8, uitleg: 'Duo’s, wie haalt de meeste pionnen op' },
+    estafette: { naam: 'Estafette in teams', cat: 'snelheid', min: 10, uitleg: 'Aflossen met een tik, teams op niveau' },
+    tik: { naam: 'Tikkertje met stoeltje-vrij', cat: 'plezier', min: 6, uitleg: 'Wie in diepe houding zit, is vrij' },
+    start: { naam: 'Startjes vanuit de knielpositie', cat: 'snelheid', min: 6, uitleg: 'Leer het startsignaal voor de masstart' },
+    uitrijden: { naam: 'Uitrijden + 1 vraag aan de groep', cat: 'plezier', min: 6, uitleg: 'Wat ging vandaag beter dan vorige week?' }
+  };
+
+  var PH = [
+    { id: 'inlopen', label: 'Inlopen', doel: 'Droog, 10 min', t: 10 },
+    { id: 'warmup', label: 'Warming-up op het ijs', doel: 'Rustig, met herhaling van vorige les', t: 10 },
+    { id: 'kern1', label: 'Kern 1 · technisch thema', doel: 'Inzet schaats', t: 20 },
+    { id: 'kern2', label: 'Kern 2 · spelvorm', doel: 'Toepassen met plezier', t: 20 },
+    { id: 'afsluit', label: 'Afsluiting', doel: 'Uitrijden, spelletje of nabespreken', t: 8 }
+  ];
+
+  var IDEAL = {
+    fun: { plezier: 45, houding: 20, techniek: 25, snelheid: 10 },
+    ls: { plezier: 30, houding: 20, techniek: 35, snelheid: 15 },
+    lt: { plezier: 15, houding: 15, techniek: 40, snelheid: 30 }
+  };
+
+  function setPlan(id, list) {
+    state.plan[id] = list;
+    render();
+  }
+
+  function render() {
+    var target = PH.filter(function (p) { return p.id === state.target; })[0];
+    document.getElementById('targetLabel').textContent = target.label;
+
+    var ageItems = [
+      ['fun', 'FUNdament · 6–9 jr'],
+      ['ls', 'Leren schaatsen · 9–12 jr'],
+      ['lt', 'Leren trainen · 12–18 jr']
+    ];
+    document.getElementById('ageFilters').innerHTML = ageItems.map(function (a) {
+      var on = state.age === a[0];
+      return '<button type="button" aria-pressed="' + on + '" class="pill ' + (on ? 'on' : '') + '" data-age="' + a[0] + '">' + a[1] + '</button>';
+    }).join('');
+
+    var filterItems = [['alle', 'Alles'], ['plezier', 'Plezier'], ['houding', 'Houding'], ['techniek', 'Techniek'], ['snelheid', 'Snelheid']];
+    document.getElementById('exerciseFilters').innerHTML = filterItems.map(function (f) {
+      var on = state.filter === f[0];
+      return '<button type="button" aria-pressed="' + on + '" class="pill ' + (on ? 'on' : '') + '" data-filter="' + f[0] + '">' + f[1] + '</button>';
+    }).join('');
+
+    var q = state.q.toLowerCase();
+    var ids = Object.keys(EX).filter(function (id) {
+      var e = EX[id];
+      if (state.filter !== 'alle' && e.cat !== state.filter) return false;
+      return !q || (e.naam + ' ' + e.uitleg).toLowerCase().indexOf(q) >= 0;
+    });
+
+    document.getElementById('exerciseList').innerHTML = ids.length ? ids.map(function (id) {
+      var e = EX[id];
+      return '<div style="display:flex;gap:10px;align-items:center;border:1px solid #E2E8F0;border-radius:12px;padding:10px 10px 10px 12px">' +
+        '<div style="flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:4px">' +
+        '<span style="font-size:15px;font-weight:600">' + e.naam + '</span>' +
+        '<span style="font-size:13px;color:#4A5B6C;line-height:1.4">' + e.uitleg + '</span>' +
+        '<div style="display:flex;gap:6px;align-items:center"><span class="chip chip-' + e.cat + '">' + CAT[e.cat].label + '</span><span style="font-size:12px;color:#4A5B6C">' + e.min + ' min</span></div></div>' +
+        '<button type="button" data-add="' + id + '" aria-label="' + e.naam + ' toevoegen aan ' + target.label + '" style="flex:none;width:44px;height:44px;border-radius:10px;border:1px solid #94A3B8;background:#F8FAFC;color:#0F1E2E;cursor:pointer;display:flex;align-items:center;justify-content:center"><strong style="font-size:20px">+</strong></button></div>';
+    }).join('') : '<p style="margin:0;font-size:14px;color:#4A5B6C">Niets gevonden. Probeer een ander woord.</p>';
+
+    var totals = { plezier: 0, houding: 0, techniek: 0, snelheid: 0 };
+    var total = 0;
+    var warnings = [];
+
+    document.getElementById('planBlocks').innerHTML = PH.map(function (p) {
+      var ids = state.plan[p.id] || [];
+      var sum = 0;
+      var items = ids.map(function (id) {
+        var e = EX[id];
+        sum += e.min;
+        totals[e.cat] += e.min;
+        total += e.min;
+        return { id: id, e: e };
+      });
+      if (sum > p.t + 2) warnings.push({ c: 'plezier', text: p.label + ' loopt ' + (sum - p.t) + ' min uit.' });
+      var over = sum > p.t + 2;
+      var isTarget = state.target === p.id;
+
+      var itemHtml = items.length ? items.map(function (item) {
+        return '<div style="display:flex;align-items:center;gap:10px;background:#FFFFFF;border:1px solid #E2E8F0;border-radius:10px;padding:6px 6px 6px 12px">' +
+          '<span class="dot dot-' + item.e.cat + '"></span><span style="flex:1 1 auto;font-size:15px;font-weight:500">' + item.e.naam + '</span>' +
+          '<span style="font-size:13px;color:#4A5B6C">' + item.e.min + ' min</span>' +
+          '<button type="button" data-remove="' + p.id + '|' + item.id + '" aria-label="' + item.e.naam + ' verwijderen" style="width:44px;height:44px;border:none;background:none;color:#4A5B6C;cursor:pointer">×</button></div>';
+      }).join('') : '<p style="margin:0;font-size:14px;color:#4A5B6C;padding:8px 0">Nog leeg — kies dit blok en voeg links een oefening toe.</p>';
+
+      return '<div class="block-box ' + (isTarget ? 'target' : '') + '">' +
+        '<div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px">' +
+        '<button type="button" data-target="' + p.id + '" aria-pressed="' + isTarget + '" style="font:inherit;background:none;border:none;padding:4px 0;cursor:pointer;text-align:left;color:#0F1E2E;display:flex;flex-direction:column;gap:2px;min-height:44px;justify-content:center">' +
+        '<span style="font-family:\'Space Grotesk\',sans-serif;font-size:18px;font-weight:700">' + p.label + '</span><span style="font-size:13px;color:#4A5B6C">' + p.doel + '</span></button>' +
+        '<span class="block-minutes ' + (over ? 'over' : '') + '">' + sum + ' / ' + p.t + ' min</span></div>' +
+        '<div style="display:flex;flex-direction:column;gap:6px">' + itemHtml + '</div></div>';
+    }).join('');
+
+    document.getElementById('totalMinutes').textContent = total;
+
+    var ideal = IDEAL[state.age];
+    var bal = ['plezier', 'houding', 'techniek', 'snelheid'].map(function (c) {
+      var pct = total ? Math.round(totals[c] / total * 100) : 0;
+      if (pct < ideal[c] - 10) warnings.push({ c: c, text: 'Weinig ' + CAT[c].label.toLowerCase() + ' (' + pct + '%) voor deze fase.' });
+      return { cat: c, pct: pct, ideal: ideal[c] };
+    });
+
+    document.getElementById('balanceBars').innerHTML = bal.map(function (c) {
+      return '<div class="bar bar-' + c.cat + ' pct-' + Math.min(10, Math.round(c.pct / 10)) + '"></div>';
+    }).join('');
+
+    document.getElementById('balanceDetails').innerHTML = bal.map(function (c) {
+      return '<div style="display:flex;align-items:center;gap:10px;font-size:14px"><span class="dot dot-' + c.cat + ' legend-dot"></span><span style="flex:1 1 auto">' + CAT[c.cat].label + '</span><span style="font-weight:700">' + c.pct + '%</span><span style="color:#CBD5E1;width:74px;text-align:right">richtlijn ' + c.ideal + '%</span></div>';
+    }).join('');
+
+    document.getElementById('adviceList').innerHTML = warnings.length ? warnings.map(function (w) {
+      return '<div style="display:flex;gap:10px;align-items:flex-start"><span class="dot dot-advice dot-' + w.c + '"></span><p style="margin:0;font-size:14px;line-height:1.5;color:#E2E8F0">' + w.text + '</p></div>';
+    }).join('') : '<div style="display:flex;gap:10px;align-items:flex-start"><span class="dot dot-advice dot-status"></span><p style="margin:0;font-size:14px;line-height:1.5;color:#E2E8F0">Mooie balans voor deze fase.</p></div>';
+
+    document.querySelectorAll('[data-age]').forEach(function (button) {
+      button.onclick = function () { state.age = button.dataset.age; render(); };
+    });
+    document.querySelectorAll('[data-filter]').forEach(function (button) {
+      button.onclick = function () { state.filter = button.dataset.filter; render(); };
+    });
+    document.querySelectorAll('[data-add]').forEach(function (button) {
+      button.onclick = function () { state.plan[state.target].push(button.dataset.add); render(); };
+    });
+    document.querySelectorAll('[data-remove]').forEach(function (button) {
+      button.onclick = function () {
+        var parts = button.dataset.remove.split('|');
+        var index = state.plan[parts[0]].indexOf(parts[1]);
+        if (index >= 0) state.plan[parts[0]].splice(index, 1);
+        render();
+      };
+    });
+    document.querySelectorAll('[data-target]').forEach(function (button) {
+      button.onclick = function () { state.target = button.dataset.target; render(); };
+    });
+  }
+
+  document.getElementById('zoek').oninput = function (event) {
+    state.q = event.target.value;
+    render();
+  };
+
+  render();
+})();
+</script>
+</body>
+</html>
