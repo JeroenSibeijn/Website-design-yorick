@@ -1,0 +1,116 @@
+:root {
+  color-scheme: light;
+  --sk-ink: #0F1E2E;
+  --sk-navy: #0F1E2E;
+  --sk-panel: #1F3247;
+  --sk-bg: #F3F6F8;
+  --sk-blue: #1E40AF;
+  --sk-orange: #F97316;
+  --sk-border: #DCE3EA;
+}
+
+x-dc {
+  display: block;
+}
+
+body {
+  color: var(--sk-ink);
+  font-family: Inter, system-ui, sans-serif;
+}
+
+body > x-dc header {
+  box-shadow: 0 8px 24px rgba(15, 30, 46, 0.12);
+}
+
+body > x-dc header > div {
+  box-sizing: border-box;
+  width: 100%;
+}
+
+body > x-dc header nav a {
+  transition: background-color 160ms ease, color 160ms ease;
+}
+
+body > x-dc header nav a:hover {
+  background: var(--sk-panel);
+  color: #FFFFFF !important;
+}
+
+body > x-dc header a:focus-visible,
+body > x-dc main a:focus-visible,
+body > x-dc main button:focus-visible,
+body > x-dc main input:focus-visible,
+body > x-dc main select:focus-visible,
+body > x-dc main textarea:focus-visible {
+  outline: 3px solid #7DD3FC;
+  outline-offset: 3px;
+}
+
+body > x-dc main h1 {
+  color: var(--sk-ink);
+  font-size: clamp(28px, 5vw, 44px) !important;
+  line-height: 1.08;
+}
+
+body > x-dc main .card,
+body > x-dc main .manage-panel,
+body > x-dc main .exercise-animation-card {
+  border-color: var(--sk-border);
+  box-shadow: 0 6px 20px rgba(15, 30, 46, 0.06);
+  transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+body > x-dc main .card:hover,
+body > x-dc main .manage-panel:hover,
+body > x-dc main .exercise-animation-card:hover {
+  border-color: #BFDBFE;
+  box-shadow: 0 10px 26px rgba(15, 30, 46, 0.1);
+  transform: translateY(-2px);
+}
+
+body > x-dc main .card a,
+body > x-dc main .link {
+  color: var(--sk-blue);
+}
+
+body > x-dc main .featured {
+  border-left: 4px solid var(--sk-orange);
+}
+
+body > x-dc main .exercise-media iframe,
+body > x-dc main .exercise-media video,
+body > x-dc main .exercise-media img {
+  display: block;
+  max-width: 100%;
+}
+
+@media (max-width: 600px) {
+  body > x-dc header > div {
+    gap: 12px !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  body > x-dc main {
+    padding: 20px !important;
+  }
+
+  body > x-dc main .manage-grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  }
+
+  body > x-dc main .card:hover,
+  body > x-dc main .manage-panel:hover,
+  body > x-dc main .exercise-animation-card:hover {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body > x-dc header nav a,
+  body > x-dc main .card,
+  body > x-dc main .manage-panel,
+  body > x-dc main .exercise-animation-card {
+    transition: none;
+  }
+}

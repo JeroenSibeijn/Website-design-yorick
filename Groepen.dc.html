@@ -1,0 +1,1181 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0F1E2E">
+<title>Schaatskompas – Mijn groepen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap">
+<style>
+:root{font-family:Inter,system-ui,sans-serif;color:#0F1E2E;background:#F3F6F8;font-synthesis:none}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0}
+button,input,select,textarea{font:inherit}
+button,a{touch-action:manipulation}
+a{color:#1D4ED8}
+a:hover{color:#1E3A8A}
+.topbar{background:#0F1E2E;color:#fff}
+.topbar-inner{max-width:1280px;margin:auto;padding:16px 32px;display:flex;flex-wrap:wrap;align-items:center;gap:20px}
+.brand{display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none;font:700 20px 'Space Grotesk',sans-serif}
+.nav{display:flex;flex:1 1 auto;flex-wrap:wrap;gap:4px}
+.nav a{padding:10px 12px;border-radius:8px;color:#CBD5E1;text-decoration:none;font-size:14px}
+.nav a[aria-current=page]{background:#1F3247;color:#fff;font-weight:600}
+.nav .login-link{border:1px solid #475569}
+main{max-width:1280px;margin:auto;padding:36px 32px 64px;display:flex;flex-direction:column;gap:24px}
+h1,h2,h3,p{margin-top:0}
+h1,h2,h3{font-family:'Space Grotesk',sans-serif}
+h1{font-size:clamp(32px,5vw,44px);line-height:1.08;margin-bottom:8px}
+h2{font-size:22px;margin-bottom:0}
+.intro{display:flex;justify-content:space-between;align-items:flex-end;gap:18px;flex-wrap:wrap}
+.intro p{margin:0;color:#4A5B6C;line-height:1.55}
+.panel{background:#fff;border:1px solid #DCE3EA;border-radius:18px;padding:24px;display:flex;flex-direction:column;gap:16px}
+.toolbar{display:flex;align-items:center;flex-wrap:wrap;gap:10px}
+.toolbar label,.field label{font-size:13px;font-weight:700;color:#334155}
+.toolbar select,.field input,.field textarea,.field select{min-height:44px;padding:10px 12px;border:1px solid #94A3B8;border-radius:10px;background:#fff;color:#0F1E2E}
+.toolbar select{min-width:min(100%,260px)}
+.button{min-height:44px;padding:10px 16px;border:1px solid #94A3B8;border-radius:10px;background:#fff;color:#0F1E2E;font-weight:600;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
+.button:hover{background:#F1F5F9}
+.button.primary{background:#0F1E2E;border-color:#0F1E2E;color:#fff}
+.button.primary:hover{background:#1F3247}
+.button.orange{background:#F97316;border-color:#F97316;color:#0F1E2E}
+.button.small{min-height:38px;padding:7px 12px;font-size:14px}
+.button.danger{border-color:#FECACA;color:#991B1B}
+.button.danger:hover{background:#FEF2F2}
+.form-panel{background:#F8FAFC;border:1px solid #DCE3EA;border-radius:14px;padding:18px}
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}
+.field{display:flex;flex-direction:column;gap:7px}
+.field textarea{min-height:88px;resize:vertical}
+.section-heading{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.stat{background:#F8FAFC;border:1px solid #E2E8F0;border-radius:12px;padding:14px}
+.stat strong{display:block;font:700 24px 'Space Grotesk',sans-serif}
+.stat span{font-size:13px;color:#4A5B6C}
+.group-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:12px}
+.group-card{border:1px solid #DCE3EA;border-radius:14px;padding:16px;display:flex;flex-direction:column;justify-content:space-between;gap:14px;background:#fff}
+.group-card h3{margin:0 0 6px;font-size:18px}
+.group-card p{margin:0;color:#4A5B6C;font-size:14px}
+.child-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr));gap:12px}
+.child-card{border:1px solid #DCE3EA;border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.child-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.child-heading h3{margin:0;font-size:18px}
+.child-actions{display:flex;flex-wrap:wrap;gap:6px}
+.former-card{border:1px solid #E2E8F0;border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:6px}
+.former-card strong{font-size:15px}
+.former-card p{margin:0;font-size:13px;color:#4A5B6C}
+.former-history{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+.former-history-entry{border-top:1px solid #E2E8F0;padding-top:8px;display:flex;flex-direction:column;gap:4px}
+.former-history-entry p{margin:0;font-size:13px;color:#4A5B6C}
+.assessment-child{border:1px solid #E2E8F0;border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:10px}
+.assessment-child strong{font-size:14px}
+.age-tag{font-size:12px;font-weight:700;padding:5px 9px;border-radius:999px;background:#E0ECFF;color:#1E3A8A}
+.progress-row{display:grid;grid-template-columns:86px minmax(0,1fr);align-items:center;gap:10px}
+.progress-row label,.progress-row .skill-name{font-size:13px;font-weight:600;color:#334155}
+.progress-level{font-size:13px;color:#334155}
+.training-list{display:flex;flex-direction:column;gap:10px}
+.training-card{border:1px solid #E2E8F0;border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:7px}
+.training-meta{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.training-meta time{font-size:13px;color:#4A5B6C}
+.training-card p{margin:0;color:#4A5B6C;line-height:1.5;font-size:14px}
+.period-card{border:1px solid #BFDBFE;border-radius:12px;padding:14px;background:#F8FBFF;display:flex;flex-direction:column;gap:6px}
+.period-card p{margin:0;color:#4A5B6C;font-size:14px;line-height:1.5}
+.workout-phase{border-top:1px solid #E2E8F0;padding-top:8px}
+.workout-phase strong{font-size:14px}
+.saved-edit-form{margin-top:8px}
+.saved-edit-form .edit-workout-phase{grid-column:1/-1;border:1px solid #DCE3EA;border-radius:10px;padding:12px}
+.saved-edit-form .edit-workout-phase legend{font-weight:700;color:#334155}
+.saved-edit-form .edit-workout-phase textarea{min-height:64px}
+.saved-edit-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.notice{border-radius:12px;padding:14px 16px;background:#FFF4E8;color:#7C2D12;line-height:1.5;font-size:14px;margin:0}
+.notice.info{background:#EAF3FF;color:#1E3A8A}
+.empty{margin:0;padding:16px;border-radius:12px;background:#F8FAFC;color:#4A5B6C;line-height:1.5}
+.attendance{display:flex;flex-wrap:wrap;gap:8px}
+.attendance label{display:flex;align-items:center;gap:7px;padding:8px 10px;border:1px solid #DCE3EA;border-radius:999px;font-size:14px}
+@media(max-width:640px){.topbar-inner{padding:12px 16px}main{padding:24px 16px 48px}.panel{padding:18px}.nav{order:3;flex-basis:100%}}
+</style>
+</head>
+<body>
+<header class="topbar">
+<div class="topbar-inner">
+<a class="brand" href="Main.dc.html"><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="14" fill="none" stroke="#7DD3FC" stroke-width="2.5"></circle><path d="M9 20 C13 12, 19 12, 23 20" fill="none" stroke="#FDBA74" stroke-width="2.5" stroke-linecap="round"></path></svg>Schaatskompas</a>
+<nav class="nav" aria-label="Hoofdmenu">
+<a href="Main.dc.html">Seizoen</a><a href="Builder.dc.html">Training bouwen</a><a href="Oefeningen/Oefeningen.dc.html">Oefeningen</a><a href="Groepen.dc.html" aria-current="page">Mijn groepen</a><a class="login-link" href="Inloggen.dc.html">Inloggen</a>
+</nav>
+</div>
+</header>
+<main>
+<section class="intro">
+<div><p style="font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#1E3A8A;margin-bottom:8px">Trainersruimte</p><h1>Mijn groepen</h1><p>Volg de ontwikkeling van ieder kind en houd bij wat jullie samen hebben getraind.</p></div>
+<button id="toggleGroupForm" class="button" type="button">+ Nieuwe groep</button>
+</section>
+
+<p class="notice info">Demo-opslag: je gegevens worden alleen in deze browser bewaard. Overdracht naar een andere trainer gebruikt eenmalige codes en werkt pas zodra server en accounts zijn gekoppeld. Gebruik voor kinderen bij voorkeur alleen voornamen.</p>
+<p id="status" role="status" aria-live="polite" class="notice" hidden></p>
+
+<section id="groupPicker" class="panel" aria-labelledby="pickerTitle">
+<div class="section-heading"><h2 id="pickerTitle">Kies een groep</h2><span style="font-size:14px;color:#4A5B6C">Selecteer een groep om de kinderen en trainingen te bekijken.</span></div>
+<div id="groupCards" class="group-cards"></div>
+<div id="groupFormPanel" class="form-panel" hidden aria-labelledby="groupFormTitle">
+<h2 id="groupFormTitle">Groep toevoegen</h2>
+<form id="groupForm" style="margin-top:14px">
+<div class="form-grid">
+<div class="field"><label for="groupName">Naam van de groep</label><input id="groupName" name="name" required maxlength="60" placeholder="bijv. Leren schaatsen"></div>
+<div style="display:flex;align-items:flex-end"><button class="button primary" type="submit">Groep opslaan</button></div>
+</div>
+</form>
+</div>
+</section>
+
+<div id="groupDetail" style="display:flex;flex-direction:column;gap:24px" hidden>
+<div id="activeGroupScreen" style="display:flex;flex-direction:column;gap:24px">
+<section class="panel" aria-labelledby="groupTitle">
+<div class="section-heading"><button id="backToGroups" class="button" type="button">← Andere groep kiezen</button><div style="display:flex;flex-wrap:wrap;gap:8px"><button id="openFormerMembers" class="button" type="button">Voormalige leden</button><button id="toggleGroupNameForm" class="button" type="button">Naam wijzigen</button><button id="toggleChildForm" class="button primary" type="button">+ Kind toevoegen</button></div></div>
+<div id="groupNameFormPanel" class="form-panel" hidden>
+<form id="groupNameForm">
+<div class="form-grid">
+<div class="field"><label for="updatedGroupName">Nieuwe groepsnaam</label><input id="updatedGroupName" name="name" required maxlength="60"></div>
+<div style="display:flex;align-items:flex-end;gap:8px"><button class="button primary" type="submit">Naam opslaan</button><button id="cancelGroupName" class="button" type="button">Annuleren</button></div>
+</div>
+</form>
+</div>
+<div id="childFormPanel" class="form-panel" hidden>
+<h2>Kind toevoegen</h2>
+<form id="childForm" style="margin-top:14px">
+<div class="form-grid">
+<div class="field"><label for="childName">Voornaam</label><input id="childName" name="name" required maxlength="60" autocomplete="off"></div>
+<div class="field"><label for="childAge">Leeftijdsfase (optioneel)</label><select id="childAge" name="age"><option value="">Niet ingevuld</option><option>FUNdament · 6–9 jaar</option><option>Leren schaatsen · 9–12 jaar</option><option>Leren trainen · 12–18 jaar</option></select></div>
+<div style="display:flex;align-items:flex-end"><button class="button primary" type="submit">Kind opslaan</button></div>
+</div>
+</form>
+</div>
+<div id="groupContent"></div>
+</section>
+
+<section class="panel" aria-labelledby="periodPlanTitle">
+<div class="section-heading"><div><h2 id="periodPlanTitle">Jaar- en periodeplan</h2><p style="margin:6px 0 0;color:#4A5B6C;font-size:14px;line-height:1.5">Maak hier het plan voor deze groep. Stel zelf de trainingsperiode in: een seizoen, jaar of kortere periode.</p></div></div>
+<form id="periodPlanForm" class="form-panel">
+<div class="form-grid">
+<div class="field"><label for="periodName">Naam van het plan</label><input id="periodName" name="name" required maxlength="100" placeholder="bijv. Seizoen 2026–2027"></div>
+<div class="field"><label for="periodStart">Begindatum</label><input id="periodStart" name="startsOn" type="date" required></div>
+<div class="field"><label for="periodEnd">Einddatum</label><input id="periodEnd" name="endsOn" type="date" required></div>
+<div class="field" style="grid-column:1/-1"><label for="periodGoals">Trainingsdoelen of periodethema's</label><textarea id="periodGoals" name="goals" maxlength="4000" placeholder="Bijv. balans en houding, daarna bijhaal en uiteindelijk starts"></textarea></div>
+</div>
+<button class="button primary" type="submit" style="margin-top:14px">Plan opslaan voor deze groep</button>
+</form>
+<div id="groupPeriodPlans" class="training-list"></div>
+</section>
+
+<section class="panel" aria-labelledby="trainingTitle">
+<div class="section-heading"><h2 id="trainingTitle">Trainingen van deze groep</h2><button id="toggleTrainingForm" class="button primary" type="button">+ Training vastleggen</button></div>
+<div id="trainingFormPanel" class="form-panel" hidden>
+<form id="trainingForm">
+<div class="form-grid">
+<div class="field"><label for="trainingDate">Datum</label><input id="trainingDate" name="date" type="date" required></div>
+<div class="field"><label for="trainingTopic">Thema of training</label><input id="trainingTopic" name="topic" required maxlength="100" placeholder="bijv. Houding en bijhaal"></div>
+<div class="field"><label for="trainingNotes">Notities (optioneel)</label><textarea id="trainingNotes" name="notes" maxlength="500" placeholder="Wat ging goed, of wat pakken jullie volgende keer op?"></textarea></div>
+<div class="field" style="grid-column:1/-1"><span style="font-size:13px;font-weight:700;color:#334155">Wat is er geoefend?</span><div id="activityOptions" class="attendance"></div></div>
+<div class="field" style="grid-column:1/-1"><span style="font-size:13px;font-weight:700;color:#334155">Aanwezig</span><div id="attendeeOptions" class="attendance"></div></div>
+<div class="field" style="grid-column:1/-1"><span style="font-size:13px;font-weight:700;color:#334155">Beheersing per aanwezig kind</span><div id="assessmentOptions" style="display:flex;flex-direction:column;gap:10px"></div></div>
+</div>
+<button class="button primary" type="submit" style="margin-top:14px">Training opslaan</button>
+</form>
+</div>
+<div id="trainingList" class="training-list"></div>
+</section>
+</div>
+<section id="formerMembersScreen" class="panel" aria-labelledby="formerMembersTitle" hidden>
+<div class="section-heading"><button id="backToActiveGroup" class="button" type="button">← Terug naar groep</button><h2 id="formerMembersTitle">Voormalige leden</h2></div>
+<p style="margin:0;color:#4A5B6C;font-size:14px;line-height:1.5">Deze kinderen zijn naar een andere groep verplaatst. Hun eerdere trainingen en beoordelingen blijven in deze groep bewaard.</p>
+<div id="formerMembersList" class="child-list"></div>
+</section>
+</div>
+</main>
+<script>
+(function () {
+  'use strict';
+  var STORAGE_KEY = 'schaatskompas-groepen-v1';
+  var SKILLS = ['Houding', 'Bijhaal', 'Inzet'];
+  var LEVELS = ['Nog oefenen', 'In ontwikkeling', 'Beheerst'];
+  var status = document.getElementById('status');
+  var data;
+  var seedInitialData = false;
+  var storageReadError = false;
+  var groupView = 'active';
+  var editingPlanId = '';
+  var editingTrainingId = '';
+
+  function makeId() {
+    return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+  }
+
+  function dateInputValue(date) {
+    return [date.getFullYear(), String(date.getMonth() + 1).padStart(2, '0'), String(date.getDate()).padStart(2, '0')].join('-');
+  }
+
+  function dateOffsetValue(offset) {
+    var date = new Date();
+    date.setDate(date.getDate() + offset);
+    return dateInputValue(date);
+  }
+
+  function demoWorkout(phases, ageBand) {
+    var workoutPhases = phases.map(function (phase) {
+      return {
+        id: phase.id,
+        label: phase.label,
+        exercises: phase.exercises.map(function (exercise) {
+          return {
+            id: exercise.id,
+            name: exercise.name,
+            category: exercise.category,
+            minutes: exercise.minutes,
+            details: exercise.details
+          };
+        })
+      };
+    });
+    return {
+      ageBand: ageBand,
+      totalMinutes: workoutPhases.reduce(function (total, phase) {
+        return total + phase.exercises.reduce(function (sum, exercise) { return sum + exercise.minutes; }, 0);
+      }, 0),
+      phases: workoutPhases
+    };
+  }
+
+  function createDemoGroup(definition) {
+    var children = definition.children.map(function (child) {
+      return { id: makeId(), name: child.name, age: child.age, progress: Object.assign({}, child.progress) };
+    });
+    var planId = makeId();
+    var plan = {
+      id: planId,
+      name: definition.plan,
+      startsOn: dateOffsetValue(-28),
+      endsOn: dateOffsetValue(168),
+      goals: definition.goals,
+      createdAt: new Date().toISOString()
+    };
+    var pastTraining = {
+      id: makeId(),
+      date: dateOffsetValue(-7),
+      topic: definition.pastTopic,
+      notes: definition.pastNotes,
+      activities: definition.activities,
+      attendees: children.map(function (child) { return child.id; }),
+      results: children.map(function (child) { return { childId: child.id, skills: Object.assign({}, child.progress) }; }),
+      status: 'completed',
+      planId: planId,
+      workout: demoWorkout(definition.pastWorkout, definition.ageBand)
+    };
+    var plannedTraining = {
+      id: makeId(),
+      date: dateOffsetValue(7),
+      topic: definition.nextTopic,
+      notes: definition.nextNotes,
+      activities: [],
+      attendees: [],
+      results: [],
+      status: 'planned',
+      planId: planId,
+      workout: demoWorkout(definition.nextWorkout, definition.ageBand)
+    };
+    return {
+      id: makeId(),
+      demoKey: definition.key,
+      name: definition.name,
+      children: children,
+      formerMembers: [],
+      trainingPlans: [plan],
+      trainings: [pastTraining, plannedTraining]
+    };
+  }
+
+  function seedDemoGroups(groupData) {
+    if (groupData.demoGroupsVersion >= 1) return false;
+    var examples = [
+      {
+        key: 'fundament-2026-v1',
+        name: 'FUNdament · Voorbeeldgroep',
+        ageBand: 'fun',
+        plan: 'Balans en plezier',
+        goals: 'Veilig glijden, balans vinden en met spelvormen vertrouwen opbouwen.',
+        activities: ['Houding', 'Inzet'],
+        children: [
+          { name: 'Liva', age: 'FUNdament · 6–9 jaar', progress: { Houding: 'In ontwikkeling', Inzet: 'Nog oefenen' } },
+          { name: 'Jens', age: 'FUNdament · 6–9 jaar', progress: { Houding: 'Beheerst', Inzet: 'In ontwikkeling' } },
+          { name: 'Mees', age: 'FUNdament · 6–9 jaar', progress: { Houding: 'Nog oefenen' } }
+        ],
+        pastTopic: 'Balansspel en uitglijden',
+        pastNotes: 'Eerste keer in tweetallen; houd de rondjes kort en speels.',
+        nextTopic: 'Pinguïnloop en stoplicht',
+        nextNotes: 'Oefen kleine pasjes en reageer op kleur.',
+        pastWorkout: [
+          { id: 'warmup', label: 'Warming-up', exercises: [{ id: 'pinguin', name: 'Pinguïnloop', category: 'plezier', minutes: 5, details: 'Kleine pasjes, armen langs het lijf' }] },
+          { id: 'kern1', label: 'Balans', exercises: [{ id: 'eenbeen', name: 'Eenbeen-glijbaan', category: 'houding', minutes: 6, details: 'Glij op één been en houd je bovenlichaam rustig' }] },
+          { id: 'afsluit', label: 'Spel', exercises: [{ id: 'stoplicht', name: 'Schaatsstoplicht', category: 'plezier', minutes: 8, details: 'Rood is stoeltje, groen is rijden' }] }
+        ],
+        nextWorkout: [
+          { id: 'warmup', label: 'Warming-up', exercises: [{ id: 'pinguin', name: 'Pinguïnloop', category: 'plezier', minutes: 5, details: 'Kleine pasjes, armen langs het lijf' }] },
+          { id: 'kern1', label: 'Kern · balans', exercises: [{ id: 'eenbeen', name: 'Eenbeen-glijbaan', category: 'houding', minutes: 6, details: 'Glij op één been en houd je bovenlichaam rustig' }] },
+          { id: 'kern2', label: 'Spelvorm', exercises: [{ id: 'lintjes', name: 'Lintjes verzamelen', category: 'plezier', minutes: 8, details: 'Verzamel lintjes in kleine groepjes' }] }
+        ]
+      },
+      {
+        key: 'techniek-2026-v1',
+        name: 'Techniek · Voorbeeldgroep',
+        ageBand: 'ls',
+        plan: 'Bochten en afzet',
+        goals: 'Bochtentechniek oefenen, de afzet rustig opbouwen en veilig remmen.',
+        activities: ['Houding', 'Bijhaal'],
+        children: [
+          { name: 'Mette', age: 'Leren schaatsen · 9–12 jaar', progress: { Houding: 'Beheerst', Bijhaal: 'In ontwikkeling' } },
+          { name: 'Finn', age: 'Leren schaatsen · 9–12 jaar', progress: { Houding: 'In ontwikkeling', Bijhaal: 'Nog oefenen' } },
+          { name: 'Aiden', age: 'Leren schaatsen · 9–12 jaar', progress: { Houding: 'Nog oefenen', Bijhaal: 'In ontwikkeling' } }
+        ],
+        pastTopic: 'Bochtjes en remmen',
+        pastNotes: 'Ruimte houden bij de pionnen en de snelheid beheersen.',
+        nextTopic: 'Slalom en kruispas',
+        nextNotes: 'Begin op lage snelheid en bouw pas daarna op.',
+        pastWorkout: [
+          { id: 'warmup', label: 'Inrijden', exercises: [{ id: 'inrijden', name: 'Rustig inrijden in subgroepjes', category: 'houding', minutes: 6, details: 'Rijd op je eigen niveau' }] },
+          { id: 'kern1', label: 'Techniek', exercises: [{ id: 'bocht', name: 'Bochtjes op de buitenkant', category: 'techniek', minutes: 8, details: 'Kijk de bocht in en houd de knieën gebogen' }, { id: 'remmen', name: 'Remmen met twee voeten', category: 'techniek', minutes: 6, details: 'Duw de ijzers rustig naar buiten' }] }
+        ],
+        nextWorkout: [
+          { id: 'warmup', label: 'Warming-up', exercises: [{ id: 'schaduw', name: 'Schaduwrijden in tweetallen', category: 'plezier', minutes: 8, details: 'Volg elkaars tempo op veilige afstand' }] },
+          { id: 'kern1', label: 'Techniek', exercises: [{ id: 'slalom', name: 'Slalom door pionnen', category: 'techniek', minutes: 8, details: 'Stuur met je knieën' }, { id: 'kruispas', name: 'Kruispas door de bocht', category: 'techniek', minutes: 8, details: 'Oefen rustig overzetten' }] }
+        ]
+      },
+      {
+        key: 'junioren-2026-v1',
+        name: 'Junioren · Voorbeeldgroep',
+        ageBand: 'lt',
+        plan: 'Starts en snelheid',
+        goals: 'Een lage startpositie combineren met een krachtige, gecontroleerde versnelling.',
+        activities: ['Houding', 'Inzet'],
+        children: [
+          { name: 'Yara', age: 'Leren trainen · 12–18 jaar', progress: { Houding: 'Beheerst', Inzet: 'In ontwikkeling' } },
+          { name: 'Daan', age: 'Leren trainen · 12–18 jaar', progress: { Houding: 'In ontwikkeling', Inzet: 'Nog oefenen' } },
+          { name: 'Sem', age: 'Leren trainen · 12–18 jaar', progress: { Houding: 'Beheerst', Inzet: 'Beheerst' } }
+        ],
+        pastTopic: 'Starts vanuit stilstand',
+        pastNotes: 'Focus op balans in de eerste drie passen.',
+        nextTopic: 'Reactiestart en estafette',
+        nextNotes: 'Houd de starts kort; geef tussen pogingen voldoende rust.',
+        pastWorkout: [
+          { id: 'warmup', label: 'Warming-up', exercises: [{ id: 'inrijden', name: 'Rustig inrijden in subgroepjes', category: 'houding', minutes: 6, details: 'Rijd op je eigen niveau' }] },
+          { id: 'kern1', label: 'Kern · starts', exercises: [{ id: 'start', name: 'Startjes vanuit de knielpositie', category: 'snelheid', minutes: 6, details: 'Vertrek op het startsignaal' }, { id: 'visgraat', name: 'Visgraat-start', category: 'snelheid', minutes: 6, details: 'Zet af in kleine V-passen' }] }
+        ],
+        nextWorkout: [
+          { id: 'kern1', label: 'Kern · reactie', exercises: [{ id: 'reactie', name: 'Reactiestart op kleur', category: 'snelheid', minutes: 6, details: 'Vertrek bij het afgesproken signaal' }, { id: 'estafette', name: 'Estafette in teams', category: 'snelheid', minutes: 10, details: 'Wissel af met een tik' }] },
+          { id: 'afsluit', label: 'Afsluiting', exercises: [{ id: 'uitrijden', name: 'Uitrijden + 1 vraag aan de groep', category: 'plezier', minutes: 6, details: 'Bespreek wat vandaag beter ging' }] }
+        ]
+      }
+    ];
+    var changed = false;
+    groupData.groups.forEach(function (group) {
+      if (group.demoKey) examples = examples.filter(function (example) { return example.key !== group.demoKey; });
+    });
+    examples.forEach(function (example) {
+      groupData.groups.push(createDemoGroup(example));
+      changed = true;
+    });
+    groupData.demoGroupsVersion = 1;
+    return changed;
+  }
+
+  function setPeriodDefaults() {
+    var today = new Date();
+    document.getElementById('periodStart').value = dateInputValue(today);
+    var yearLater = new Date(today);
+    yearLater.setFullYear(yearLater.getFullYear() + 1);
+    document.getElementById('periodEnd').value = dateInputValue(yearLater);
+  }
+
+  function escapeHtml(value) {
+    return String(value).replace(/[&<>"']/g, function (char) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char];
+    });
+  }
+
+  function showStatus(message, isError) {
+    status.textContent = message;
+    status.hidden = !message;
+    status.className = isError ? 'notice' : 'notice info';
+  }
+
+  function saveData() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      showStatus('Opgeslagen in deze browser.', false);
+      return true;
+    } catch (error) {
+      showStatus('Opslaan is niet gelukt. Controleer de browseropslag en probeer opnieuw.', true);
+      return false;
+    }
+  }
+
+  function loadData() {
+    storageReadError = false;
+    try {
+      var stored = localStorage.getItem(STORAGE_KEY);
+      if (stored) {
+        var parsed = JSON.parse(stored);
+        if (!parsed || !Array.isArray(parsed.groups)) throw new Error('Ongeldige opgeslagen gegevens');
+        parsed.groups.forEach(function (group) {
+          group.children = Array.isArray(group.children) ? group.children : [];
+          group.formerMembers = Array.isArray(group.formerMembers) ? group.formerMembers : [];
+          group.trainingPlans = Array.isArray(group.trainingPlans) ? group.trainingPlans : [];
+          group.trainings = Array.isArray(group.trainings) ? group.trainings : [];
+          group.children.forEach(function (child) { child.progress = child.progress || {}; });
+          group.trainings.forEach(function (training) {
+            training.attendees = Array.isArray(training.attendees) ? training.attendees : [];
+            training.activities = Array.isArray(training.activities) ? training.activities : [];
+            training.results = Array.isArray(training.results) ? training.results : [];
+          });
+        });
+        parsed.activeGroupId = '';
+        return parsed;
+      }
+    } catch (error) {
+      storageReadError = true;
+      showStatus('De eerder opgeslagen gegevens konden niet worden gelezen. Wis de browsergegevens voor deze demo of herstel de opslag voordat je verdergaat.', true);
+      return { groups: [], activeGroupId: '' };
+    }
+    seedInitialData = true;
+    var groupId = makeId();
+    var sampleChildren = [
+      { id: makeId(), name: 'Noor', age: 'Leren schaatsen · 9–12 jaar', progress: { Houding: 'Beheerst', Bijhaal: 'In ontwikkeling', Inzet: 'Nog oefenen' } },
+      { id: makeId(), name: 'Milan', age: 'FUNdament · 6–9 jaar', progress: { Houding: 'In ontwikkeling', Bijhaal: 'Nog oefenen', Inzet: 'Nog oefenen' } },
+      { id: makeId(), name: 'Sam', age: 'Leren schaatsen · 9–12 jaar', progress: { Houding: 'Beheerst', Bijhaal: 'Beheerst', Inzet: 'In ontwikkeling' } }
+    ];
+    return {
+      activeGroupId: '',
+      groups: [{
+        id: groupId,
+        name: 'Leren schaatsen',
+        children: sampleChildren,
+        formerMembers: [],
+        trainings: [
+          {
+            id: makeId(),
+            date: new Date().toISOString().slice(0, 10),
+            topic: 'Houding en balans',
+            notes: 'Geoefend met stoeltje-glijden en balansspel.',
+            activities: ['Houding', 'Bijhaal'],
+            attendees: sampleChildren.map(function (child) { return child.id; }),
+            results: sampleChildren.map(function (child) {
+              return { childId: child.id, skills: { Houding: child.progress.Houding, Bijhaal: child.progress.Bijhaal } };
+            })
+          }
+        ]
+      }]
+    };
+  }
+
+  function activeGroup() {
+    return data.groups.find(function (group) { return group.id === data.activeGroupId; }) || null;
+  }
+
+  function getHistoryChildren(group) {
+    return group.children.concat((group.formerMembers || []).map(function (member) { return member.child; }));
+  }
+
+  function refreshLatestProgress(group) {
+    group.children.forEach(function (child) {
+      var latest = {};
+      group.trainings.forEach(function (training) {
+        (training.results || []).forEach(function (result) {
+          if (result.childId !== child.id) return;
+          Object.keys(result.skills || {}).forEach(function (skill) {
+            if (!latest[skill] || training.date >= latest[skill].date) {
+              latest[skill] = { date: training.date, level: result.skills[skill] };
+            }
+          });
+        });
+      });
+      Object.keys(latest).forEach(function (skill) {
+        child.progress[skill] = latest[skill].level;
+      });
+    });
+  }
+
+  function renderAssessmentOptions(group) {
+    var form = document.getElementById('trainingForm');
+    var container = document.getElementById('assessmentOptions');
+    var currentValues = {};
+    Array.prototype.forEach.call(container.querySelectorAll('[data-result-child]'), function (select) {
+      currentValues[select.dataset.resultChild + '|' + select.dataset.resultSkill] = select.value;
+    });
+    var attendees = Array.prototype.map.call(form.querySelectorAll('[name="attendees"]:checked'), function (input) { return input.value; });
+    var activities = Array.prototype.map.call(form.querySelectorAll('[name="activities"]:checked'), function (input) { return input.value; });
+    if (!attendees.length || !activities.length) {
+      container.innerHTML = '<p class="empty">Kies eerst de geoefende vaardigheden en aanwezige kinderen om beheersing vast te leggen.</p>';
+      return;
+    }
+
+    container.innerHTML = attendees.map(function (childId) {
+      var child = group.children.find(function (item) { return item.id === childId; });
+      if (!child) return '';
+      var skillFields = activities.map(function (skill) {
+        var id = 'result-' + child.id + '-' + skill;
+        var options = '<option value="">Niet beoordeeld</option>' + LEVELS.map(function (level) {
+          return '<option value="' + escapeHtml(level) + '">' + escapeHtml(level) + '</option>';
+        }).join('');
+        return '<div class="field"><label for="' + escapeHtml(id) + '">' + escapeHtml(skill) + '</label><select id="' + escapeHtml(id) + '" data-result-child="' + escapeHtml(child.id) + '" data-result-skill="' + escapeHtml(skill) + '">' + options + '</select></div>';
+      }).join('');
+      return '<div class="assessment-child"><strong>' + escapeHtml(child.name) + '</strong><div class="form-grid">' + skillFields + '</div></div>';
+    }).join('');
+    Array.prototype.forEach.call(container.querySelectorAll('[data-result-child]'), function (select) {
+      select.value = currentValues[select.dataset.resultChild + '|' + select.dataset.resultSkill] || '';
+    });
+  }
+
+  function renderPlanEditForm(plan) {
+    return '<form class="form-panel saved-edit-form" data-edit-plan-form="' + escapeHtml(plan.id) + '" hidden><div class="form-grid">' +
+      '<div class="field"><label>Naam van het plan<input name="name" required maxlength="100" value="' + escapeHtml(plan.name) + '"></label></div>' +
+      '<div class="field"><label>Begindatum<input name="startsOn" type="date" required value="' + escapeHtml(plan.startsOn) + '"></label></div>' +
+      '<div class="field"><label>Einddatum<input name="endsOn" type="date" required value="' + escapeHtml(plan.endsOn) + '"></label></div>' +
+      '<div class="field" style="grid-column:1/-1"><label>Trainingsdoelen of periodethema\'s<textarea name="goals" maxlength="4000">' + escapeHtml(plan.goals || '') + '</textarea></label></div>' +
+      '</div><div class="saved-edit-actions" style="margin-top:12px"><button class="button primary small" type="submit">Planwijzigingen opslaan</button>' +
+      '<button class="button small" type="button" data-cancel-plan-edit>Annuleren</button></div></form>';
+  }
+
+  function renderTrainingEditForm(training, plans) {
+    var phases = training.workout && Array.isArray(training.workout.phases) ? training.workout.phases : [];
+    if (!phases.length) phases = [{ id: 'training', label: 'Training', exercises: [] }];
+    var planOptions = '<option value="">Geen jaar-/periodeplan</option>' + plans.map(function (plan) {
+      return '<option value="' + escapeHtml(plan.id) + '"' + (training.planId === plan.id ? ' selected' : '') + '>' + escapeHtml(plan.name) + '</option>';
+    }).join('');
+    var phaseFields = phases.map(function (phase, index) {
+      var exerciseText = (phase.exercises || []).map(function (exercise) {
+        return String(exercise.name || '') + ' | ' + String(exercise.minutes || 5);
+      }).join('\n');
+      return '<fieldset class="edit-workout-phase"><legend>Trainingsonderdeel ' + (index + 1) + '</legend><div class="form-grid">' +
+        '<div class="field"><label>Onderdeelnaam<input name="phaseLabel' + index + '" required maxlength="100" value="' + escapeHtml(phase.label || '') + '"></label></div>' +
+        '<div class="field" style="grid-column:1/-1"><label>Oefeningen — één per regel, met minuten na de |<textarea name="phaseExercises' + index + '" placeholder="Bijvoorbeeld: Slalom door pionnen | 8">' + escapeHtml(exerciseText) + '</textarea></label></div>' +
+        '</div></fieldset>';
+    }).join('');
+    return '<form class="form-panel saved-edit-form" data-edit-training-form="' + escapeHtml(training.id) + '" data-phase-count="' + phases.length + '" hidden>' +
+      '<div class="form-grid"><div class="field"><label>Naam van de training<input name="topic" required maxlength="100" value="' + escapeHtml(training.topic) + '"></label></div>' +
+      '<div class="field"><label>Datum<input name="date" type="date" required value="' + escapeHtml(training.date) + '"></label></div>' +
+      '<div class="field"><label>Jaar-/periodeplan<select name="planId">' + planOptions + '</select></label></div>' +
+      '<div class="field" style="grid-column:1/-1"><label>Notities<textarea name="notes" maxlength="2000">' + escapeHtml(training.notes || '') + '</textarea></label></div>' +
+      phaseFields +
+      '<p style="grid-column:1/-1;margin:0;color:#4A5B6C;font-size:13px">Pas oefeningen aan met één oefening per regel, bijvoorbeeld <strong>Slalom door pionnen | 8</strong>. Zonder minuten gebruikt een bestaande oefening haar huidige duur; nieuwe oefeningen krijgen 5 minuten.</p>' +
+      '</div><div class="saved-edit-actions" style="margin-top:12px"><button class="button primary small" type="submit">Trainingwijzigingen opslaan</button>' +
+      '<button class="button small" type="button" data-cancel-training-edit>Annuleren</button></div></form>';
+  }
+
+  function parseEditedExercises(text, previousExercises) {
+    var lines = text.split(/\r?\n/).map(function (line) { return line.trim(); }).filter(Boolean);
+    var exercises = [];
+    for (var index = 0; index < lines.length; index += 1) {
+      var line = lines[index];
+      var durationMatch = line.match(/^(.*?)\s*\|\s*(\d{1,3})$/);
+      if (line.indexOf('|') >= 0 && !durationMatch) return null;
+      var name = durationMatch ? durationMatch[1].trim() : line;
+      if (!name) return null;
+      var previous = previousExercises.filter(function (exercise) {
+        return String(exercise.name || '').toLowerCase() === name.toLowerCase();
+      })[0];
+      var minutes = durationMatch ? Number(durationMatch[2]) : (previous ? Number(previous.minutes) : 5);
+      if (!Number.isInteger(minutes) || minutes < 1 || minutes > 180) return null;
+      exercises.push(Object.assign({}, previous || {}, { name: name, minutes: minutes }));
+    }
+    return exercises;
+  }
+
+  function render() {
+    var group = activeGroup();
+    var picker = document.getElementById('groupPicker');
+    var detail = document.getElementById('groupDetail');
+    picker.hidden = Boolean(group);
+    detail.hidden = !group;
+    document.querySelector('.intro').hidden = Boolean(group);
+    document.getElementById('activeGroupScreen').hidden = groupView !== 'active';
+    document.getElementById('formerMembersScreen').hidden = groupView !== 'former';
+    document.getElementById('groupCards').innerHTML = data.groups.length ? data.groups.map(function (item) {
+      var childLabel = item.children.length === 1 ? ' kind' : ' kinderen';
+      var trainingLabel = item.trainings.length === 1 ? ' training' : ' trainingen';
+      return '<article class="group-card"><div><h3>' + escapeHtml(item.name) + '</h3><p>' + item.children.length + childLabel + ' · ' + item.trainings.length + trainingLabel + '</p></div><button class="button primary" type="button" data-select-group="' + escapeHtml(item.id) + '">Open groep</button></article>';
+    }).join('') : '<p class="empty">Je hebt nog geen groepen. Maak een groep aan om te beginnen.</p>';
+    var content = document.getElementById('groupContent');
+    var trainingList = document.getElementById('trainingList');
+    var attendees = document.getElementById('attendeeOptions');
+    if (!group) {
+      return;
+    }
+    document.getElementById('toggleChildForm').disabled = false;
+    document.getElementById('toggleTrainingForm').disabled = false;
+
+    var mastered = 0;
+    var totalSkills = 0;
+    group.children.forEach(function (child) {
+      SKILLS.forEach(function (skill) {
+        if (LEVELS.indexOf(child.progress[skill]) < 0) return;
+        totalSkills += 1;
+        if (child.progress[skill] === 'Beheerst') mastered += 1;
+      });
+    });
+    var formerMembers = group.formerMembers || [];
+    var trainingPlans = group.trainingPlans || [];
+    document.getElementById('groupPeriodPlans').innerHTML = trainingPlans.length ?
+      trainingPlans.slice().sort(function (a, b) { return a.startsOn.localeCompare(b.startsOn); }).map(function (plan) {
+        var linkedCount = group.trainings.filter(function (training) {
+          return training.planId === plan.id || (training.date >= plan.startsOn && training.date <= plan.endsOn);
+        }).length;
+        var period = new Date(plan.startsOn + 'T12:00:00').toLocaleDateString('nl-NL') + ' – ' + new Date(plan.endsOn + 'T12:00:00').toLocaleDateString('nl-NL');
+        var weeks = Math.max(1, Math.ceil((new Date(plan.endsOn + 'T12:00:00') - new Date(plan.startsOn + 'T12:00:00') + 86400000) / 604800000));
+        return '<article class="period-card"><div class="section-heading"><strong>' + escapeHtml(plan.name) + '</strong><button class="button small" type="button" data-edit-plan="' + escapeHtml(plan.id) + '">Aanpassen</button></div>' +
+          '<p>' + escapeHtml(period) + ' · ' + weeks + ' weken · ' + linkedCount + (linkedCount === 1 ? ' training' : ' trainingen') + '</p>' +
+          (plan.goals ? '<p>' + escapeHtml(plan.goals) + '</p>' : '') + renderPlanEditForm(plan) + '</article>';
+      }).join('') : '<p class="empty">Voor deze groep is nog geen jaar- of periodeplan opgeslagen.</p>';
+    Array.prototype.forEach.call(document.querySelectorAll('[data-edit-plan-form]'), function (form) {
+      form.hidden = form.dataset.editPlanForm !== editingPlanId;
+    });
+    document.getElementById('openFormerMembers').textContent = 'Voormalige leden (' + formerMembers.length + ')';
+    document.getElementById('formerMembersTitle').textContent = 'Voormalige leden · ' + group.name;
+    content.innerHTML = '<div class="summary-grid" aria-label="Groepsoverzicht">' +
+      '<div class="stat"><strong>' + group.children.length + '</strong><span>kinderen in deze groep</span></div>' +
+      '<div class="stat"><strong>' + group.trainings.length + '</strong><span>trainingen opgeslagen</span></div>' +
+      '<div class="stat"><strong>' + (totalSkills ? Math.round(mastered / totalSkills * 100) + '%' : '—') + '</strong><span>beheerst van beoordeelde vaardigheden</span></div></div>' +
+      '<div class="section-heading" style="margin-top:18px"><h2 id="groupTitle">' + escapeHtml(group.name) + '</h2><span style="font-size:13px;color:#4A5B6C">Beheersing wordt bijgewerkt op basis van beoordelingen per training.</span></div>' +
+      (group.children.length ? '<div class="child-list">' + group.children.map(function (child) {
+        var progress = SKILLS.map(function (skill) {
+          return '<div class="progress-row"><span class="skill-name">' + escapeHtml(skill) + '</span><span class="progress-level">' + escapeHtml(child.progress[skill] || 'Nog niet beoordeeld') + '</span></div>';
+        }).join('');
+        var otherGroups = data.groups.filter(function (item) { return item.id !== group.id; });
+        var movePanel = otherGroups.length ? '<form class="form-panel" data-child-move-form="' + escapeHtml(child.id) + '" hidden><div class="form-grid"><div class="field"><label for="destination-' + escapeHtml(child.id) + '">Verplaatsen naar groep</label><select id="destination-' + escapeHtml(child.id) + '" name="destination" required>' +
+          otherGroups.map(function (item) { return '<option value="' + escapeHtml(item.id) + '">' + escapeHtml(item.name) + '</option>'; }).join('') +
+          '</select></div><div style="display:flex;align-items:flex-end;gap:8px"><button class="button primary small" type="submit">Verplaats kind</button><button class="button small" type="button" data-cancel-child-move="' + escapeHtml(child.id) + '">Annuleren</button></div></div><p style="margin:10px 0 0;font-size:13px;color:#4A5B6C">De beheersing wordt gekopieerd. Eerdere trainingen blijven in deze groep bij Voormalige leden.</p></form>' :
+          '<div class="form-panel" data-child-move-form="' + escapeHtml(child.id) + '" hidden><p class="empty">Maak eerst een andere groep aan om dit kind te verplaatsen.</p></div>';
+        return '<article class="child-card"><div class="child-heading"><div><h3>' + escapeHtml(child.name) + '</h3>' + (child.age ? '<span class="age-tag">' + escapeHtml(child.age) + '</span>' : '') + '</div>' +
+          '<div class="child-actions"><button class="button small" type="button" data-edit-child="' + escapeHtml(child.id) + '">Naam wijzigen</button><button class="button small" type="button" data-move-child="' + escapeHtml(child.id) + '">Verplaatsen</button><button class="button small" type="button" data-transfer-child="' + escapeHtml(child.id) + '">Andere trainer</button><button class="button small danger" type="button" data-delete-child="' + escapeHtml(child.id) + '">Verwijderen</button></div></div>' +
+          '<form class="form-panel" data-child-edit-form="' + escapeHtml(child.id) + '" hidden><div class="form-grid"><div class="field"><label for="child-name-' + escapeHtml(child.id) + '">Nieuwe naam</label><input id="child-name-' + escapeHtml(child.id) + '" name="name" required maxlength="60" autocomplete="off"></div>' +
+          '<div style="display:flex;align-items:flex-end;gap:8px"><button class="button primary small" type="submit">Naam opslaan</button><button class="button small" type="button" data-cancel-child-edit="' + escapeHtml(child.id) + '">Annuleren</button></div></div></form>' +
+          movePanel +
+          '<div class="form-panel" data-transfer-info="' + escapeHtml(child.id) + '" hidden><p style="margin:0;font-size:14px;line-height:1.5;color:#334155">Overdracht naar een andere trainer verloopt met een eenmalige code die de ontvangende trainer accepteert. Deze demo heeft nog geen server of accounts; de veilige codeflow is voorbereid in de database, maar kan hier nog niet worden uitgevoerd.</p></div>' +
+          progress + '</article>';
+      }).join('') + '</div>' : '<p class="empty">Nog geen kinderen toegevoegd aan deze groep.</p>');
+
+    document.getElementById('formerMembersList').innerHTML = formerMembers.length ? formerMembers.map(function (member) {
+      var child = member.child;
+      var levels = SKILLS.map(function (skill) { return skill + ': ' + (child.progress[skill] || 'Nog niet beoordeeld'); }).join(' · ');
+      var moved = member.movedAt ? new Date(member.movedAt + 'T12:00:00').toLocaleDateString('nl-NL') : 'datum onbekend';
+      var history = group.trainings.filter(function (training) {
+        return training.attendees.indexOf(child.id) >= 0 || (training.results || []).some(function (result) { return result.childId === child.id; });
+      }).sort(function (a, b) { return b.date.localeCompare(a.date); });
+      var historyHtml = history.length ? history.map(function (training) {
+        var result = (training.results || []).find(function (entry) { return entry.childId === child.id; });
+        var assessments = result ? Object.keys(result.skills || {}).map(function (skill) {
+          return escapeHtml(skill) + ': ' + escapeHtml(result.skills[skill]);
+        }).join(' · ') : '';
+        return '<div class="former-history-entry"><strong>' + escapeHtml(training.topic) + ' · ' + escapeHtml(new Date(training.date + 'T12:00:00').toLocaleDateString('nl-NL')) + '</strong>' +
+          (training.activities && training.activities.length ? '<p>Geoefend: ' + escapeHtml(training.activities.join(', ')) + '</p>' : '') +
+          '<p>' + (assessments ? 'Beheersing: ' + assessments : 'Geen beheersing vastgelegd') + '</p></div>';
+      }).join('') : '<p>Geen eerdere trainingen vastgelegd voor dit kind.</p>';
+      return '<article class="former-card"><strong>' + escapeHtml(child.name) + (child.age ? ' · ' + escapeHtml(child.age) : '') + '</strong><p>Verplaatst op ' + escapeHtml(moved) + (member.destinationGroup ? ' naar ' + escapeHtml(member.destinationGroup) : '') + '</p><p>Beheersing bij vertrek: ' + escapeHtml(levels) + '</p><div class="former-history"><strong>Eerdere trainingen en beoordelingen</strong>' + historyHtml + '</div></article>';
+    }).join('') : '<p class="empty">Deze groep heeft nog geen voormalige leden.</p>';
+
+    var activityOptions = document.getElementById('activityOptions');
+    activityOptions.innerHTML = SKILLS.map(function (skill) {
+      return '<label><input type="checkbox" name="activities" value="' + escapeHtml(skill) + '"> ' + escapeHtml(skill) + '</label>';
+    }).join('');
+    attendees.innerHTML = group.children.length ? group.children.map(function (child) {
+      return '<label><input type="checkbox" name="attendees" value="' + escapeHtml(child.id) + '"> ' + escapeHtml(child.name) + '</label>';
+    }).join('') : '<span style="font-size:14px;color:#4A5B6C">Voeg eerst kinderen toe aan deze groep.</span>';
+    renderAssessmentOptions(group);
+    var sortedTrainings = group.trainings.slice().sort(function (a, b) { return b.date.localeCompare(a.date); });
+    var historyChildren = getHistoryChildren(group);
+    trainingList.innerHTML = sortedTrainings.length ? sortedTrainings.map(function (training) {
+      var names = historyChildren.filter(function (child) { return training.attendees.indexOf(child.id) >= 0; }).map(function (child) { return child.name; });
+      var outcomes = (training.results || []).map(function (result) {
+        var child = historyChildren.find(function (item) { return item.id === result.childId; });
+        if (!child) return '';
+        var levels = Object.keys(result.skills || {}).map(function (skill) {
+          return escapeHtml(skill) + ': ' + escapeHtml(result.skills[skill]);
+        }).join(' · ');
+        return levels ? '<p>Beheersing — ' + escapeHtml(child.name) + ': ' + levels + '</p>' : '';
+      }).join('');
+      var workout = training.workout && Array.isArray(training.workout.phases) ? training.workout.phases.map(function (phase) {
+        var exerciseNames = (phase.exercises || []).map(function (exercise) {
+          return escapeHtml(exercise.name) + ' (' + escapeHtml(exercise.minutes) + ' min)';
+        }).join(', ');
+        return exerciseNames ? '<div class="workout-phase"><strong>' + escapeHtml(phase.label) + '</strong><p>' + exerciseNames + '</p></div>' : '';
+      }).join('') : '';
+      var plan = training.planId && trainingPlans.find(function (item) { return item.id === training.planId; });
+      return '<article class="training-card"><div class="training-meta"><strong>' + (training.status === 'planned' ? 'Ontwerp · ' : '') + escapeHtml(training.topic) + '</strong><div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><time datetime="' + escapeHtml(training.date) + '">' + escapeHtml(new Date(training.date + 'T12:00:00').toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' })) + '</time><button class="button small" type="button" data-edit-training="' + escapeHtml(training.id) + '">Aanpassen</button></div></div>' +
+        (plan ? '<p>Periodeplan: ' + escapeHtml(plan.name) + '</p>' : '') +
+        (training.notes ? '<p>' + escapeHtml(training.notes) + '</p>' : '') +
+        workout +
+        (training.activities && training.activities.length ? '<p>Geoefend: ' + escapeHtml(training.activities.join(', ')) + '</p>' : '') +
+        (training.status === 'planned' ? '<p>Gepland; aanwezigheid en beheersing worden na de training vastgelegd.</p>' : '<p>Aanwezig: ' + escapeHtml(names.length ? names.join(', ') : 'niet geregistreerd') + '</p>') +
+        (outcomes || '<p>Beheersing niet per activiteit beoordeeld.</p>') + renderTrainingEditForm(training, trainingPlans) + '</article>';
+    }).join('') : '<p class="empty">Nog geen trainingen opgeslagen voor deze groep.</p>';
+    Array.prototype.forEach.call(trainingList.querySelectorAll('[data-edit-training-form]'), function (form) {
+      form.hidden = form.dataset.editTrainingForm !== editingTrainingId;
+    });
+  }
+
+  document.getElementById('toggleGroupForm').addEventListener('click', function () {
+    var panel = document.getElementById('groupFormPanel');
+    panel.hidden = !panel.hidden;
+    if (!panel.hidden) document.getElementById('groupName').focus();
+  });
+  document.getElementById('toggleGroupNameForm').addEventListener('click', function () {
+    var group = activeGroup();
+    if (!group) return;
+    document.getElementById('updatedGroupName').value = group.name;
+    document.getElementById('groupNameFormPanel').hidden = false;
+    document.getElementById('updatedGroupName').focus();
+    document.getElementById('updatedGroupName').select();
+  });
+  document.getElementById('cancelGroupName').addEventListener('click', function () {
+    document.getElementById('groupNameFormPanel').hidden = true;
+  });
+  document.getElementById('groupNameForm').addEventListener('submit', function (event) {
+    event.preventDefault();
+    var group = activeGroup();
+    if (!group) return;
+    var name = new FormData(event.currentTarget).get('name').trim();
+    if (!name) {
+      showStatus('Vul een groepsnaam in.', true);
+      document.getElementById('updatedGroupName').focus();
+      return;
+    }
+    var previousName = group.name;
+    group.name = name;
+    if (saveData()) {
+      event.currentTarget.reset();
+      document.getElementById('groupNameFormPanel').hidden = true;
+      render();
+    } else {
+      group.name = previousName;
+    }
+  });
+  document.getElementById('toggleChildForm').addEventListener('click', function () {
+    var panel = document.getElementById('childFormPanel');
+    panel.hidden = !panel.hidden;
+    if (!panel.hidden) document.getElementById('childName').focus();
+  });
+  document.getElementById('toggleTrainingForm').addEventListener('click', function () {
+    var panel = document.getElementById('trainingFormPanel');
+    panel.hidden = !panel.hidden;
+    if (!panel.hidden) document.getElementById('trainingDate').focus();
+  });
+  document.getElementById('groupCards').addEventListener('click', function (event) {
+    var button = event.target.closest('[data-select-group]');
+    if (!button) return;
+    data.activeGroupId = button.dataset.selectGroup;
+    groupView = 'active';
+    editingPlanId = '';
+    editingTrainingId = '';
+    document.getElementById('childFormPanel').hidden = true;
+    document.getElementById('trainingFormPanel').hidden = true;
+    render();
+  });
+  document.getElementById('openFormerMembers').addEventListener('click', function () {
+    groupView = 'former';
+    render();
+  });
+  document.getElementById('backToActiveGroup').addEventListener('click', function () {
+    groupView = 'active';
+    render();
+  });
+  document.getElementById('backToGroups').addEventListener('click', function () {
+    data.activeGroupId = '';
+    groupView = 'active';
+    editingPlanId = '';
+    editingTrainingId = '';
+    document.getElementById('groupNameFormPanel').hidden = true;
+    document.getElementById('childFormPanel').hidden = true;
+    document.getElementById('trainingFormPanel').hidden = true;
+    document.getElementById('groupFormPanel').hidden = true;
+    render();
+  });
+  document.getElementById('groupForm').addEventListener('submit', function (event) {
+    event.preventDefault();
+    var name = new FormData(event.currentTarget).get('name').trim();
+    var group = { id: makeId(), name: name, children: [], formerMembers: [], trainingPlans: [], trainings: [] };
+    data.groups.push(group);
+    data.activeGroupId = '';
+    if (saveData()) {
+      event.currentTarget.reset();
+      document.getElementById('groupFormPanel').hidden = true;
+      render();
+    } else {
+      data.groups.pop();
+    }
+  });
+  document.getElementById('childForm').addEventListener('submit', function (event) {
+    event.preventDefault();
+    var group = activeGroup();
+    if (!group) return;
+    var form = new FormData(event.currentTarget);
+    group.children.push({ id: makeId(), name: form.get('name').trim(), age: form.get('age'), progress: {} });
+    if (saveData()) {
+      event.currentTarget.reset();
+      document.getElementById('childFormPanel').hidden = true;
+      render();
+    } else {
+      group.children.pop();
+    }
+  });
+  document.getElementById('trainingForm').addEventListener('change', function (event) {
+    var group = activeGroup();
+    if (!group) return;
+    if (event.target.matches('[name="attendees"], [name="activities"]')) {
+      renderAssessmentOptions(group);
+    }
+  });
+  document.getElementById('trainingForm').addEventListener('submit', function (event) {
+    event.preventDefault();
+    var group = activeGroup();
+    if (!group) return;
+    var form = new FormData(event.currentTarget);
+    var activities = form.getAll('activities');
+    if (!activities.length) {
+      showStatus('Kies eerst welke vaardigheden tijdens deze training zijn geoefend.', true);
+      document.getElementById('activityOptions').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+    var trainingForm = event.currentTarget;
+    var attendees = form.getAll('attendees');
+    var results = attendees.map(function (childId) {
+      var skills = {};
+      Array.prototype.forEach.call(trainingForm.querySelectorAll('[data-result-child]'), function (select) {
+        if (select.dataset.resultChild === childId && select.value) {
+          skills[select.dataset.resultSkill] = select.value;
+        }
+      });
+      return { childId: childId, skills: skills };
+    }).filter(function (result) { return Object.keys(result.skills).length > 0; });
+    group.trainings.push({
+      id: makeId(),
+      date: form.get('date'),
+      topic: form.get('topic').trim(),
+      notes: form.get('notes').trim(),
+      activities: activities,
+      attendees: attendees,
+      results: results
+    });
+    refreshLatestProgress(group);
+    if (saveData()) {
+      event.currentTarget.reset();
+      document.getElementById('trainingDate').value = new Date().toISOString().slice(0, 10);
+      document.getElementById('trainingFormPanel').hidden = true;
+      render();
+    } else {
+      group.trainings.pop();
+      refreshLatestProgress(group);
+    }
+  });
+  document.getElementById('periodPlanForm').addEventListener('submit', function (event) {
+    event.preventDefault();
+    var group = activeGroup();
+    if (!group) {
+      showStatus('Open eerst de groep waarvoor je het plan wilt maken.', true);
+      return;
+    }
+    var form = new FormData(event.currentTarget);
+    var name = form.get('name').trim();
+    var startsOn = form.get('startsOn');
+    var endsOn = form.get('endsOn');
+    if (!name) {
+      showStatus('Vul een naam voor het jaar- of periodeplan in.', true);
+      document.getElementById('periodName').focus();
+      return;
+    }
+    if (endsOn < startsOn) {
+      showStatus('De einddatum van het periodeplan mag niet voor de begindatum liggen.', true);
+      document.getElementById('periodEnd').focus();
+      return;
+    }
+    group.trainingPlans = Array.isArray(group.trainingPlans) ? group.trainingPlans : [];
+    group.trainingPlans.push({
+      id: makeId(),
+      name: name,
+      startsOn: startsOn,
+      endsOn: endsOn,
+      goals: form.get('goals').trim(),
+      createdAt: new Date().toISOString()
+    });
+    if (saveData()) {
+      event.currentTarget.reset();
+      setPeriodDefaults();
+      render();
+      showStatus('Jaar-/periodeplan opgeslagen voor ' + group.name + '.', false);
+    } else {
+      group.trainingPlans.pop();
+    }
+  });
+  document.getElementById('groupPeriodPlans').addEventListener('click', function (event) {
+    var editButton = event.target.closest('[data-edit-plan]');
+    var cancelButton = event.target.closest('[data-cancel-plan-edit]');
+    if (editButton) editingPlanId = editButton.dataset.editPlan;
+    else if (cancelButton) editingPlanId = '';
+    else return;
+    render();
+  });
+  document.getElementById('groupPeriodPlans').addEventListener('submit', function (event) {
+    var form = event.target.closest('[data-edit-plan-form]');
+    if (!form) return;
+    event.preventDefault();
+    var group = activeGroup();
+    var plan = group && group.trainingPlans.find(function (item) { return item.id === form.dataset.editPlanForm; });
+    if (!plan) {
+      showStatus('Dit jaar-/periodeplan is niet meer beschikbaar. Vernieuw de pagina.', true);
+      return;
+    }
+    var values = new FormData(form);
+    var name = values.get('name').trim();
+    var startsOn = values.get('startsOn');
+    var endsOn = values.get('endsOn');
+    if (!name || !startsOn || !endsOn || endsOn < startsOn) {
+      showStatus('Vul een naam in en controleer de begin- en einddatum.', true);
+      return;
+    }
+    var hasLinkedTrainingOutsidePeriod = group.trainings.some(function (training) {
+      return training.planId === plan.id && (training.date < startsOn || training.date > endsOn);
+    });
+    if (hasLinkedTrainingOutsidePeriod) {
+      showStatus('Pas eerst de datum of het gekoppelde plan aan van trainingen die buiten deze periode vallen.', true);
+      return;
+    }
+    var previous = Object.assign({}, plan);
+    plan.name = name;
+    plan.startsOn = startsOn;
+    plan.endsOn = endsOn;
+    plan.goals = values.get('goals').trim();
+    if (saveData()) {
+      editingPlanId = '';
+      render();
+      showStatus('Jaar-/periodeplan aangepast.', false);
+    } else {
+      Object.assign(plan, previous);
+    }
+  });
+  document.getElementById('trainingList').addEventListener('click', function (event) {
+    var editButton = event.target.closest('[data-edit-training]');
+    var cancelButton = event.target.closest('[data-cancel-training-edit]');
+    if (editButton) editingTrainingId = editButton.dataset.editTraining;
+    else if (cancelButton) editingTrainingId = '';
+    else return;
+    render();
+  });
+  document.getElementById('trainingList').addEventListener('submit', function (event) {
+    var form = event.target.closest('[data-edit-training-form]');
+    if (!form) return;
+    event.preventDefault();
+    var group = activeGroup();
+    var training = group && group.trainings.find(function (item) { return item.id === form.dataset.editTrainingForm; });
+    if (!training) {
+      showStatus('Deze training is niet meer beschikbaar. Vernieuw de pagina.', true);
+      return;
+    }
+    var values = new FormData(form);
+    var topic = values.get('topic').trim();
+    var date = values.get('date');
+    var plan = group.trainingPlans.find(function (item) { return item.id === values.get('planId'); });
+    if (!topic || !date) {
+      showStatus('Vul de naam en datum van de training in.', true);
+      return;
+    }
+    if (plan && (date < plan.startsOn || date > plan.endsOn)) {
+      showStatus('De trainingsdatum valt buiten de gekozen jaar-/periodeplanning.', true);
+      return;
+    }
+    var oldWorkout = training.workout || {};
+    var oldPhases = Array.isArray(oldWorkout.phases) ? oldWorkout.phases : [];
+    var phases = [];
+    var phaseCount = Number(form.dataset.phaseCount);
+    for (var index = 0; index < phaseCount; index += 1) {
+      var previousPhase = oldPhases[index] || { exercises: [] };
+      var exercises = parseEditedExercises(values.get('phaseExercises' + index), previousPhase.exercises || []);
+      var label = values.get('phaseLabel' + index).trim();
+      if (!exercises || !label) {
+        showStatus('Controleer de fasebenamingen en de oefenregels. Minuten moeten tussen 1 en 180 liggen.', true);
+        return;
+      }
+      phases.push(Object.assign({}, previousPhase, { label: label, exercises: exercises }));
+    }
+    var workout = Object.assign({}, oldWorkout, {
+      phases: phases,
+      totalMinutes: phases.reduce(function (total, phase) {
+        return total + phase.exercises.reduce(function (phaseTotal, exercise) {
+          return phaseTotal + Number(exercise.minutes || 0);
+        }, 0);
+      }, 0)
+    });
+    var previous = {
+      topic: training.topic,
+      date: training.date,
+      notes: training.notes,
+      planId: training.planId,
+      workout: training.workout
+    };
+    var oldProgress = group.children.map(function (child) {
+      return { child: child, progress: Object.assign({}, child.progress || {}) };
+    });
+    training.topic = topic;
+    training.date = date;
+    training.notes = values.get('notes').trim();
+    training.planId = values.get('planId') || '';
+    training.workout = workout;
+    refreshLatestProgress(group);
+    if (saveData()) {
+      editingTrainingId = '';
+      render();
+      showStatus('Training aangepast.', false);
+    } else {
+      Object.assign(training, previous);
+      oldProgress.forEach(function (entry) { entry.child.progress = entry.progress; });
+    }
+  });
+  document.getElementById('groupContent').addEventListener('click', function (event) {
+    var cancelButton = event.target.closest('[data-cancel-child-edit]');
+    if (cancelButton) {
+      var cancelledForm = Array.prototype.find.call(
+        document.querySelectorAll('[data-child-edit-form]'),
+        function (form) { return form.dataset.childEditForm === cancelButton.dataset.cancelChildEdit; }
+      );
+      if (cancelledForm) cancelledForm.hidden = true;
+      return;
+    }
+
+    var editButton = event.target.closest('[data-edit-child]');
+    if (editButton) {
+      var editForm = Array.prototype.find.call(
+        document.querySelectorAll('[data-child-edit-form]'),
+        function (form) { return form.dataset.childEditForm === editButton.dataset.editChild; }
+      );
+      var group = activeGroup();
+      var child = group && group.children.find(function (item) { return item.id === editButton.dataset.editChild; });
+      if (!editForm || !child) return;
+      editForm.hidden = false;
+      editForm.elements.name.value = child.name;
+      editForm.elements.name.focus();
+      editForm.elements.name.select();
+      return;
+    }
+
+    var moveButton = event.target.closest('[data-move-child]');
+    if (moveButton) {
+      moveButton.closest('.child-card').querySelector('[data-child-move-form]').hidden = false;
+      return;
+    }
+
+    var cancelMoveButton = event.target.closest('[data-cancel-child-move]');
+    if (cancelMoveButton) {
+      cancelMoveButton.closest('[data-child-move-form]').hidden = true;
+      return;
+    }
+
+    var transferButton = event.target.closest('[data-transfer-child]');
+    if (transferButton) {
+      var transferPanel = transferButton.closest('.child-card').querySelector('[data-transfer-info]');
+      transferPanel.hidden = !transferPanel.hidden;
+      return;
+    }
+
+    var deleteButton = event.target.closest('[data-delete-child]');
+    if (!deleteButton) return;
+    var groupToEdit = activeGroup();
+    var childToDelete = groupToEdit && groupToEdit.children.find(function (item) { return item.id === deleteButton.dataset.deleteChild; });
+    if (!childToDelete || !window.confirm('Weet je zeker dat je ' + childToDelete.name + ' en de beoordelingen uit deze groep wilt verwijderen? Het kind wordt ook uit de presentielijsten verwijderd.')) return;
+
+    var childIndex = groupToEdit.children.indexOf(childToDelete);
+    var previousTrainingData = groupToEdit.trainings.map(function (training) {
+      return { training: training, attendees: training.attendees.slice(), results: (training.results || []).slice() };
+    });
+    groupToEdit.children.splice(childIndex, 1);
+    groupToEdit.trainings.forEach(function (training) {
+      training.attendees = training.attendees.filter(function (childId) { return childId !== childToDelete.id; });
+      training.results = (training.results || []).filter(function (result) { return result.childId !== childToDelete.id; });
+    });
+    if (saveData()) {
+      render();
+    } else {
+      groupToEdit.children.splice(childIndex, 0, childToDelete);
+      previousTrainingData.forEach(function (entry) {
+        entry.training.attendees = entry.attendees;
+        entry.training.results = entry.results;
+      });
+      render();
+    }
+  });
+  document.getElementById('groupContent').addEventListener('submit', function (event) {
+    var moveForm = event.target.closest('[data-child-move-form]');
+    if (moveForm) {
+      event.preventDefault();
+      var source = activeGroup();
+      var childToMove = source && source.children.find(function (item) { return item.id === moveForm.dataset.childMoveForm; });
+      var destinationId = new FormData(moveForm).get('destination');
+      var destination = data.groups.find(function (item) {
+        return item.id === destinationId && item.id !== (source && source.id);
+      });
+      if (!source || !childToMove || !destination) {
+        showStatus('Kies een andere bestaande groep.', true);
+        return;
+      }
+      if (!window.confirm('Verplaats ' + childToMove.name + ' naar ' + destination.name + '? De huidige beheersing wordt gekopieerd; eerdere trainingen blijven bij Voormalige leden in deze groep.')) return;
+
+      var sourceIndex = source.children.indexOf(childToMove);
+      var formerMember = {
+        child: childToMove,
+        movedAt: new Date().toISOString().slice(0, 10),
+        destinationGroup: destination.name
+      };
+      var copiedChild = Object.assign({}, childToMove, {
+        id: makeId(),
+        progress: Object.assign({}, childToMove.progress)
+      });
+      source.children.splice(sourceIndex, 1);
+      source.formerMembers.push(formerMember);
+      destination.children.push(copiedChild);
+      if (saveData()) {
+        render();
+      } else {
+        destination.children.pop();
+        source.formerMembers.pop();
+        source.children.splice(sourceIndex, 0, childToMove);
+        render();
+      }
+      return;
+    }
+    var form = event.target.closest('[data-child-edit-form]');
+    if (!form) return;
+    event.preventDefault();
+    var group = activeGroup();
+    var child = group && group.children.find(function (item) { return item.id === form.dataset.childEditForm; });
+    if (!child) return;
+    var name = new FormData(form).get('name').trim();
+    if (!name) {
+      showStatus('Vul een naam in.', true);
+      form.elements.name.focus();
+      return;
+    }
+    var previousName = child.name;
+    child.name = name;
+    if (saveData()) {
+      render();
+    } else {
+      child.name = previousName;
+    }
+  });
+
+  data = loadData();
+  var demoGroupsAdded = !storageReadError && seedDemoGroups(data);
+  data.groups.forEach(refreshLatestProgress);
+  document.getElementById('trainingDate').value = new Date().toISOString().slice(0, 10);
+  setPeriodDefaults();
+  if ((seedInitialData || demoGroupsAdded) && data.groups.length && saveData() && demoGroupsAdded) {
+    showStatus('Drie voorbeeldgroepen met plannen en trainingen zijn eenmalig toegevoegd. Bestaande groepen zijn behouden.', false);
+  }
+  render();
+})();
+</script>
+</body>
+</html>
