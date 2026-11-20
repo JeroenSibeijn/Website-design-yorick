@@ -128,7 +128,7 @@ function current_user(PDO $pdo): ?array
         return null;
     }
 
-    $statement = $pdo->prepare('SELECT id, email, display_name FROM users WHERE id = ?');
+    $statement = $pdo->prepare('SELECT id, email, display_name, is_admin FROM users WHERE id = ?');
     $statement->execute([$id]);
     $user = $statement->fetch();
     if (!$user) {
@@ -141,6 +141,7 @@ function current_user(PDO $pdo): ?array
         'id' => (int) $user['id'],
         'email' => $user['email'],
         'name' => $user['display_name'],
+        'isAdmin' => (bool) $user['is_admin'],
     ];
 }
 

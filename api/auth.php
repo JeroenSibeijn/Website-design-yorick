@@ -69,6 +69,7 @@ try {
             'id' => (int) $pdo->lastInsertId(),
             'email' => $email,
             'name' => $displayName,
+            'isAdmin' => false,
         ];
     } else {
         $emailHash = hash('sha256', $email);
@@ -84,7 +85,7 @@ try {
             respond(429, ['error' => 'Te veel inlogpogingen. Wacht 15 minuten en probeer opnieuw.']);
         }
 
-        $statement = $pdo->prepare('SELECT id, email, display_name, password_hash FROM users WHERE email = ? LIMIT 1');
+        $statement = $pdo->prepare('SELECT id, email, display_name, password_hash, is_admin FROM users WHERE email = ? LIMIT 1');
         $statement->execute([$email]);
         $record = $statement->fetch();
         if (!$record || !password_verify($password, $record['password_hash'])) {
@@ -103,6 +104,7 @@ try {
             'id' => (int) $record['id'],
             'email' => $record['email'],
             'name' => $record['display_name'],
+            'isAdmin' => (bool) $record['is_admin'],
         ];
     }
 

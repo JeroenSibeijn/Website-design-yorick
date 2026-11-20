@@ -42,9 +42,11 @@
   function apiRequest(endpoint, options) {
     options = options || {};
     var controller = typeof global.AbortController === 'function' ? new global.AbortController() : null;
-    var timeout = controller ? global.setTimeout(function () { controller.abort(); }, 10000) : null;
+    var timeout = controller ? global.setTimeout(function () { controller.abort(); }, options.timeoutMs || 10000) : null;
     var headers = Object.assign({ Accept: 'application/json' }, options.headers || {});
-    var requestOptions = Object.assign({}, options, {
+    var requestOptions = Object.assign({}, options);
+    delete requestOptions.timeoutMs;
+    requestOptions = Object.assign(requestOptions, {
       credentials: 'same-origin',
       cache: 'no-store',
       headers: headers
@@ -263,6 +265,81 @@
     });
   }
 
+  function localExerciseCatalog() {
+    var value = localStore.getItem(CATALOG_KEY);
+    if (!value) return { version: 1, categories: [], exercises: [] };
+    var catalog;
+    try {
+      catalog = JSON.parse(value);
+    } catch (error) {
+      throw new Error('De lokale oefeningencatalogus bevat ongeldige JSON en kan niet worden gedeeld.');
+    }
+    if (!catalog || catalog.version !== 1 || !Array.isArray(catalog.categories) || !Array.isArray(catalog.exercises)) {
+      throw new Error('De lokale oefeningencatalogus heeft een ongeldig formaat en kan niet worden gedeeld.');
+    }
+    return catalog;
+  }
+
+  function applySharedCatalog(result) {
+    var catalog = result && result.catalog;
+    if (!catalog || catalog.version !== 1 || !Array.isArray(catalog.categories) ||
+        !Array.isArray(catalog.exercises)) {
+      throw new Error('De server gaf een ongeldige gedeelde oefeningencatalogus terug.');
+    }
+    originalSetItem.call(localStore, CATALOG_KEY, JSON.stringify(catalog));
+    return catalog;
+  }
+
+  function sharedCatalogRequest(action, value) {
+    if (!user) return Promise.reject(new Error('Log in om oefeningen met andere accounts te delen.'));
+    return ensureServer().then(function () {
+      var body = { action: action };
+      body[action === 'create_category' ? 'category' : 'exercise'] = value;
+      return apiRequest('exercises.php', {
+        timeoutMs: 120000,
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': csrf
+        },
+        body: JSON.stringify(body)
+      });
+    }).then(applySharedCatalog);
+  }
+
+  function syncSharedCatalog() {
+    if (!user) return Promise.resolve(null);
+    return ensureServer().then(function () {
+      var catalog = localExerciseCatalog();
+      catalog.categories = catalog.categories.filter(function (category) { return !category.createdBy; });
+      catalog.exercises = catalog.exercises.filter(function (exercise) { return !exercise.createdBy; });
+      return apiRequest('exercises.php', {
+        timeoutMs: 120000,
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': csrf
+        },
+        body: JSON.stringify({ action: 'import', catalog: catalog })
+      });
+    }).then(applySharedCatalog);
+  }
+
+  function prepareSharedCatalog() {
+    if (!user) return Promise.resolve(null);
+    return ensureServer().then(function () {
+      return apiRequest('exercises.php', { timeoutMs: 120000 });
+    });
+  }
+
+  function createSharedCategory(category) {
+    return sharedCatalogRequest('create_category', category);
+  }
+
+  function createSharedExercise(exercise) {
+    return sharedCatalogRequest('create_exercise', exercise);
+  }
+
   function queueSnapshotSave() {
     if (!serverAvailable || !user || applyingServerData) return;
     try {
@@ -304,7 +381,11 @@
         if (nextUserId === previousUserId) return;
         revision = null;
         if (session.user) {
-          syncNow({ askBeforeImport: false }).catch(function () {});
+          prepareSharedCatalog().then(function () {
+            return syncNow({ askBeforeImport: false });
+          }).then(syncSharedCatalog).catch(function (error) {
+            setStatus('De gedeelde oefeningencatalogus kon niet worden geladen. ' + error.message, true);
+          });
         } else {
           setStatus('Je bent uitgelogd. De lokale browsergegevens zijn niet gewijzigd.', false);
         }
@@ -334,8 +415,12 @@
     }
     return loadSession().then(function (session) {
       if (!user) return { configured: true, user: null };
-      return syncNow({ askBeforeImport: false }).then(function () {
-        return { configured: true, user: user };
+      return prepareSharedCatalog().then(function () {
+        return syncNow({ askBeforeImport: false });
+      }).then(function () {
+        return syncSharedCatalog().then(function () {
+          return { configured: true, user: user };
+        });
       }, function (error) {
         return { configured: true, user: user, error: error };
       });
@@ -348,6 +433,77 @@
   function ensureServer() {
     if (serverAvailable && csrf) return Promise.resolve();
     return loadSession().then(function () {});
+  }
+
+  function mediaUrl(mediaId) {
+    if (!/^[a-f0-9]{32}$/i.test(String(mediaId || ''))) {
+      throw new Error('Het media-ID is ongeldig.');
+    }
+    return new global.URL(apiBase + 'media.php?id=' + encodeURIComponent(mediaId), global.location.href).href;
+  }
+
+  function isMediaUrl(value) {
+    try {
+      var url = new global.URL(value, global.location.href);
+      var endpoint = new global.URL(apiBase + 'media.php', global.location.href);
+      var queryKeys = [];
+      url.searchParams.forEach(function (unused, key) { queryKeys.push(key); });
+      return url.origin === endpoint.origin && url.pathname === endpoint.pathname &&
+        url.username === '' && url.password === '' && url.hash === '' &&
+        queryKeys.length === 1 && queryKeys[0] === 'id' &&
+        /^[a-f0-9]{32}$/i.test(url.searchParams.get('id') || '');
+    } catch (error) {
+      return false;
+    }
+  }
+
+  function uploadMedia(file, purpose, onProgress) {
+    if (!file || (purpose !== 'video' && purpose !== 'animation')) {
+      return Promise.reject(new Error('Selecteer een geldig videobestand of animatiebestand.'));
+    }
+    return ensureServer().then(function () {
+      if (!user) throw new Error('Log in om bestanden naar je server te uploaden en te synchroniseren.');
+      return new Promise(function (resolve, reject) {
+        var request = new global.XMLHttpRequest();
+        request.open('POST', apiBase + 'media.php', true);
+        request.withCredentials = true;
+        request.timeout = 1800000;
+        request.setRequestHeader('Accept', 'application/json');
+        request.setRequestHeader('X-CSRF-Token', csrf);
+        request.addEventListener('load', function () {
+          var result;
+          try {
+            result = JSON.parse(request.responseText);
+          } catch (error) {
+            reject(new Error('De server gaf geen geldige JSON terug. Controleer de Apache/PHP API.'));
+            return;
+          }
+          if (request.status < 200 || request.status >= 300) {
+            reject(new Error(result.error || 'De server heeft het uploadverzoek geweigerd.'));
+            return;
+          }
+          resolve(result.media);
+        });
+        request.addEventListener('error', function () {
+          reject(new Error('De upload is mislukt. Controleer je verbinding en probeer het opnieuw.'));
+        });
+        request.addEventListener('timeout', function () {
+          reject(new Error('De upload duurde langer dan 30 minuten. Probeer een kleiner bestand of controleer de serververbinding.'));
+        });
+        request.addEventListener('abort', function () {
+          reject(new Error('De upload is geannuleerd.'));
+        });
+        if (typeof onProgress === 'function') {
+          request.upload.addEventListener('progress', function (event) {
+            if (event.lengthComputable) onProgress(Math.round((event.loaded / event.total) * 100));
+          });
+        }
+        var formData = new global.FormData();
+        formData.append('purpose', purpose);
+        formData.append('file', file, file.name);
+        request.send(formData);
+      });
+    });
   }
 
   function authAction(action, values) {
@@ -364,7 +520,12 @@
       csrf = result.csrf || '';
       user = result.user || null;
       broadcastAuthChange();
-      return result;
+      if (!user) return result;
+      return prepareSharedCatalog().then(function () {
+        return syncNow({ askBeforeImport: false });
+      }).then(syncSharedCatalog).then(function () {
+        return result;
+      });
     });
   }
 
@@ -427,6 +588,11 @@
     signUp: signUp,
     signOut: signOut,
     syncNow: syncNow,
+    mediaUrl: mediaUrl,
+    isMediaUrl: isMediaUrl,
+    uploadMedia: uploadMedia,
+    createSharedCategory: createSharedCategory,
+    createSharedExercise: createSharedExercise,
     exportLocalBackup: exportLocalBackup
   };
 }(window));

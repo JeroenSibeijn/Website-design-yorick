@@ -33,6 +33,7 @@ h1{margin:0;font-size:38px}
 .card a{color:#1E40AF;font-weight:700}
 .featured{border-left:4px solid #F97316}
 .manage-panel{background:#fff;border:1px solid #DCE3EA;border-radius:16px;padding:22px;display:flex;flex-direction:column;gap:14px}
+.manage-panel[hidden]{display:none}
 .manage-panel h2{margin:0;font-size:22px}
 .manage-panel p{margin:0;color:#475569;font-size:14px;line-height:1.5}
 .manage-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
@@ -44,8 +45,14 @@ h1{margin:0;font-size:38px}
 .form-button{align-self:flex-start;border:0;border-radius:9px;background:#0F1E2E;color:#fff;padding:11px 15px;font:600 14px Inter,system-ui,sans-serif;cursor:pointer}
 .status{min-height:20px;color:#1E3A8A;font-size:14px}
 .status.error{color:#9A3412}
-.custom-category-grid,.custom-exercise-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
-.custom-category-grid .card a,.custom-exercise-card>a{color:#1E40AF;font-weight:700}
+.custom-exercise-card>a{color:#1E40AF;font-weight:700}
+#catalogStatus:empty{display:none}
+.sort-control{display:flex;flex-wrap:wrap;align-items:center;gap:10px;font-size:14px;font-weight:600;color:#334155}
+.sort-control select{font:inherit;padding:9px 11px;border:1px solid #94A3B8;border-radius:9px;background:#fff;color:#0F1E2E}
+.weekly-feature{gap:12px}
+.weekly-feature h2{margin:0}
+.weekly-feature a{color:#1E40AF;font-weight:700}
+.weekly-tip{border-radius:10px;background:#FFF4E8;padding:12px;color:#7C2D12}
 .custom-exercise-card h3{margin:0;font:700 19px 'Space Grotesk',sans-serif}
 .custom-exercise-card{background:#fff;border:1px solid #DCE3EA;border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:10px}
 .custom-exercise-card p{margin:0;color:#475569;font-size:14px;line-height:1.5}
@@ -58,7 +65,7 @@ h1{margin:0;font-size:38px}
 <header class="site-header" style="background:#0F1E2E;color:#FFFFFF">
 <div style="max-width:1360px;margin:0 auto;padding:16px 32px;display:flex;flex-wrap:wrap;align-items:center;gap:24px">
 <div style="display:flex;align-items:center;gap:10px">
-<svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="14" fill="none" stroke="#60A5FA" stroke-width="2.5"></circle><path d="M9 20 C13 12, 19 12, 23 20" fill="none" stroke="#FDBA74" stroke-width="2.5" stroke-linecap="round"></path></svg>
+<img src="../Schaatscompas%20logo.jpg" alt="" width="80" height="80" style="object-fit:contain;flex:none">
 <span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:20px">Schaatskompas</span>
 </div>
 <nav aria-label="Hoofdmenu" style="display:flex;flex-wrap:wrap;gap:4px;flex:1 1 auto">
@@ -74,18 +81,26 @@ h1{margin:0;font-size:38px}
 <main class="page">
 <section class="intro">
 <h1>Oefeningen</h1>
-<p>Blader per thema door de oefeningen. Open een categorie voor korte uitleg of bekijk de volledige instructie bij Stoeltje-glijden.</p>
+<p>Ontdek de oefening van deze week, bekijk de gedeelde categorieën en sorteer oefeningen op datum of naam.</p>
 </section>
-<section class="grid" aria-label="Oefeningencategorieën">
-<article class="card featured"><h2>Plezier &amp; spel</h2><p>Speelse vormen om kinderen in beweging te krijgen en samen te laten oefenen.</p><a href="Oefeningen-Plezier.dc.html">Bekijk oefeningen</a></article>
-<article class="card featured"><h2>Houding</h2><p>Oefeningen voor balans, een lage zit en ontspannen glijden.</p><a href="Oefeningen-Houding.dc.html">Bekijk oefeningen</a></article>
-<article class="card featured"><h2>Techniek</h2><p>Werk aan sturen, afzetten, bochten rijden en veilig remmen.</p><a href="Oefeningen-Techniek.dc.html">Bekijk oefeningen</a></article>
-<article class="card featured"><h2>Snelheid</h2><p>Starts, reacties en korte wedstrijdvormen op een passend niveau.</p><a href="Oefeningen-Snelheid.dc.html">Bekijk oefeningen</a></article>
+<section id="weeklyFeature" class="card featured weekly-feature" aria-live="polite">
+<p>De oefening en uitlegtip van deze week worden geladen.</p>
 </section>
+<label class="sort-control" for="catalogSortOrder">Sorteren op
+<select id="catalogSortOrder" data-exercise-sort>
+<option value="date-desc">Datum: nieuwste eerst</option>
+<option value="date-asc">Datum: oudste eerst</option>
+<option value="name-asc">Alfabet: A–Z</option>
+<option value="name-desc">Alfabet: Z–A</option>
+</select>
+</label>
+<section id="exerciseCategories" class="grid" aria-label="Oefeningencategorieën"></section>
+<p id="catalogStatus" class="status" role="status" aria-live="polite"></p>
+<p id="categoryPermissionNotice" class="status">Alleen beheerders kunnen nieuwe categorieën aanmaken.</p>
 <section class="manage-grid" aria-label="Eigen categorieën en oefeningen">
-<article class="manage-panel">
+<article id="categoryManagePanel" class="manage-panel" hidden>
 <h2>Categorie toevoegen</h2>
-<p>Maak een eigen categorie voor je oefeningen.</p>
+<p>Maak een categorie voor de gedeelde oefeningencatalogus. Alle accounts kunnen de categorie zien.</p>
 <form id="categoryForm" class="field">
 <label for="categoryName">Naam categorie</label><input id="categoryName" maxlength="50" required>
 <button class="form-button" type="submit">Categorie opslaan</button>
@@ -94,30 +109,21 @@ h1{margin:0;font-size:38px}
 </article>
 <article class="manage-panel">
 <h2>Oefening toevoegen</h2>
-<p>Voeg uitleg toe en koppel optioneel een video en animatie via een https-link.</p>
+<p>Oefeningen en uploads die je met een account toevoegt, zijn zichtbaar voor alle accounts. Alleen de maker of een beheerder kan een gedeelde oefening aanpassen of verwijderen.</p>
 <form id="exerciseForm" class="manage-grid">
 <div class="field"><label for="exerciseName">Naam oefening</label><input id="exerciseName" maxlength="100" required></div>
 <div class="field"><label for="exerciseCategory">Categorie</label><select id="exerciseCategory" required></select></div>
 <div class="field"><label for="exerciseMinutes">Duur in minuten</label><input id="exerciseMinutes" type="number" min="1" max="240" value="6" required></div>
-<div class="field full"><label for="exerciseExplanation">Uitleg</label><textarea id="exerciseExplanation" maxlength="2000" required></textarea></div>
+<div class="field full"><label for="exerciseExplanation">Uitleg (verplicht)</label><textarea id="exerciseExplanation" maxlength="2000" required></textarea></div>
 <div class="field"><label for="exerciseVideoUrl">Uitlegvideo-URL</label><input id="exerciseVideoUrl" type="url" maxlength="2048" placeholder="https://..."></div>
+<div class="field"><label for="exerciseVideoFile">Of upload video (MP4/WebM, max. 500 MB)</label><input id="exerciseVideoFile" type="file" accept="video/mp4,video/webm,.mp4,.webm"></div>
 <div class="field"><label for="exerciseAnimationUrl">Animatie-URL</label><input id="exerciseAnimationUrl" type="url" maxlength="2048" placeholder="https://..."></div>
+<div class="field"><label for="exerciseAnimationFile">Of upload animatie (GIF max. 100 MB; overige formaten max. 500 MB)</label><input id="exerciseAnimationFile" type="file" accept="image/gif,image/webp,image/png,image/jpeg,video/mp4,video/webm,.gif,.webp,.png,.jpg,.jpeg,.mp4,.webm"></div>
+<progress id="exerciseUploadProgress" max="100" value="0" aria-label="Uploadvoortgang" hidden></progress>
 <button class="form-button" type="submit">Oefening opslaan</button>
 </form>
 <p id="exerciseStatus" class="status" role="status" aria-live="polite"></p>
 </article>
-</section>
-<section class="manage-panel">
-<h2>Eigen categorieën</h2>
-<div id="customCategories" class="custom-category-grid"></div>
-<div id="customExercises" class="custom-exercise-grid"></div>
-<p id="catalogStatus" class="status" role="status" aria-live="polite"></p>
-<p>Je catalogus blijft beschikbaar in de trainingbouwer. Na inloggen synchroniseert deze met je eigen server; zonder account blijft alles lokaal in deze browser.</p>
-</section>
-<section class="card featured">
-<h2>Uitgelicht: Stoeltje-glijden</h2>
-<p>Bekijk de animatie, uitleg per leeftijdsfase en tips voor het organiseren van de oefening op de baan.</p>
-<a href="Oefening.dc.html">Open Stoeltje-glijden</a>
 </section>
 </main>
 </x-dc>
@@ -126,13 +132,94 @@ window.SchaatskompasSync.ready.then(function () {
 (function () {
   var api = window.SchaatskompasExerciseCatalog;
   var builtInCategories = [
-    { id: 'plezier', name: 'Plezier & spel', tone: 'orange' },
-    { id: 'houding', name: 'Houding', tone: 'blue' },
-    { id: 'techniek', name: 'Techniek', tone: 'blue' },
-    { id: 'snelheid', name: 'Snelheid', tone: 'orange' }
+    { id: 'plezier', name: 'Plezier & spel', tone: 'orange', createdAt: '2024-01-01T00:00:00.000Z', description: 'Speelse vormen om kinderen in beweging te krijgen en samen te laten oefenen.', href: 'Oefeningen-Plezier.dc.html' },
+    { id: 'houding', name: 'Houding', tone: 'blue', createdAt: '2024-01-01T00:00:00.000Z', description: 'Oefeningen voor balans, een lage zit en ontspannen glijden.', href: 'Oefeningen-Houding.dc.html' },
+    { id: 'techniek', name: 'Techniek', tone: 'blue', createdAt: '2024-01-01T00:00:00.000Z', description: 'Werk aan sturen, afzetten, bochten rijden en veilig remmen.', href: 'Oefeningen-Techniek.dc.html' },
+    { id: 'snelheid', name: 'Snelheid', tone: 'orange', createdAt: '2024-01-01T00:00:00.000Z', description: 'Starts, reacties en korte wedstrijdvormen op een passend niveau.', href: 'Oefeningen-Snelheid.dc.html' }
+  ];
+  var builtInExercises = [
+    { id: 'builtin-pinguinloop', name: 'Pinguïnloop', explanation: 'Maak kleine pasjes met de armen langs het lijf.', categoryId: 'plezier', href: 'Oefeningen-Plezier.dc.html' },
+    { id: 'builtin-stoplicht', name: 'Schaatsstoplicht', explanation: 'Rood is stoeltje, oranje is één been en groen is rijden.', categoryId: 'plezier', href: 'Oefeningen-Plezier.dc.html' },
+    { id: 'builtin-tikkertje', name: 'Tikkertje met stoeltje-vrij', explanation: 'Wie in een diepe houding zit, is even vrij.', categoryId: 'plezier', href: 'Oefeningen-Plezier.dc.html' },
+    { id: 'builtin-schaduw', name: 'Schaduwrijden', explanation: 'Volg in tweetallen elkaars tempo op veilige afstand.', categoryId: 'plezier', href: 'Oefeningen-Plezier.dc.html' },
+    { id: 'builtin-lintjes', name: 'Lintjes verzamelen', explanation: 'Verzamel in kleine groepen lintjes zonder te botsen.', categoryId: 'plezier', href: 'Oefeningen-Plezier.dc.html' },
+    { id: 'builtin-uitrijden', name: 'Uitrijden en nabespreken', explanation: 'Rijd rustig uit en bespreek wat er beter ging.', categoryId: 'plezier', href: 'Oefeningen-Plezier.dc.html' },
+    { id: 'builtin-droog-inlopen', name: 'Droog inlopen', explanation: 'Warm op met joggen, knieheffen en schaatspassen naast de baan.', categoryId: 'houding', href: 'Oefeningen-Houding.dc.html' },
+    { id: 'builtin-stoeltje-glijden', name: 'Stoeltje-glijden', explanation: 'Zak laag door je knieën, houd je rug bol en glijd gecontroleerd.', categoryId: 'houding', href: 'Oefening.dc.html' },
+    { id: 'builtin-eenbeen', name: 'Eenbeen-glijbaan', explanation: 'Glij rustig op één been en houd heupen en schouders stabiel.', categoryId: 'houding', href: 'Oefeningen-Houding.dc.html' },
+    { id: 'builtin-inrijden', name: 'Rustig inrijden', explanation: 'Rijd in kleine subgroepjes op een ontspannen tempo.', categoryId: 'houding', href: 'Oefeningen-Houding.dc.html' },
+    { id: 'builtin-duwspel', name: 'Duwspel met zachte handen', explanation: 'Werk met vlakke handen aan balans en een stabiele houding.', categoryId: 'houding', href: 'Oefeningen-Houding.dc.html' },
+    { id: 'builtin-ijsgewenning', name: 'IJsgewenning', explanation: 'Verken het ijs op een rustig tempo en oefen veilig stoppen.', categoryId: 'houding', href: 'Oefening-IJsgewenning.dc.html' },
+    { id: 'builtin-achterop', name: 'Achterop zitten', explanation: 'Verplaats je gewicht rustig naar achteren en houd controle.', categoryId: 'houding', href: 'Oefening-Achterop-zitten.dc.html' },
+    { id: 'builtin-bijhaal', name: 'Herhaling: bijhaal-ballet', explanation: 'Laat de knie hangen en houd de schaats loodrecht.', categoryId: 'techniek', href: 'Oefeningen-Techniek.dc.html' },
+    { id: 'builtin-slalom', name: 'Slalom door pionnen', explanation: 'Stuur met de knieën en houd de schouders rustig.', categoryId: 'techniek', href: 'Oefeningen-Techniek.dc.html' },
+    { id: 'builtin-inzet', name: 'Inzet op de lijn', explanation: 'Oefen een rustige inzet met de schaats op de buitenkant.', categoryId: 'techniek', href: 'Oefeningen-Techniek.dc.html' },
+    { id: 'builtin-remmen', name: 'Remmen met twee voeten', explanation: 'Maak je voeten breed en duw de ijzers rustig naar buiten.', categoryId: 'techniek', href: 'Oefeningen-Techniek.dc.html' },
+    { id: 'builtin-bocht', name: 'Bochtjes op de buitenkant', explanation: 'Kijk de bocht in en houd de knieën gebogen.', categoryId: 'techniek', href: 'Oefeningen-Techniek.dc.html' },
+    { id: 'builtin-kruispas', name: 'Kruispas door de bocht', explanation: 'Oefen rustig overzetten met voldoende ruimte.', categoryId: 'techniek', href: 'Oefeningen-Techniek.dc.html' },
+    { id: 'builtin-pionnenrace', name: 'Pionnenrace', explanation: 'Werk in duo’s en kijk wie de meeste pionnen kan ophalen.', categoryId: 'snelheid', href: 'Oefeningen-Snelheid.dc.html' },
+    { id: 'builtin-estafette', name: 'Estafette in teams', explanation: 'Wissel af met een tik en deel teams in op niveau.', categoryId: 'snelheid', href: 'Oefeningen-Snelheid.dc.html' },
+    { id: 'builtin-start', name: 'Startjes vanuit de knielpositie', explanation: 'Leer reageren op het startsignaal voor een massastart.', categoryId: 'snelheid', href: 'Oefeningen-Snelheid.dc.html' },
+    { id: 'builtin-visgraat', name: 'Visgraat-start', explanation: 'Zet vanuit een lage houding af in kleine V-passen.', categoryId: 'snelheid', href: 'Oefeningen-Snelheid.dc.html' },
+    { id: 'builtin-reactiestart', name: 'Reactiestart op kleur', explanation: 'Vertrek pas bij de afgesproken kleur of het afgesproken signaal.', categoryId: 'snelheid', href: 'Oefeningen-Snelheid.dc.html' }
+  ];
+  var weeklyTips = [
+    'Laat iedereen eerst rustig wennen aan het ijs en controleer of de ruimte vrij is.',
+    'Doe de beweging zelf één keer voor en benoem waar de kinderen op kunnen letten.',
+    'Begin langzaam; verhoog pas het tempo als de basishouding stabiel blijft.',
+    'Geef één duidelijke aanwijzing per beurt, zodat kinderen die meteen kunnen toepassen.',
+    'Laat kinderen voldoende afstand houden en spreek vooraf een stopteken af.',
+    'Maak de oefening kort en herhaalbaar; veel goede pogingen werken beter dan één lange.',
+    'Pas de afstand aan het niveau aan, niet de veiligheid van de oefening.',
+    'Vraag na een poging wat goed ging voordat je een verbeterpunt geeft.',
+    'Gebruik pionnen duidelijk zichtbaar en houd de route vrij van kruisend verkeer.',
+    'Laat kinderen in kleine groepjes starten zodat iedereen ruimte en aandacht krijgt.',
+    'Oefen eerst de losse beweging naast elkaar en voeg daarna pas snelheid toe.',
+    'Moedig een ontspannen bovenlichaam aan; gespannen schouders kosten controle.',
+    'Wissel links en rechts af als de oefening dat toelaat.',
+    'Plan korte drink- en rustmomenten, zeker na intensieve sprintvormen.',
+    'Laat kinderen naar de rijrichting kijken in plaats van naar hun voeten.',
+    'Gebruik een duidelijk start- en stopsignaal dat iedereen vooraf kent.',
+    'Maak het makkelijker door de afstand korter te maken of steunpunten toe te voegen.',
+    'Maak het uitdagender met een extra opdracht, niet door onveilig harder te rijden.',
+    'Geef kinderen tijd om na een fout hun balans te herstellen voordat ze doorgaan.',
+    'Koppel kinderen aan een passend maatje en laat ze elkaar positief aanmoedigen.',
+    'Laat een bocht ruim inzetten en voorkom dat kinderen elkaar binnendoor kruisen.',
+    'Zet pionnen zo neer dat de rijlijn voor iedereen in één oogopslag duidelijk is.',
+    'Gebruik een korte demonstratie vanuit de zijkant én de rijrichting.',
+    'Controleer na elke ronde of de startzone vrij is voor de volgende groep.',
+    'Laat kinderen tellen hoeveel gecontroleerde herhalingen lukken, niet alleen hoe snel.',
+    'Kies een tempo waarbij de techniek netjes blijft tot het einde van de oefening.',
+    'Bij een estafette: laat de volgende rijder pas vertrekken na een duidelijke tik.',
+    'Houd bij reactiespelletjes het startsignaal eerlijk en onvoorspelbaar.',
+    'Laat kinderen bij een balansopdracht hun armen rustig gebruiken voor stabiliteit.',
+    'Maak de oefening speels met een doel, maar houd de rijrichting vast.',
+    'Laat na een sprint rustig uitrijden voordat je de volgende opdracht uitlegt.',
+    'Herhaal de belangrijkste veiligheidsafspraak vlak voordat de oefening start.',
+    'Geef verschillende niveaus een eigen afstand zodat iedereen succesvol kan oefenen.',
+    'Beloon gecontroleerde uitvoering net zo duidelijk als snelheid of winst.',
+    'Laat kinderen na een ronde wisselen van rol, zodat iedereen actief blijft.',
+    'Zorg dat wachtende kinderen achter de startlijn blijven en de baan vrijlaten.',
+    'Kijk eerst naar de houding van de heupen en knieën voordat je op de armen coacht.',
+    'Gebruik een korte oefenronde zonder wedstrijd voordat je punten of tijd toevoegt.',
+    'Laat kinderen veilig uitwijken en stop de oefening als de route onoverzichtelijk wordt.',
+    'Sluit af met één vraag: wat hielp jou om meer controle te houden?',
+    'Verander maar één onderdeel tegelijk, zoals afstand, richting of tempo.',
+    'Geef een compliment dat precies benoemt wat goed ging, zoals een stabiele knie.',
+    'Laat kinderen met voldoende ruimte starten en voorkom opstoppingen bij de finish.',
+    'Gebruik herkenbare kleuren of signalen en controleer dat iedereen ze goed ziet.',
+    'Plan na een intensieve oefening een rustige glijvorm om het tempo te laten zakken.',
+    'Laat kinderen een persoonlijke uitdaging kiezen die veilig en haalbaar is.',
+    'Herhaal een bekende beweging in een nieuwe spelvorm om techniek leuk te houden.',
+    'Geef uitleg buiten de rijlijn, zodat niemand tijdens het luisteren hoeft uit te wijken.',
+    'Controleer materiaal en veters voordat een oefening met versnellen begint.',
+    'Laat kinderen bij vermoeidheid pauzeren in plaats van slordig door te rijden.',
+    'Eindig met een succeservaring: kies een variant waarin iedereen kan meedoen.',
+    'Vat na afloop de tip samen en laat kinderen die meteen nog één keer proberen.'
   ];
   var categoryForm = document.getElementById('categoryForm');
   var exerciseForm = document.getElementById('exerciseForm');
+  var sortControl = document.getElementById('catalogSortOrder');
 
   function setStatus(id, message, isError) {
     var status = document.getElementById(id);
@@ -140,44 +227,105 @@ window.SchaatskompasSync.ready.then(function () {
     status.classList.toggle('error', Boolean(isError));
   }
 
-  function categoryName(id, catalog) {
-    var all = builtInCategories.concat(catalog.categories);
-    var category = all.filter(function (item) { return item.id === id; })[0];
-    return category ? category.name : '';
+  function isAdmin() {
+    var sync = window.SchaatskompasSync;
+    var user = sync && sync.getUser();
+    return Boolean(user && user.isAdmin);
+  }
+
+  function updateCategoryAccess() {
+    var admin = isAdmin();
+    document.getElementById('categoryManagePanel').hidden = !admin;
+    document.getElementById('categoryPermissionNotice').hidden = admin;
+  }
+
+  function weekInfo() {
+    var now = new Date();
+    var utcDate = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
+    var weekdayOffset = (utcDate.getUTCDay() + 6) % 7;
+    var monday = utcDate.getTime() - weekdayOffset * 86400000;
+    var thursday = new Date(monday + 3 * 86400000);
+    var year = thursday.getUTCFullYear();
+    var firstThursday = new Date(Date.UTC(year, 0, 4));
+    var firstMonday = firstThursday.getTime() - ((firstThursday.getUTCDay() + 6) % 7) * 86400000;
+    return {
+      year: year,
+      number: Math.floor((monday - firstMonday) / 604800000) + 1,
+      sequence: Math.floor((monday - Date.UTC(1970, 0, 5)) / 604800000)
+    };
+  }
+
+  function renderWeeklyFeature(catalog, categories) {
+    var week = weekInfo();
+    var weekIndex = ((week.sequence % weeklyTips.length) + weeklyTips.length) % weeklyTips.length;
+    var categoryById = {};
+    categories.forEach(function (category) { categoryById[category.id] = category; });
+    var customExercises = api.sortItems(catalog.exercises, 'date-asc').map(function (exercise) {
+      var category = categoryById[exercise.categoryId] || { name: '', tone: 'blue' };
+      return Object.assign({}, exercise, {
+        tone: category.tone,
+        categoryName: category.name,
+        href: (category.href || 'Oefeningen-Categorie.dc.html?id=' + encodeURIComponent(category.id)) +
+          '#exercise-' + encodeURIComponent(exercise.id)
+      });
+    });
+    var candidates = builtInExercises.map(function (exercise) {
+      var category = categoryById[exercise.categoryId];
+      return Object.assign({}, exercise, {
+        tone: category.tone,
+        categoryName: category.name,
+        createdAt: '2024-01-01T00:00:00.000Z'
+      });
+    }).concat(customExercises);
+    var exercise = candidates[week.sequence % candidates.length];
+    var videoUrl = api.mediaUrl(exercise.videoMediaId) || exercise.videoUrl || '';
+    var animationUrl = api.mediaUrl(exercise.animationMediaId) || exercise.animationUrl || '';
+    var media = videoUrl ?
+      '<div class="exercise-media"><strong>Uitlegvideo</strong>' +
+        api.mediaMarkup(videoUrl, 'Uitlegvideo: ' + exercise.name, exercise.videoMimeType) + '</div>' :
+      (animationUrl ? '<div class="exercise-media"><strong>Animatie</strong>' +
+        api.mediaMarkup(animationUrl, 'Animatie: ' + exercise.name, exercise.animationMimeType) + '</div>' :
+        '<p class="exercise-unavailable" style="margin:0;color:#64748B;font-size:13px">Er is nog geen uitlegvideo of animatie toegevoegd.</p>');
+    var explanation = String(exercise.explanation || '').trim();
+    document.getElementById('weeklyFeature').innerHTML =
+      '<span>Week ' + week.number + ' · ' + week.year + '</span><h2>Uitgelicht: ' +
+      api.escapeHtml(exercise.name) + '</h2><p>' +
+      (explanation ? api.escapeHtml(explanation) : 'Er is nog geen uitleg toegevoegd.') + '</p>' +
+      '<p><strong>' + api.escapeHtml(exercise.categoryName) + '</strong> · ' + (exercise.minutes || 6) +
+      ' minuten</p>' + media + '<div class="weekly-tip"><strong>Uitlegtip van deze week</strong><p>' +
+      api.escapeHtml(weeklyTips[weekIndex]) + '</p></div><a href="' +
+      api.escapeHtml(exercise.href) + '">Bekijk deze oefening</a>';
   }
 
   function render() {
     try {
       var catalog = api.load();
       var categories = builtInCategories.concat(catalog.categories);
+      var sortedCategories = api.sortItems(categories, sortControl.value);
+      document.getElementById('exerciseCategories').innerHTML = sortedCategories.map(function (category) {
+        var isBuiltIn = builtInCategories.some(function (item) { return item.id === category.id; });
+        var description = isBuiltIn ? category.description : 'Gedeelde categorie met eigen oefeningen.';
+        var href = isBuiltIn ? category.href : 'Oefeningen-Categorie.dc.html?id=' + encodeURIComponent(category.id);
+        return '<article class="card featured"><h2>' + api.escapeHtml(category.name) + '</h2><p>' +
+          api.escapeHtml(description) + '</p><a href="' + api.escapeHtml(href) + '">Bekijk oefeningen</a></article>';
+      }).join('');
+
       document.getElementById('exerciseCategory').innerHTML = categories.map(function (category) {
         return '<option value="' + api.escapeHtml(category.id) + '">' + api.escapeHtml(category.name) + '</option>';
       }).join('');
-      document.getElementById('customCategories').innerHTML = catalog.categories.length ? catalog.categories.map(function (category) {
-        var tint = api.colors(category.tone);
-        return '<article class="card" style="border-left:4px solid ' + tint.accent + '"><h2>' + api.escapeHtml(category.name) +
-          '</h2><p>Bekijk de eigen oefeningen in deze categorie.</p><a href="#custom-category-' + api.escapeHtml(category.id) + '">Naar oefeningen</a></article>';
-      }).join('') : '<p>Je hebt nog geen eigen categorieën toegevoegd.</p>';
-      var groups = categories.map(function (category) {
-        var exercises = catalog.exercises.filter(function (exercise) { return exercise.categoryId === category.id; });
-        if (!exercises.length) return '';
-        var cards = exercises.map(function (exercise) {
-          exercise.tone = category.tone;
-          return api.renderExerciseCard(exercise, category.name);
-        }).join('');
-        return '<section id="custom-category-' + api.escapeHtml(category.id) + '" class="manage-panel"><h2>' +
-          api.escapeHtml(category.name) + '</h2><div class="custom-exercise-grid">' + cards + '</div></section>';
-      }).join('');
-      document.getElementById('customExercises').innerHTML = groups || '<p>Je hebt nog geen eigen oefeningen toegevoegd.</p>';
-      setStatus('catalogStatus', 'Aangepaste oefeningen zijn ook beschikbaar in de trainingbouwer.', false);
+      renderWeeklyFeature(catalog, categories);
+      setStatus('catalogStatus', '', false);
     } catch (error) {
       setStatus('catalogStatus', error.message || 'De oefeningencatalogus kon niet worden geladen.', true);
     }
   }
 
+  sortControl.addEventListener('change', render);
+
   categoryForm.addEventListener('submit', function (event) {
     event.preventDefault();
     try {
+      if (!isAdmin()) throw new Error('Alleen beheerders kunnen nieuwe categorieën aanmaken.');
       var catalog = api.load();
       var name = document.getElementById('categoryName').value.trim();
       if (!name) throw new Error('Vul een categorienaam in.');
@@ -186,15 +334,25 @@ window.SchaatskompasSync.ready.then(function () {
         return category.name.toLowerCase() === name.toLowerCase();
       });
       if (duplicate) throw new Error('Deze categorie bestaat al.');
-      catalog.categories.push({
+      var category = {
         id: api.createId(api.categoryPrefix),
         name: name,
-        tone: 'blue'
+        tone: 'blue',
+        createdAt: new Date().toISOString()
+      };
+      var sync = window.SchaatskompasSync;
+      var categorySubmit = categoryForm.querySelector('button[type="submit"]');
+      categorySubmit.disabled = true;
+      var saveCategory = sync.createSharedCategory(category);
+      saveCategory.then(function () {
+        categoryForm.reset();
+        setStatus('categoryStatus', 'Categorie opgeslagen en gedeeld met alle accounts.', false);
+        render();
+      }).catch(function (error) {
+        setStatus('categoryStatus', error.message || 'De categorie kon niet worden opgeslagen.', true);
+      }).then(function () {
+        categorySubmit.disabled = false;
       });
-      api.save(catalog);
-      categoryForm.reset();
-      setStatus('categoryStatus', 'Categorie opgeslagen.', false);
-      render();
     } catch (error) {
       setStatus('categoryStatus', error.message || 'De categorie kon niet worden opgeslagen.', true);
     }
@@ -210,26 +368,94 @@ window.SchaatskompasSync.ready.then(function () {
       var explanation = document.getElementById('exerciseExplanation').value.trim();
       var minutes = Number(document.getElementById('exerciseMinutes').value);
       if (!category) throw new Error('Kies een bestaande categorie.');
-      if (!name || !explanation) throw new Error('Vul de naam en uitleg van de oefening in.');
+      if (!name || !explanation) throw new Error('Vul de naam en de verplichte uitleg van de oefening in.');
       if (name.length > 100 || explanation.length > 2000) throw new Error('De naam mag maximaal 100 tekens zijn en de uitleg maximaal 2000 tekens.');
       if (!Number.isInteger(minutes) || minutes < 1 || minutes > 240) throw new Error('De duur moet tussen 1 en 240 minuten liggen.');
       var videoUrl = api.validateMediaUrl(document.getElementById('exerciseVideoUrl').value);
       var animationUrl = api.validateMediaUrl(document.getElementById('exerciseAnimationUrl').value);
-      catalog.exercises.push({
-        id: api.createId(api.exercisePrefix),
-        categoryId: categoryId,
-        name: name,
-        explanation: explanation,
-        minutes: minutes,
-        videoUrl: videoUrl,
-        animationUrl: animationUrl,
-        tone: category.tone
+      var videoFile = document.getElementById('exerciseVideoFile').files[0] || null;
+      var animationFile = document.getElementById('exerciseAnimationFile').files[0] || null;
+      if (videoFile && videoUrl) throw new Error('Kies voor de uitlegvideo een URL of een bestand, niet allebei.');
+      if (animationFile && animationUrl) throw new Error('Kies voor de animatie een URL of een bestand, niet allebei.');
+      [videoFile, animationFile].forEach(function (file) {
+        if (file && (file.size < 1 || file.size > api.maxMediaBytesForFile(file))) {
+          throw new Error(file.type === 'image/gif' || /\.gif$/i.test(file.name) ?
+            'Een GIF moet groter zijn dan 0 bytes en maximaal 100 MB.' :
+            'Een upload moet groter zijn dan 0 bytes en maximaal 500 MB.');
+        }
       });
-      api.save(catalog);
-      exerciseForm.reset();
-      document.getElementById('exerciseMinutes').value = '6';
-      setStatus('exerciseStatus', 'Oefening opgeslagen en toegevoegd aan de trainingbouwer.', false);
-      render();
+      var sync = window.SchaatskompasSync;
+      if ((videoFile || animationFile) && (!sync || !sync.getUser())) {
+        throw new Error('Log in via de inlogpagina voordat je bestanden uploadt. Daarna worden de bestanden met je account gesynchroniseerd.');
+      }
+
+      var formControls = exerciseForm.querySelectorAll('input,select,textarea,button');
+      var progress = document.getElementById('exerciseUploadProgress');
+      var uploaded = { video: null, animation: null };
+      Array.prototype.forEach.call(formControls, function (control) { control.disabled = true; });
+      progress.value = 0;
+      progress.hidden = !videoFile && !animationFile;
+
+      function upload(file, purpose, label) {
+        return sync.uploadMedia(file, purpose, function (percent) {
+          progress.value = percent;
+          setStatus('exerciseStatus', label + ' uploaden: ' + percent + '% — laat deze pagina open.', false);
+        });
+      }
+
+      var uploads = Promise.resolve();
+      if (videoFile) {
+        uploads = uploads.then(function () {
+          return upload(videoFile, 'video', 'Video');
+        }).then(function (media) { uploaded.video = media; });
+      }
+      if (animationFile) {
+        uploads = uploads.then(function () {
+          return upload(animationFile, 'animation', 'Animatie');
+        }).then(function (media) { uploaded.animation = media; });
+      }
+
+      uploads.then(function () {
+        var currentCatalog = api.load();
+        if (!builtInCategories.concat(currentCatalog.categories).some(function (item) { return item.id === categoryId; })) {
+          throw new Error('De gekozen categorie bestaat niet meer. Kies opnieuw een categorie.');
+        }
+        var exercise = {
+          id: api.createId(api.exercisePrefix),
+          categoryId: categoryId,
+          name: name,
+          explanation: explanation,
+          minutes: minutes,
+          videoUrl: videoUrl,
+          videoMediaId: uploaded.video ? uploaded.video.id : '',
+          videoMimeType: uploaded.video ? uploaded.video.mimeType : '',
+          animationUrl: animationUrl,
+          animationMediaId: uploaded.animation ? uploaded.animation.id : '',
+          animationMimeType: uploaded.animation ? uploaded.animation.mimeType : '',
+          tone: category.tone,
+          createdAt: new Date().toISOString()
+        };
+        var saveExercise = sync && sync.getUser() ?
+          sync.createSharedExercise(exercise) :
+          Promise.resolve().then(function () {
+            currentCatalog.exercises.push(exercise);
+            api.save(currentCatalog);
+          });
+        return saveExercise.then(function () {
+          exerciseForm.reset();
+          document.getElementById('exerciseMinutes').value = '6';
+          progress.hidden = true;
+          render();
+          setStatus('exerciseStatus', sync && sync.getUser() ?
+            'Oefening opgeslagen en gedeeld met alle accounts.' :
+            'Oefening lokaal opgeslagen. Log in om deze met alle accounts te delen.', false);
+        });
+      }).catch(function (error) {
+        progress.hidden = true;
+        setStatus('exerciseStatus', error.message || 'De oefening of bestanden konden niet worden opgeslagen.', true);
+      }).then(function () {
+        Array.prototype.forEach.call(formControls, function (control) { control.disabled = false; });
+      });
     } catch (error) {
       setStatus('exerciseStatus', error.message || 'De oefening kon niet worden opgeslagen.', true);
     }
@@ -238,6 +464,7 @@ window.SchaatskompasSync.ready.then(function () {
   window.addEventListener('storage', function (event) {
     if (event.key === api.storageKey) render();
   });
+  updateCategoryAccess();
   render();
 }());
 });

@@ -38,6 +38,7 @@ html[data-animation-embed] body> x-dc>div{min-height:0!important;background:#0F1
 html[data-animation-embed] body>x-dc>div>header{display:none!important}
 html[data-animation-embed] body>x-dc>div>main{width:100%!important;max-width:none!important;margin:0!important;padding:0!important;gap:0!important}
 html[data-animation-embed] body>x-dc>div>main>*:not(#animationStage):not(#animationLibrary){display:none!important}
+html:not([data-animation-embed]) #animationLibrary{display:none!important}
 html[data-animation-embed="stoeltje"] #animationLibrary,
 html[data-animation-embed="slalom"] #animationStage,
 html[data-animation-embed="eenbeen"] #animationStage,
@@ -67,7 +68,7 @@ html[data-animation-embed="bocht"] .exercise-animation-card[data-animation="boch
 <header class="site-header" style="background: #0F1E2E; color: #FFFFFF">
 <div style="max-width: 1360px; margin: 0 auto; padding: 16px 32px; display: flex; flex-wrap: wrap; align-items: center; gap: 24px">
 <div style="display: flex; align-items: center; gap: 10px">
-<svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="14" fill="none" stroke="#60A5FA" stroke-width="2.5"></circle><path d="M9 20 C13 12, 19 12, 23 20" fill="none" stroke="#FDBA74" stroke-width="2.5" stroke-linecap="round"></path></svg>
+<img src="../Schaatscompas%20logo.jpg" alt="" width="80" height="80" style="object-fit:contain;flex:none">
 <span style="font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 20px">Schaatskompas</span>
 </div>
 <nav aria-label="Hoofdmenu" style="display: flex; flex-wrap: wrap; gap: 4px; flex: 1 1 auto">
@@ -89,9 +90,6 @@ Op het ijs</a>
 <nav aria-label="Kruimelpad" style="font-size: 14px; color: #4A5B6C"><a href="Oefeningen.dc.html">Oefeningen</a> › <a href="Oefeningen-Houding.dc.html">Houding</a> › Stoeltje-glijden</nav>
 <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px">
 <h1 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 44px; line-height: 1.05">Stoeltje-glijden</h1>
-<div style="display: flex; flex-wrap: wrap; gap: 8px">
-<a href="../Builder.dc.html" style="background: #0F1E2E; color: #FFFFFF; text-decoration: none; font-weight: 600; padding: 13px 18px; border-radius: 12px; font-size: 15px">+ Aan training toevoegen</a>
-</div>
 </div>
 <div style="display: flex; flex-wrap: wrap; gap: 8px">
 <span style="font-size: 13px; font-weight: 600; padding: 6px 10px; border-radius: 999px; background: #DBEAFE; color: #1E3A8A">Houding</span>
@@ -238,7 +236,6 @@ Op het ijs</a>
 <p>Kijk de bocht in, buig je knieën en houd voldoende ruimte tot de schaatser voor je.</p>
 </article>
 </div>
-<a href="../Builder.dc.html" style="font-size:14px">Open de trainingbouwer en gebruik deze oefeningen</a>
 </section>
 
 <section style="background: #FFFFFF; border: 1px solid #DCE3EA; border-radius: 20px; padding: 28px; display: flex; flex-direction: column; gap: 20px">
@@ -282,17 +279,13 @@ Op het ijs</a>
 <h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 22px">Makkelijker of moeilijker</h2>
 <div style="display: flex; gap: 12px; align-items: flex-start; border-top: 1px solid #E2E8F0; padding-top: 12px"><span style="flex: none; font-size: 12px; font-weight: 700; padding: 4px 8px; border-radius: 6px; background: #DBEAFE; color: #1E3A8A">Makkelijker</span><span style="font-size: 15px; color: #3B4A5A">Handen op de knieën tijdens het glijden. Eerst stilstaand oefenen aan de boarding.</span></div>
 <div style="display: flex; gap: 12px; align-items: flex-start; border-top: 1px solid #E2E8F0; padding-top: 12px"><span style="flex: none; font-size: 12px; font-weight: 700; padding: 4px 8px; border-radius: 6px; background: #F1F5F9; color: #334155">Moeilijker</span><span style="font-size: 15px; color: #3B4A5A">Handen op de rug, en wie het langst blijft glijden zonder af te zetten.</span></div>
-<div style="display: flex; gap: 12px; align-items: flex-start; border-top: 1px solid #E2E8F0; padding-top: 12px"><span style="flex: none; font-size: 12px; font-weight: 700; padding: 4px 8px; border-radius: 6px; background: #FFEDD5; color: #7C2D12">Als spel</span><span style="font-size: 15px; color: #3B4A5A">Schaatsstoplicht: bij rood zit iedereen in stoeltje.</span></div>
+<div style="display: flex; gap: 12px; align-items: flex-start; border-top: 1px solid #E2E8F0; padding-top: 12px"><span style="flex: none; font-size: 12px; font-weight: 700; padding: 4px 8px; border-radius: 6px; background: #FFEDD5; color: #7C2D12">Als spel</span><span style="font-size: 15px; color: #3B4A5A">Gebruik een afgesproken stopsignaal: bij rood houdt iedereen gecontroleerd stil.</span></div>
 </div>
 
 <div style="background: #0F1E2E; color: #FFFFFF; border-radius: 20px; padding: 24px; display: flex; flex-direction: column; gap: 14px">
-<h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 22px">Plek in de leerlijn</h2>
-<div style="display: flex; flex-direction: column; gap: 10px">
-<a href="Oefening-IJsgewenning.dc.html" style="text-decoration: none; color: #CBD5E1; border: 1px solid #334155; border-radius: 12px; padding: 12px 14px; font-size: 15px">← Vorige stap · IJsgewenning</a>
-<div style="border: 2px solid #F97316; border-radius: 12px; padding: 12px 14px; font-size: 15px; font-weight: 700">Nu · Stoeltje-glijden</div>
-<a href="Oefening-Achterop-zitten.dc.html" style="text-decoration: none; color: #CBD5E1; border: 1px solid #334155; border-radius: 12px; padding: 12px 14px; font-size: 15px">Volgende stap · Achterop zitten, gewicht in de hakken →</a>
-</div>
-<p style="margin: 0; font-size: 14px; line-height: 1.5; color: #CBD5E1">Klaar als: een kind 3 pionnen lang in stoeltje glijdt zonder rechtop te komen.</p>
+<h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 22px">Doel van de oefening</h2>
+<p style="margin: 0; font-size: 15px; line-height: 1.55; color: #CBD5E1">De schaatser houdt een lage, stabiele houding vast en glijdt gecontroleerd tussen de pionnen.</p>
+<p style="margin: 0; font-size: 14px; line-height: 1.5; color: #CBD5E1">Klaar als: een kind drie pionnen lang in stoeltje glijdt zonder rechtop te komen.</p>
 </div>
 </section>
 

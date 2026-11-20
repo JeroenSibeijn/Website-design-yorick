@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Schaatskompas – Oefening</title>
+<link rel="stylesheet" href="../exercise-pages.css">
+<link rel="stylesheet" href="../header-nav.css">
+<style>
+body{margin:0;background:#F3F6F8;color:#0F1E2E;font-family:Inter,system-ui,sans-serif}
+.page{max-width:1120px;margin:0 auto;padding:32px;display:flex;flex-direction:column;gap:22px}
+h1,h2{font-family:'Space Grotesk',sans-serif}
+h1{margin:0;font-size:clamp(30px,6vw,42px)}
+.intro{display:flex;flex-direction:column;gap:10px}
+.intro p{margin:0;color:#475569;line-height:1.55}
+.back{color:#1E40AF}
+.badges{display:flex;flex-wrap:wrap;gap:8px}
+.badge{padding:6px 10px;border-radius:999px;background:#EAF3FF;color:#1E3A8A;font-size:13px;font-weight:700}
+.content{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:18px}
+.panel{background:#fff;border:1px solid #DCE3EA;border-radius:18px;padding:22px;display:flex;flex-direction:column;gap:14px}
+.panel h2{margin:0;font-size:23px}
+.steps{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:10px;color:#334155;line-height:1.55}
+.animation{width:100%;height:auto;border-radius:14px;background:#EEF5FA}
+.animation-caption{margin:0;color:#475569;font-size:14px;line-height:1.5}
+.status{color:#9A3412;background:#FFF4E8;border-radius:12px;padding:14px}
+@media(max-width:640px){.page{padding:20px}.panel{padding:18px}}
+</style>
+</head>
+<body>
+<x-dc>
+<header class="site-header" style="background:#0F1E2E;color:#FFFFFF">
+<div style="max-width:1360px;margin:0 auto;padding:16px 32px;display:flex;flex-wrap:wrap;align-items:center;gap:24px">
+<div style="display:flex;align-items:center;gap:10px">
+<img src="../Schaatscompas%20logo.jpg" alt="" width="40" height="40" style="object-fit:contain;flex:none">
+<span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:20px">Schaatskompas</span>
+</div>
+<nav aria-label="Hoofdmenu">
+<a href="../Main.dc.html" style="color:#CBD5E1;text-decoration:none">Seizoen</a>
+<a href="../Builder.dc.html" style="color:#CBD5E1;text-decoration:none">Training bouwen</a>
+<a href="Oefeningen.dc.html" aria-current="page" style="color:#FFFFFF;text-decoration:none;background:#1F3247;font-weight:600">Oefeningen</a>
+<a href="../Groepen.dc.html" style="color:#CBD5E1;text-decoration:none">Mijn groepen</a>
+<a href="../Inloggen.dc.html" style="color:#CBD5E1;text-decoration:none">Inloggen</a>
+</nav>
+<a href="../OpHetIjs.dc.html" style="display:inline-flex;align-items:center;gap:8px;background:#F97316;color:#0F1E2E;text-decoration:none;font-weight:700;padding:12px 18px;border-radius:999px;font-size:15px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><polygon points="6 4 20 12 6 20 6 4"></polygon></svg>Op het ijs</a>
+</div>
+</header>
+<main class="page">
+<section class="intro">
+<nav aria-label="Kruimelpad"><a class="back" href="Oefeningen.dc.html">Oefeningen</a> › <a class="back" href="#" id="categoryLink">Categorie</a> › <span id="exerciseBreadcrumb">Oefening</span></nav>
+<h1 id="exerciseTitle">Oefening laden...</h1>
+<div id="exerciseBadges" class="badges"></div>
+<p id="exerciseSummary"></p>
+</section>
+<div id="exerciseContent" class="content"></div>
+<p id="exerciseStatus" class="status" role="status" hidden></p>
+</main>
+</x-dc>
+<script>
+(function () {
+  var guides = {
+    'builtin-pinguinloop': {
+      name: 'Pinguïnloop', category: 'Plezier & spel', minutes: 5, animation: 'penguin',
+      summary: 'Oefen kleine, beheerste pasjes met de voeten licht naar buiten en de armen ontspannen naast het lichaam.',
+      steps: ['Start rechtop op een rustig stuk ijs.', 'Zet kleine pasjes met voldoende ruimte om je heen.', 'Houd je blik vooruit en stop op het afgesproken teken.'],
+      caption: 'De korte pinguïnpasjes blijven klein; de route en figuur zijn schematisch.'
+    },
+    'builtin-stoplicht': {
+      name: 'Schaatsstoplicht', category: 'Plezier & spel', minutes: 6, animation: 'signal',
+      summary: 'Reageer op kleur: groen is rustig rijden, oranje is gecontroleerd glijden en rood is veilig stilzetten.',
+      steps: ['Spreek de betekenis van elke kleur vooraf af.', 'Rijd op groen in dezelfde richting.', 'Verander alleen bij het signaal en houd afstand tot anderen.'],
+      caption: 'Het licht wisselt van kleur terwijl de schaatser de afgesproken reactie uitvoert.'
+    },
+    'builtin-tikkertje': {
+      name: 'Tikkertje met stoeltje-vrij', category: 'Plezier & spel', minutes: 7, animation: 'tag',
+      summary: 'Een tikspel met een veilige vrijplaats: een diepe, beheerste stoeltjeshouding betekent dat je even niet getikt mag worden.',
+      steps: ['Wijs één tikker aan en baken een ruim speelvak af.', 'Rijd rustig en kijk vooruit; raak elkaar niet aan.', 'Spreek af wanneer iemand weer mee mag doen.'],
+      caption: 'De tikker volgt op afstand; de tweede schaatser bereikt een afgesproken vrijplaats.'
+    },
+    'builtin-schaduw': {
+      name: 'Schaduwrijden', category: 'Plezier & spel', minutes: 6, animation: 'pair',
+      summary: 'Rijd in tweetallen achter elkaar en spiegel eenvoudige bewegingen zonder de voorganger in te halen.',
+      steps: ['Maak tweetallen met een passende snelheid.', 'Houd enkele meters afstand en blijf in dezelfde rijrichting.', 'Wissel na een korte ronde van leider.'],
+      caption: 'De tweede schaatser volgt dezelfde lijn met voldoende tussenruimte.'
+    },
+    'builtin-lintjes': {
+      name: 'Lintjes verzamelen', category: 'Plezier & spel', minutes: 8, animation: 'collect',
+      summary: 'Verzamel lintjes op een afgebakende route en keer gecontroleerd terug naar je team.',
+      steps: ['Leg lintjes op vaste, goed zichtbare plekken.', 'Laat kleine groepjes om de beurt vertrekken.', 'Pak alleen een lintje als de route vrij is; kruis geen andere rijlijn.'],
+      caption: 'De route loopt langs afzonderlijke verzamelpunten en blijft overzichtelijk.'
+    },
+    'builtin-uitrijden': {
+      name: 'Uitrijden en nabespreken', category: 'Plezier & spel', minutes: 5, animation: 'cooldown',
+      summary: 'Verlaag na een intensieve oefening rustig het tempo en bespreek daarna één succesmoment.',
+      steps: ['Rijd een ruime ronde op een ontspannen tempo.', 'Houd afstand en gebruik geen sprintjes meer.', 'Stop op een veilige plek voor de nabespreking.'],
+      caption: 'De schaatser rijdt een ruime, rustige ronde uit.'
+    },
+    'builtin-droog-inlopen': {
+      name: 'Droog inlopen', category: 'Houding', minutes: 6, animation: 'warmup',
+      summary: 'Warm naast de baan op met lichte loop- en schaatsbewegingen voordat de groep het ijs op gaat.',
+      steps: ['Begin met rustig joggen op een vrije plek.', 'Voeg knieheffen en kleine zijwaartse schaatspassen toe.', 'Verhoog de inspanning geleidelijk en houd ruimte om je heen.'],
+      caption: 'De bewegingen lopen geleidelijk op van rustig stappen naar schaatspassen.'
+    },
+    'builtin-eenbeen': {
+      name: 'Eenbeen-glijbaan', category: 'Houding', minutes: 6, animation: 'balance',
+      summary: 'Glijd over een korte afstand op één been en houd romp en heupen stabiel.',
+      steps: ['Zet rustig af en kies één glijbeen.', 'Houd de knie licht gebogen en kijk vooruit.', 'Wissel na een korte afstand van been.'],
+      caption: 'De schaatser houdt één been op het ijs en wisselt daarna gecontroleerd.'
+    },
+    'builtin-inrijden': {
+      name: 'Rustig inrijden', category: 'Houding', minutes: 8, animation: 'glide',
+      summary: 'Rijd in kleine groepjes op een gelijkmatig, ontspannen tempo om aan het ijs te wennen.',
+      steps: ['Start in kleine groepjes met voldoende onderlinge afstand.', 'Volg de afgesproken rijrichting.', 'Blijf ontspannen en verhoog het tempo nog niet.'],
+      caption: 'Een gelijkmatige lijn en vaste rijrichting helpen de groep rustig op gang.'
+    },
+    'builtin-duwspel': {
+      name: 'Duwspel met zachte handen', category: 'Houding', minutes: 5, animation: 'gentle',
+      summary: 'Oefen balans met lichte hand-op-hand druk terwijl beide schaatsers gecontroleerd blijven staan of glijden.',
+      steps: ['Werk met een maatje op een rustige, vrije plek.', 'Raak elkaars handen zacht aan; duw niet hard.', 'Stop meteen als één van beiden uit balans raakt.'],
+      caption: 'De handen raken elkaar licht; de oefening draait om balans, niet om kracht.'
+    },
+    'builtin-bijhaal': {
+      name: 'Herhaling: bijhaal-ballet', category: 'Techniek', minutes: 6, animation: 'recovery',
+      summary: 'Breng na een afzet het vrije been ontspannen terug onder het lichaam en houd de knie gebogen.',
+      steps: ['Maak een rustige zijwaartse afzet.', 'Breng het vrije been terug onder je heup.', 'Herhaal links en rechts zonder je bovenlichaam te draaien.'],
+      caption: 'Na de afzet keert het vrije been terug onder de heup.'
+    },
+    'builtin-slalom': {
+      name: 'Slalom door pionnen', category: 'Techniek', minutes: 7, animation: 'slalom',
+      summary: 'Rijd in een vloeiende slalom om pionnen en stuur met gebogen knieën.',
+      steps: ['Zet pionnen ruim uit elkaar op een rechte lijn.', 'Rijd om en om links en rechts langs de pionnen.', 'Kijk naar de volgende pion en houd snelheid beheerst.'],
+      caption: 'De schaatser volgt een vloeiende zigzaglijn rond de pionnen.'
+    },
+    'builtin-inzet': {
+      name: 'Inzet op de lijn', category: 'Techniek', minutes: 6, animation: 'curve',
+      summary: 'Oefen het rustig inzetten van een bocht door de lijn te volgen en het gewicht gecontroleerd te verplaatsen.',
+      steps: ['Rijd rechtop en kijk de bocht in.', 'Buig je knieën en zet de bocht ruim in.', 'Blijf op je eigen lijn en houd afstand.'],
+      caption: 'De gebogen route laat zien waar de bocht rustig wordt ingezet.'
+    },
+    'builtin-remmen': {
+      name: 'Remmen met twee voeten', category: 'Techniek', minutes: 6, animation: 'brake',
+      summary: 'Rem op een vrije rechte strook door je voeten gecontroleerd breder te zetten en de snelheid geleidelijk te verminderen.',
+      steps: ['Begin op lage snelheid en kijk of de strook vrij is.', 'Zet de voeten iets breder en buig je knieën.', 'Bouw de remdruk rustig op; stop vóór de afgesproken lijn.'],
+      caption: 'De schaatser remt geleidelijk en stopt vóór de markering.'
+    },
+    'builtin-bocht': {
+      name: 'Bochtjes op de buitenkant', category: 'Techniek', minutes: 7, animation: 'curve',
+      summary: 'Rijd ruime bochtjes met gebogen knieën en houd je bovenlichaam rustig.',
+      steps: ['Begin op een ruime, overzichtelijke bocht.', 'Kijk in de rijrichting en kantel gecontroleerd mee.', 'Rijd uit op dezelfde lijn zonder anderen te kruisen.'],
+      caption: 'De schaatser volgt een ruime bocht en houdt de lijn constant.'
+    },
+    'builtin-kruispas': {
+      name: 'Kruispas door de bocht', category: 'Techniek', minutes: 7, animation: 'cross',
+      summary: 'Oefen rustig het overzetten van de schaatsen in een ruime bocht, met controle en voldoende ruimte.',
+      steps: ['Rijd eerst een bocht zonder over te zetten.', 'Kruis de buitenste schaats gecontroleerd over de andere.', 'Wissel van richting en oefen beide kanten.'],
+      caption: 'De gekruiste lijnen geven de rustige overzetting weer.'
+    },
+    'builtin-pionnenrace': {
+      name: 'Pionnenrace', category: 'Snelheid', minutes: 7, animation: 'collect',
+      summary: 'Rijd in kleine teams naar een pion en keer via dezelfde veilige route terug.',
+      steps: ['Maak teams en geef ieder team een eigen baan.', 'Vertrek één voor één en keer pas om bij de pion.', 'Tel de pionnen na afloop; snelheid gaat niet boven controle.'],
+      caption: 'Schaatsers vertrekken om de beurt en keren via hun eigen route terug.'
+    },
+    'builtin-estafette': {
+      name: 'Estafette in teams', category: 'Snelheid', minutes: 8, animation: 'relay',
+      summary: 'Wissel elkaar af in een teamestafette met een duidelijke, veilige wisselzone.',
+      steps: ['Markeer start, keerpunt en wisselzone.', 'Vertrek pas na een duidelijke handtik.', 'Rijd na je beurt buiten de actieve rijlijn terug.'],
+      caption: 'De volgende rijder start pas na de afgesproken wissel.'
+    },
+    'builtin-start': {
+      name: 'Startjes vanuit de knielpositie', category: 'Snelheid', minutes: 6, animation: 'start',
+      summary: 'Oefen vanuit een lage startpositie een gecontroleerde eerste versnelling op het startsignaal.',
+      steps: ['Neem een stabiele lage houding achter de startlijn aan.', 'Reageer op het afgesproken startsignaal.', 'Maak enkele krachtige passen en kom geleidelijk omhoog.'],
+      caption: 'De schaatser vertrekt laag en versnelt pas na het startsignaal.'
+    },
+    'builtin-visgraat': {
+      name: 'Visgraat-start', category: 'Snelheid', minutes: 6, animation: 'vstart',
+      summary: 'Vertrek vanuit een lage houding met kleine V-passen en bouw de snelheid geleidelijk op.',
+      steps: ['Zet de schaatsen in een kleine V-stand.', 'Duw afwisselend schuin naar buiten.', 'Breng de schaatsen daarna geleidelijk terug naar de rijrichting.'],
+      caption: 'De pijlen tonen de afzet schuin naar buiten vanuit de V-stand.'
+    },
+    'builtin-reactiestart': {
+      name: 'Reactiestart op kleur', category: 'Snelheid', minutes: 6, animation: 'reaction',
+      summary: 'Vertrek alleen op het vooraf afgesproken kleur- of geluidssignaal.',
+      steps: ['Leg uit welk signaal betekent dat je vertrekt.', 'Wacht in een stabiele houding achter de lijn.', 'Rijd na de start enkele meters rechtdoor en rem rustig af.'],
+      caption: 'De schaatser wacht op het afgesproken signaal voordat die vertrekt.'
+    }
+  };
+  var animations = {
+    penguin: {
+      path: 'M 42 145 C 90 120 120 170 165 145 S 240 120 285 145 S 355 170 400 140',
+      markers: '<path d="M70 174l8-5 8 5m42 0 8-5 8 5m42 0 8-5 8 5" fill="none" stroke="#F97316" stroke-width="4" stroke-linecap="round"/>'
+    },
+    signal: {
+      path: 'M 50 145 L 390 145',
+      markers: '<rect x="28" y="35" width="48" height="112" rx="14" fill="#0F1E2E"/><circle cx="52" cy="58" r="12" fill="#16A34A"><animate attributeName="fill" values="#16A34A;#16A34A;#F97316;#DC2626;#DC2626;#16A34A" dur="6s" repeatCount="indefinite"/></circle><circle cx="52" cy="92" r="12" fill="#F97316"/><circle cx="52" cy="126" r="12" fill="#DC2626"/>'
+    },
+    tag: {
+      path: 'M 40 145 C 100 145 100 75 165 75 S 225 160 285 160 S 350 95 400 95',
+      markers: '<circle cx="0" cy="-25" r="7" fill="#F97316"><animateMotion dur="5s" repeatCount="indefinite" path="M 48 110 C 108 110 108 48 173 48 S 233 125 293 125 S 358 68 408 68"/></circle>'
+    },
+    pair: {
+      path: 'M 40 125 C 130 95 270 155 400 120',
+      markers: '<path d="M40 162H400" stroke="#CBD5E1" stroke-width="2" stroke-dasharray="8 8"/>'
+    },
+    collect: {
+      path: 'M 35 145 C 90 145 95 75 150 75 S 210 150 265 150 S 330 75 405 100',
+      markers: '<g fill="#F97316"><path d="M92 150l10-25 10 25z"/><path d="M202 158l10-25 10 25z"/><path d="M320 120l10-25 10 25z"/></g><path d="M100 48v20m-8-10h16m105 38v20m-8-10h16m106-75v20m-8-10h16" stroke="#1E40AF" stroke-width="3" stroke-linecap="round"/>'
+    },
+    cooldown: {
+      path: 'M 55 145 C 130 115 220 165 390 135',
+      markers: '<path d="M42 170H398" stroke="#CBD5E1" stroke-width="2" stroke-dasharray="8 8"/><path d="M372 66l20 9-20 9" fill="none" stroke="#F97316" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>'
+    },
+    warmup: {
+      path: 'M 40 150 C 95 150 115 80 170 80 S 240 150 295 150 S 350 80 405 80',
+      markers: '<path d="M50 176l8-8 8 8m28 0 8-8 8 8m28 0 8-8 8 8" fill="none" stroke="#F97316" stroke-width="4" stroke-linecap="round"/>'
+    },
+    balance: {
+      path: 'M 45 140 C 145 112 280 112 395 140',
+      markers: '<circle cx="100" cy="174" r="6" fill="#F97316"/><circle cx="220" cy="174" r="6" fill="#1D4ED8"/><circle cx="340" cy="174" r="6" fill="#F97316"/>'
+    },
+    glide: {
+      path: 'M 42 140 C 150 120 280 158 400 130',
+      markers: '<path d="M35 173H405" stroke="#CBD5E1" stroke-width="2" stroke-dasharray="10 10"/>'
+    },
+    gentle: {
+      path: 'M 45 145 C 120 115 180 115 220 145',
+      markers: '<g fill="#F97316"><circle cx="288" cy="102" r="15"/><path d="M280 117v37m-20-24 20-7 20 7m-20 24-16 24m16-24 16 24" fill="none" stroke="#F97316" stroke-width="7" stroke-linecap="round"/></g><path d="M220 137L269 118" stroke="#F97316" stroke-width="3" stroke-dasharray="4 5"/>'
+    },
+    recovery: {
+      path: 'M 45 140 C 120 125 170 125 205 140 S 300 155 395 130',
+      markers: '<path d="M150 177c15-12 30-12 45 0m18 0c15-12 30-12 45 0" fill="none" stroke="#F97316" stroke-width="4" stroke-linecap="round"/>'
+    },
+    slalom: {
+      path: 'M 35 145 C 80 145 80 75 125 75 S 170 155 215 155 S 260 75 305 75 S 355 145 405 110',
+      markers: '<g fill="#F97316"><path d="M76 155l10-25 10 25z"/><path d="M166 107l10-25 10 25z"/><path d="M257 155l10-25 10 25z"/><path d="M348 113l10-25 10 25z"/></g>'
+    },
+    curve: {
+      path: 'M 35 160 C 120 160 115 55 225 55 S 330 160 405 110',
+      markers: '<path d="M35 184C120 184 125 80 225 80S320 180 405 135" fill="none" stroke="#CBD5E1" stroke-width="3" stroke-dasharray="8 8"/><circle cx="225" cy="55" r="7" fill="#F97316"/>'
+    },
+    brake: {
+      path: 'M 45 140 L 250 140 L 300 140',
+      markers: '<path d="M325 92v88m16-88v88m16-88v88" stroke="#F97316" stroke-width="5"/><path d="M255 161l12 10m0-10-12 10m28-10 12 10m0-10-12 10" stroke="#64748B" stroke-width="3" stroke-linecap="round"/>'
+    },
+    cross: {
+      path: 'M 38 150 C 110 150 130 75 210 75 S 300 150 405 125',
+      markers: '<path d="M140 174l36-30m-36 0 36 30m95-30 36 30m-36 0 36-30" stroke="#F97316" stroke-width="4" stroke-linecap="round"/>'
+    },
+    relay: {
+      path: 'M 42 145 L 350 145',
+      markers: '<path d="M350 70v105m10-105v105" stroke="#F97316" stroke-width="4"/><circle cx="220" cy="92" r="12" fill="#F97316"/><path d="M220 104v34m-18-20 18-6 18 6m-18 20-15 20m15-20 15 20" fill="none" stroke="#F97316" stroke-width="7" stroke-linecap="round"/>'
+    },
+    start: {
+      path: 'M 45 145 L 395 125',
+      markers: '<path d="M74 105v78m10-78v78" stroke="#F97316" stroke-width="4"/><path d="M340 72l22 10-22 10" fill="none" stroke="#F97316" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>'
+    },
+    vstart: {
+      path: 'M 42 148 C 110 145 145 125 205 125 S 315 115 400 105',
+      markers: '<path d="M105 80l32 50m62-50-32 50m100-50 32 50" stroke="#F97316" stroke-width="4" stroke-linecap="round"/><path d="M350 70l20 9-20 9" fill="none" stroke="#1D4ED8" stroke-width="4"/>'
+    },
+    reaction: {
+      path: 'M 45 145 L 395 125',
+      markers: '<circle cx="80" cy="70" r="23" fill="#DC2626"><animate attributeName="fill" values="#DC2626;#DC2626;#16A34A;#DC2626" dur="4s" repeatCount="indefinite"/></circle><path d="M350 72l22 10-22 10" fill="none" stroke="#F97316" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>'
+    }
+  };
+
+  function escapeHtml(value) {
+    return String(value).replace(/[&<>"']/g, function (char) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char];
+    });
+  }
+
+  var id = new URLSearchParams(window.location.search).get('id');
+  var guide = guides[id];
+  if (!guide) {
+    document.getElementById('exerciseTitle').textContent = 'Oefening niet gevonden';
+    document.getElementById('exerciseContent').hidden = true;
+    var status = document.getElementById('exerciseStatus');
+    status.hidden = false;
+    status.textContent = 'Deze oefening bestaat niet of is niet beschikbaar.';
+    return;
+  }
+
+  document.title = 'Schaatskompas – ' + guide.name;
+  document.getElementById('exerciseTitle').textContent = guide.name;
+  document.getElementById('exerciseBreadcrumb').textContent = guide.name;
+  document.getElementById('categoryLink').textContent = guide.category;
+  document.getElementById('categoryLink').href = {
+    'Plezier & spel': 'Oefeningen-Plezier.dc.html',
+    'Houding': 'Oefeningen-Houding.dc.html',
+    'Techniek': 'Oefeningen-Techniek.dc.html',
+    'Snelheid': 'Oefeningen-Snelheid.dc.html'
+  }[guide.category];
+  document.getElementById('exerciseSummary').textContent = guide.summary;
+  document.getElementById('exerciseBadges').innerHTML =
+    '<span class="badge">' + escapeHtml(guide.category) + '</span><span class="badge">' +
+    guide.minutes + ' minuten</span>';
+
+  var animation = animations[guide.animation];
+  document.getElementById('exerciseContent').innerHTML =
+    '<section class="panel"><h2>Uitleg</h2><ol class="steps">' +
+    guide.steps.map(function (step) { return '<li>' + escapeHtml(step) + '</li>'; }).join('') +
+    '</ol></section><section class="panel"><h2>Uitleganimatie</h2><svg class="animation" viewBox="0 0 440 210" role="img" aria-label="Schematische animatie voor ' +
+    escapeHtml(guide.name) + '"><rect x="0" y="0" width="440" height="210" rx="14" fill="#EEF5FA"/>' +
+    '<path d="' + animation.path + '" fill="none" stroke="#94A3B8" stroke-width="4" stroke-dasharray="8 8"/>' +
+    animation.markers +
+    '<g fill="none" stroke="#1D4ED8" stroke-linecap="round" stroke-linejoin="round" stroke-width="8">' +
+    '<circle cx="0" cy="-28" r="9" fill="#1D4ED8" stroke="none"/>' +
+    '<path d="M0-16l-4 26m-3-17-15 8m15-8 16 5m-13 12-15 19m15-19 20 13"/>' +
+    '<animateMotion dur="5s" repeatCount="indefinite" rotate="auto" path="' + animation.path + '"/>' +
+    '</g></svg><p class="animation-caption">' + escapeHtml(guide.caption) + '</p></section>';
+}());
+</script>
+</body>
+</html>
