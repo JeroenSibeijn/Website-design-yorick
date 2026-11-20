@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Schaatskompas – Oefening Stoeltje-glijden</title>
+<link rel="stylesheet" href="../exercise-pages.css">
+<script>
+  var embeddedAnimation = new URLSearchParams(window.location.search).get('embed');
+  if (['stoeltje', 'slalom', 'eenbeen', 'start', 'bocht'].indexOf(embeddedAnimation) >= 0) {
+    document.documentElement.setAttribute('data-animation-embed', embeddedAnimation);
+  }
+</script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap">
+<style>
+body{margin:0;background:#F3F6F8}
+a{color:#1D4ED8}a:hover{color:#1E3A8A}
+@keyframes skA{0%,44%{opacity:1}50%,94%{opacity:0}100%{opacity:1}}
+@keyframes skB{0%,44%{opacity:0}50%,94%{opacity:1}100%{opacity:0}}
+@keyframes lap{from{offset-distance:0%}to{offset-distance:100%}}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
+.scene{position:absolute;inset:0;animation-duration:8s;animation-timing-function:ease-in-out;animation-iteration-count:infinite}.scene-a{animation-name:skA}.scene-b{animation-name:skB}.anim-running{animation-play-state:running}.anim-paused{animation-play-state:paused}
+.exercise-animation-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:16px}
+.exercise-animation-card{background:#FFFFFF;border:1px solid #DCE3EA;border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:10px}
+.exercise-animation-card h3{margin:0;font:700 19px 'Space Grotesk',sans-serif}
+.exercise-animation-card p{margin:0;color:#3B4A5A;font-size:14px;line-height:1.5}
+.exercise-animation-card svg{display:block;width:100%;height:auto;background:#EEF5FA;border-radius:12px}
+.track-dot{position:absolute;left:0;top:0;width:16px;height:16px;border-radius:999px;border:2px solid #FFFFFF;offset-rotate:0deg;animation:lap linear infinite}.track.anim-running .track-dot{animation-play-state:running}.track.anim-paused .track-dot{animation-play-state:paused}.dot-blue{background:#1D4ED8}.dot-orange{background:#F97316}.dot-outer{offset-path:path("M 130 40 H 390 A 90 90 0 0 1 390 220 H 130 A 90 90 0 0 1 130 40 Z")}.dot-inner{offset-path:path("M 170 90 H 350 A 40 40 0 0 1 350 170 H 170 A 40 40 0 0 1 170 90 Z")}
+.dot-d0{animation-duration:10s;animation-delay:0s}.dot-d2{animation-duration:10s;animation-delay:-2s}.dot-d4{animation-duration:10s;animation-delay:-4s}.dot-d6{animation-duration:10s;animation-delay:-6s}.dot-d8{animation-duration:10s;animation-delay:-8s}.dot-i0{animation-duration:9s;animation-delay:0s}.dot-i45{animation-duration:9s;animation-delay:-4.5s}
+.age-tab{font:inherit;font-size:14px;font-weight:600;min-height:44px;padding:0 16px;border-radius:999px;border:none;cursor:pointer;background:transparent;color:#0F1E2E}.age-tab.on{background:#0F1E2E;color:#FFFFFF}
+html[data-animation-embed] body> x-dc>div{min-height:0!important;background:#0F1E2E!important;color:#FFFFFF!important}
+html[data-animation-embed] body>x-dc>div>header{display:none!important}
+html[data-animation-embed] body>x-dc>div>main{width:100%!important;max-width:none!important;margin:0!important;padding:0!important;gap:0!important}
+html[data-animation-embed] body>x-dc>div>main>*:not(#animationStage):not(#animationLibrary){display:none!important}
+html[data-animation-embed="stoeltje"] #animationLibrary,
+html[data-animation-embed="slalom"] #animationStage,
+html[data-animation-embed="eenbeen"] #animationStage,
+html[data-animation-embed="start"] #animationStage,
+html[data-animation-embed="bocht"] #animationStage{display:none!important}
+html[data-animation-embed="stoeltje"] #animationStage{display:flex!important;gap:0!important}
+html[data-animation-embed="stoeltje"] #animationStage>*:not(#sideAnimation){display:none!important}
+html[data-animation-embed="stoeltje"] #sideAnimation{flex:1 1 100%!important;padding:12px!important;border:0!important;border-radius:0!important}
+html[data-animation-embed="slalom"] #animationLibrary,
+html[data-animation-embed="eenbeen"] #animationLibrary,
+html[data-animation-embed="start"] #animationLibrary,
+html[data-animation-embed="bocht"] #animationLibrary{display:flex!important;gap:0!important;padding:12px!important;border:0!important;border-radius:0!important;background:#0F1E2E!important}
+html[data-animation-embed="slalom"] #animationLibrary>*:not(.exercise-animation-grid),
+html[data-animation-embed="eenbeen"] #animationLibrary>*:not(.exercise-animation-grid),
+html[data-animation-embed="start"] #animationLibrary>*:not(.exercise-animation-grid),
+html[data-animation-embed="bocht"] #animationLibrary>*:not(.exercise-animation-grid){display:none!important}
+html[data-animation-embed] .exercise-animation-grid{display:block!important}
+html[data-animation-embed] .exercise-animation-card{display:none!important}
+html[data-animation-embed="slalom"] .exercise-animation-card[data-animation="slalom"],
+html[data-animation-embed="eenbeen"] .exercise-animation-card[data-animation="eenbeen"],
+html[data-animation-embed="start"] .exercise-animation-card[data-animation="start"],
+html[data-animation-embed="bocht"] .exercise-animation-card[data-animation="bocht"]{display:flex!important}
+</style>
+</helmet>
+<div style="font-family: Inter, system-ui, sans-serif; color: #0F1E2E; background: #F3F6F8; min-height: 100vh">
+
+<header style="background: #0F1E2E; color: #FFFFFF">
+<div style="max-width: 1360px; margin: 0 auto; padding: 16px 32px; display: flex; flex-wrap: wrap; align-items: center; gap: 24px">
+<div style="display: flex; align-items: center; gap: 10px">
+<svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="14" fill="none" stroke="#7DD3FC" stroke-width="2.5"></circle><path d="M9 20 C13 12, 19 12, 23 20" fill="none" stroke="#FDBA74" stroke-width="2.5" stroke-linecap="round"></path></svg>
+<span style="font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 20px">Schaatskompas</span>
+</div>
+<nav aria-label="Hoofdmenu" style="display: flex; flex-wrap: wrap; gap: 4px; flex: 1 1 auto">
+<a href="../Main.dc.html" style="color: #CBD5E1; text-decoration: none; padding: 10px 14px; border-radius: 8px; font-size: 15px">Seizoen</a>
+<a href="../Builder.dc.html" style="color: #CBD5E1; text-decoration: none; padding: 10px 14px; border-radius: 8px; font-size: 15px">Training bouwen</a>
+<a href="Oefeningen.dc.html" style="color: #FFFFFF; text-decoration: none; padding: 10px 14px; border-radius: 8px; background: #1F3247; font-weight: 600; font-size: 15px">Oefeningen</a>
+<a href="../Groepen.dc.html" style="color: #CBD5E1; text-decoration: none; padding: 10px 14px; border-radius: 8px; font-size: 15px">Mijn groepen</a>
+<a href="../Inloggen.dc.html" style="color: #CBD5E1; text-decoration: none; padding: 10px 14px; border-radius: 8px; font-size: 15px">Inloggen</a>
+</nav>
+<a href="../OpHetIjs.dc.html" style="display: inline-flex; align-items: center; gap: 8px; background: #F97316; color: #0F1E2E; text-decoration: none; font-weight: 700; padding: 12px 18px; border-radius: 999px; font-size: 15px">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><polygon points="6 4 20 12 6 20 6 4"></polygon></svg>
+Op het ijs</a>
+</div>
+</header>
+
+<main style="max-width: 1280px; margin: 0 auto; padding: 32px; display: flex; flex-direction: column; gap: 28px">
+
+<div style="display: flex; flex-direction: column; gap: 12px">
+<nav aria-label="Kruimelpad" style="font-size: 14px; color: #4A5B6C"><a href="Oefeningen.dc.html">Oefeningen</a> › <a href="Oefeningen-Houding.dc.html">Houding</a> › Stoeltje-glijden</nav>
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px">
+<h1 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 44px; line-height: 1.05">Stoeltje-glijden</h1>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<a href="../Builder.dc.html" style="background: #0F1E2E; color: #FFFFFF; text-decoration: none; font-weight: 600; padding: 13px 18px; border-radius: 12px; font-size: 15px">+ Aan training toevoegen</a>
+</div>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<span style="font-size: 13px; font-weight: 600; padding: 6px 10px; border-radius: 999px; background: #DBEAFE; color: #1E3A8A">Houding</span>
+<span style="font-size: 13px; font-weight: 600; padding: 6px 10px; border-radius: 999px; background: #F1F5F9; color: #334155">6 minuten</span>
+<span style="font-size: 13px; font-weight: 600; padding: 6px 10px; border-radius: 999px; background: #F1F5F9; color: #334155">Alle fases</span>
+<span style="font-size: 13px; font-weight: 600; padding: 6px 10px; border-radius: 999px; background: #F1F5F9; color: #334155">Materiaal: 4 pionnen</span>
+<span style="font-size: 13px; font-weight: 600; padding: 6px 10px; border-radius: 999px; background: #F1F5F9; color: #334155">Clubleerlijn week 1–3</span>
+</div>
+</div>
+
+<section id="animationStage" style="display: flex; flex-wrap: wrap; gap: 24px">
+<div id="sideAnimation" style="flex: 999 1 560px; min-width: 0; background: #FFFFFF; border: 1px solid #DCE3EA; border-radius: 20px; padding: 24px; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px">
+<h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 22px">Uitleganimatie · zijaanzicht</h2>
+<button id="animationToggle" type="button" aria-pressed="true" style="font: inherit; font-size: 14px; font-weight: 600; min-height: 44px; padding: 0 16px; border-radius: 999px; border: 1px solid #94A3B8; background: #FFFFFF; color: #0F1E2E; cursor: pointer">Pauzeer animatie</button>
+</div>
+<div style="position: relative; background: #EEF5FA; border-radius: 16px; height: 380px; overflow: hidden">
+<div class="scene scene-a anim-running">
+<span style="position: absolute; top: 16px; left: 16px; font-size: 14px; font-weight: 700; padding: 6px 12px; border-radius: 999px; background: #FFEDD5; color: #7C2D12">Zo niet: rechtop, holle rug</span>
+<svg viewBox="0 0 520 380" width="100%" height="100%" role="img" aria-label="Schaatser die rechtop staat met holle rug">
+<line x1="0" y1="330" x2="520" y2="330" stroke="#B6CCDB" stroke-width="3"></line>
+<line x1="200" y1="326" x2="330" y2="326" stroke="#334155" stroke-width="5" stroke-linecap="round"></line>
+<path d="M258 318 L262 262 L254 196 L262 120" fill="none" stroke="#EA580C" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"></path>
+<path d="M262 120 Q248 160 254 196" fill="none" stroke="#EA580C" stroke-width="5" stroke-dasharray="6 6"></path>
+<line x1="262" y1="126" x2="272" y2="200" stroke="#EA580C" stroke-width="10" stroke-linecap="round"></line>
+<circle cx="266" cy="92" r="22" fill="#EA580C"></circle>
+<rect x="236" y="306" width="54" height="20" rx="6" fill="#0F1E2E"></rect>
+</svg>
+</div>
+<div class="scene scene-b anim-running">
+<span style="position: absolute; top: 16px; left: 16px; font-size: 14px; font-weight: 700; padding: 6px 12px; border-radius: 999px; background: #DBEAFE; color: #1E3A8A">Zo wel: het stoeltje</span>
+<svg viewBox="0 0 520 380" width="100%" height="100%" role="img" aria-label="Schaatser in goede houding: knieën voor, kont laag, bolle rug">
+<line x1="0" y1="330" x2="520" y2="330" stroke="#B6CCDB" stroke-width="3"></line>
+<line x1="190" y1="326" x2="320" y2="326" stroke="#334155" stroke-width="5" stroke-linecap="round"></line>
+<path d="M250 316 L292 240 L196 222" fill="none" stroke="#1D4ED8" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"></path>
+<path d="M196 222 Q236 150 300 176" fill="none" stroke="#1D4ED8" stroke-width="13" stroke-linecap="round"></path>
+<line x1="296" y1="178" x2="300" y2="236" stroke="#1D4ED8" stroke-width="10" stroke-linecap="round"></line>
+<circle cx="326" cy="166" r="22" fill="#1D4ED8"></circle>
+<rect x="226" y="306" width="54" height="20" rx="6" fill="#0F1E2E"></rect>
+<g font-family="Inter, sans-serif" font-size="15" font-weight="700" fill="#0F1E2E">
+<circle cx="310" cy="242" r="13" fill="#F97316"></circle><text x="305" y="247" fill="#0F1E2E">1</text>
+<text x="330" y="247">Knieën naar voren</text>
+<circle cx="178" cy="238" r="13" fill="#F97316"></circle><text x="173" y="243" fill="#0F1E2E">2</text>
+<text x="40" y="262">Kont naar beneden</text>
+<circle cx="236" cy="150" r="13" fill="#F97316"></circle><text x="231" y="155" fill="#0F1E2E">3</text>
+<text x="110" y="128">Bolle rug</text>
+<circle cx="292" cy="268" r="0" fill="#F97316"></circle>
+<circle cx="372" cy="150" r="13" fill="#F97316"></circle><text x="367" y="155" fill="#0F1E2E">4</text>
+<text x="392" y="128">Kijk onder je</text>
+<text x="392" y="146">wenkbrauwen door</text>
+<circle cx="312" cy="214" r="13" fill="#F97316"></circle><text x="307" y="219" fill="#0F1E2E">5</text>
+<text x="334" y="206">Schouders</text>
+<text x="334" y="224">laten hangen</text>
+</g>
+</svg>
+</div>
+</div>
+<p style="margin: 0; font-size: 15px; line-height: 1.55; color: #3B4A5A">Toon de animatie op je telefoon of tablet en bespreek het verschil tussen de houdingen. Pauzeer wanneer je een aandachtspunt wilt toelichten.</p>
+</div>
+
+<div style="flex: 1 1 380px; min-width: 0; background: #FFFFFF; border: 1px solid #DCE3EA; border-radius: 20px; padding: 24px; display: flex; flex-direction: column; gap: 16px">
+<h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 22px">Organisatie op de baan</h2>
+<div style="overflow-x: auto">
+<div class="track anim-running" style="position: relative; width: 520px; height: 260px; margin: 0 auto">
+<svg viewBox="0 0 520 260" width="520" height="260" aria-hidden="true" style="position: absolute; left: 0; top: 0">
+<rect x="10" y="10" width="500" height="240" rx="120" fill="#EEF5FA" stroke="#B6CCDB" stroke-width="3"></rect>
+<path d="M 130 40 H 390 A 90 90 0 0 1 390 220 H 130 A 90 90 0 0 1 130 40 Z" fill="none" stroke="#94A3B8" stroke-width="2" stroke-dasharray="8 8"></path>
+<path d="M 170 90 H 350 A 40 40 0 0 1 350 170 H 170 A 40 40 0 0 1 170 90 Z" fill="none" stroke="#94A3B8" stroke-width="2" stroke-dasharray="4 6"></path>
+<polygon points="220,34 226,46 214,46" fill="#F97316"></polygon>
+<polygon points="300,34 306,46 294,46" fill="#F97316"></polygon>
+<polygon points="220,214 226,226 214,226" fill="#F97316"></polygon>
+<polygon points="300,214 306,226 294,226" fill="#F97316"></polygon>
+</svg>
+<span class="track-dot dot-blue dot-outer dot-d0"></span><span class="track-dot dot-blue dot-outer dot-d2"></span><span class="track-dot dot-blue dot-outer dot-d4"></span>
+<span class="track-dot dot-blue dot-outer dot-d6"></span><span class="track-dot dot-blue dot-outer dot-d8"></span>
+<span class="track-dot dot-orange dot-inner dot-i0"></span><span class="track-dot dot-orange dot-inner dot-i45"></span>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px; font-size: 14px; line-height: 1.5; color: #334155">
+<div style="display: flex; gap: 10px; align-items: center"><span style="flex: none; width: 14px; height: 14px; border-radius: 999px; background: #1D4ED8"></span>Buitenbaan: wie het al kan, glijdt langs de pionnen in stoeltje</div>
+<div style="display: flex; gap: 10px; align-items: center"><span style="flex: none; width: 14px; height: 14px; border-radius: 999px; background: #F97316"></span>Binnenbaan: kleine lus, trainer rijdt mee en corrigeert</div>
+<p style="margin: 0">Tussen de pionnen: glijden in stoeltje. Op de bocht: rechtop uitrusten. Zo is er geen stilstand en kan jij in de binnenbaan individueel helpen.</p>
+</div>
+</div>
+</section>
+
+<section id="animationLibrary" aria-labelledby="extraAnimationsTitle" style="background:#FFFFFF;border:1px solid #DCE3EA;border-radius:20px;padding:28px;display:flex;flex-direction:column;gap:18px">
+<div><h2 id="extraAnimationsTitle" style="margin:0 0 6px;font-family:'Space Grotesk',sans-serif;font-size:26px">Meer oefenanimaties</h2><p style="margin:0;color:#4A5B6C;font-size:15px;line-height:1.5">Bekijk de bewegingen en gebruik de oefeningen als inspiratie voor je training.</p></div>
+<div class="exercise-animation-grid">
+<article class="exercise-animation-card" data-animation="slalom">
+<h3>Slalom door pionnen</h3>
+<svg viewBox="0 0 440 210" role="img" aria-label="Animatie van een schaatser die in een slalom om pionnen rijdt">
+<path d="M20 150 C80 150 95 85 145 95 S205 155 245 145 S305 80 350 95 S395 135 425 110" fill="none" stroke="#94A3B8" stroke-width="4" stroke-dasharray="8 8"></path>
+<g fill="#F97316"><path d="M85 146l10-25 10 25z"></path><path d="M145 108l10-25 10 25z"></path><path d="M220 153l10-25 10 25z"></path><path d="M300 100l10-25 10 25z"></path><path d="M370 116l10-25 10 25z"></path></g>
+<g fill="#1D4ED8" stroke="#1D4ED8" stroke-linecap="round" stroke-width="8">
+<circle cx="0" cy="-24" r="10" stroke="none"></circle><path d="M0-12l-4 30m-2-22l-16 8m16-8l15 7m-13 15l-16 18m16-18l20 12"></path>
+<animateMotion dur="5s" repeatCount="indefinite" path="M 26 135 C 72 135 72 100 112 100 S 175 140 210 140 S 278 88 318 88 S 370 115 412 110"></animateMotion>
+</g>
+<path d="M0 180h440" stroke="#B6CCDB" stroke-width="3"></path>
+</svg>
+<p>Rijd om en om links en rechts langs de pionnen. Kijk vooruit en stuur met je knieën.</p>
+</article>
+
+<article class="exercise-animation-card" data-animation="eenbeen">
+<h3>Eenbeen-glijbaan</h3>
+<svg viewBox="0 0 440 210" role="img" aria-label="Animatie van een schaatser die op één been glijdt">
+<path d="M20 165h400" stroke="#B6CCDB" stroke-width="3"></path>
+<path d="M50 172h340" stroke="#CBD5E1" stroke-width="2" stroke-dasharray="10 10"></path>
+<g fill="none" stroke="#1D4ED8" stroke-linecap="round" stroke-linejoin="round" stroke-width="9">
+<circle cx="0" cy="-34" r="10" fill="#1D4ED8" stroke="none"></circle><path d="M0-21l-5 30m-3-18l-17 8m17-8l19 2m-16 16l2 20 24 6m-26-26l-18 25"></path>
+<animateMotion dur="4s" repeatCount="indefinite" path="M 42 125 C 125 112 245 112 395 128"></animateMotion>
+</g>
+<g fill="#F97316"><circle cx="80" cy="170" r="5"></circle><circle cx="220" cy="170" r="5"></circle><circle cx="360" cy="170" r="5"></circle></g>
+</svg>
+<p>Glij rustig op één been. Houd je romp stabiel en wissel na een korte afstand van been.</p>
+</article>
+
+<article class="exercise-animation-card" data-animation="start">
+<h3>Start vanuit stilstand</h3>
+<svg viewBox="0 0 440 210" role="img" aria-label="Animatie van een schaatser die laag start en versnelt">
+<path d="M20 170h400" stroke="#B6CCDB" stroke-width="3"></path>
+<path d="M60 155v25m8-25v25" stroke="#F97316" stroke-width="4"></path>
+<path d="M100 150h90m-65 12h100m-75 12h110" stroke="#93C5FD" stroke-width="3" stroke-linecap="round" opacity=".8"></path>
+<g fill="none" stroke="#1D4ED8" stroke-linecap="round" stroke-linejoin="round" stroke-width="9">
+<circle cx="0" cy="-30" r="10" fill="#1D4ED8" stroke="none"></circle><path d="M0-17l15 15 18 2m-16-2l-18 16m17-16l-16 25m16-25l31 20"></path>
+<animateMotion dur="3.2s" repeatCount="indefinite" keyTimes="0;0.25;1" keyPoints="0;0.08;1" calcMode="linear" path="M 55 130 L 360 125"></animateMotion>
+</g>
+<path d="M385 72l18 10-18 10" fill="none" stroke="#F97316" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<p>Vertrek laag op het startsignaal. Maak de eerste passen krachtig en kom geleidelijk omhoog.</p>
+</article>
+
+<article class="exercise-animation-card" data-animation="bocht">
+<h3>Bocht rijden</h3>
+<svg viewBox="0 0 440 210" role="img" aria-label="Animatie van een schaatser die een bocht rijdt">
+<path d="M28 166 C100 166 104 54 220 54 S332 166 412 110" fill="none" stroke="#94A3B8" stroke-width="4" stroke-dasharray="8 8"></path>
+<path d="M28 190 C120 190 130 80 220 80 S310 190 412 134" fill="none" stroke="#CBD5E1" stroke-width="3"></path>
+<g fill="none" stroke="#1D4ED8" stroke-linecap="round" stroke-linejoin="round" stroke-width="9">
+<circle cx="0" cy="-32" r="10" fill="#1D4ED8" stroke="none"></circle><path d="M0-19l-7 28m-5-17l-15 10m15-10l18 2m-13 15l-17 20m17-20l24 12"></path>
+<animateMotion dur="4.5s" repeatCount="indefinite" rotate="auto" path="M 38 150 C 112 150 110 68 220 68 S 330 155 405 115"></animateMotion>
+</g>
+<circle cx="220" cy="68" r="5" fill="#F97316"></circle>
+</svg>
+<p>Kijk de bocht in, buig je knieën en houd voldoende ruimte tot de schaatser voor je.</p>
+</article>
+</div>
+<a href="../Builder.dc.html" style="font-size:14px">Open de trainingbouwer en gebruik deze oefeningen</a>
+</section>
+
+<section style="background: #FFFFFF; border: 1px solid #DCE3EA; border-radius: 20px; padding: 28px; display: flex; flex-direction: column; gap: 20px">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px">
+<h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 26px">Zo leg je het uit</h2>
+<div role="tablist" aria-label="Kies de leeftijdsfase" style="display: flex; flex-wrap: wrap; gap: 6px; background: #F1F5F9; border-radius: 999px; padding: 4px">
+<button type="button" role="tab" aria-selected="true" class="age-tab on" data-age="fun">FUNdament 6–9</button>
+<button type="button" role="tab" aria-selected="false" class="age-tab" data-age="ls">Leren schaatsen 9–12</button>
+<button type="button" role="tab" aria-selected="false" class="age-tab" data-age="lt">Leren trainen 12–18</button>
+</div>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px">
+<div style="background: #F8FAFC; border-radius: 14px; padding: 18px; display: flex; flex-direction: column; gap: 8px">
+<span style="font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #1E3A8A">Praatje</span>
+<p id="explanationTalk" style="margin: 0; font-size: 16px; line-height: 1.55">We gaan zitten op een onzichtbaar krukje… en dan glijden!</p>
+</div>
+<div style="background: #F8FAFC; border-radius: 14px; padding: 18px; display: flex; flex-direction: column; gap: 8px">
+<span style="font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #1E3A8A">Plaatje</span>
+<p id="explanationShow" style="margin: 0; font-size: 16px; line-height: 1.55">Doe het zelf voor en zak heel overdreven. Vraag: „Wie kan er nóg lager?” Laat daarna de animatie zien.</p>
+</div>
+<div style="background: #F8FAFC; border-radius: 14px; padding: 18px; display: flex; flex-direction: column; gap: 8px">
+<span style="font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #1E3A8A">Daadje</span>
+<p id="explanationDo" style="margin: 0; font-size: 16px; line-height: 1.55">Zet af tussen de eerste pionnen, ga op je krukje zitten en glij zo ver als je kunt. Wie komt het verst?</p>
+</div>
+</div>
+<div style="display: flex; gap: 12px; align-items: flex-start; background: #FFF4E8; border-radius: 14px; padding: 16px 18px">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9A3412" stroke-width="2" aria-hidden="true" style="flex: none; margin-top: 2px"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M12 2a7 7 0 0 0-4 12.7V16h8v-1.3A7 7 0 0 0 12 2z"></path></svg>
+<p style="margin: 0; font-size: 15px; line-height: 1.55; color: #7C2D12"><strong>Waarom het werkt:</strong> <span id="explanationWhy">Jonge kinderen leren via beelden en spel, niet via lichaamsdelen. Eén beeld (het krukje) onthouden ze; vijf aanwijzingen niet.</span></p>
+</div>
+</section>
+
+<section style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px">
+<div style="background: #FFFFFF; border: 1px solid #DCE3EA; border-radius: 20px; padding: 24px; display: flex; flex-direction: column; gap: 14px">
+<h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 22px">Wat zie je vaak — en wat zeg je dan?</h2>
+<div style="display: flex; flex-direction: column; gap: 4px; border-top: 1px solid #E2E8F0; padding-top: 12px"><strong style="font-size: 15px">Diep, maar met een holle rug</strong><span style="font-size: 15px; color: #3B4A5A">„Maak een kattenrug, alsof iemand je navel naar binnen trekt.”</span></div>
+<div style="display: flex; flex-direction: column; gap: 4px; border-top: 1px solid #E2E8F0; padding-top: 12px"><strong style="font-size: 15px">Kijkt naar het ijs</strong><span style="font-size: 15px; color: #3B4A5A">„Kijk naar mij aan het einde van het rechte eind.”</span></div>
+<div style="display: flex; flex-direction: column; gap: 4px; border-top: 1px solid #E2E8F0; padding-top: 12px"><strong style="font-size: 15px">Schouders opgetrokken, gespannen</strong><span style="font-size: 15px; color: #3B4A5A">„Laat je armen even bungelen als slappe spaghetti.”</span></div>
+</div>
+
+<div style="background: #FFFFFF; border: 1px solid #DCE3EA; border-radius: 20px; padding: 24px; display: flex; flex-direction: column; gap: 14px">
+<h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 22px">Makkelijker of moeilijker</h2>
+<div style="display: flex; gap: 12px; align-items: flex-start; border-top: 1px solid #E2E8F0; padding-top: 12px"><span style="flex: none; font-size: 12px; font-weight: 700; padding: 4px 8px; border-radius: 6px; background: #DBEAFE; color: #1E3A8A">Makkelijker</span><span style="font-size: 15px; color: #3B4A5A">Handen op de knieën tijdens het glijden. Eerst stilstaand oefenen aan de boarding.</span></div>
+<div style="display: flex; gap: 12px; align-items: flex-start; border-top: 1px solid #E2E8F0; padding-top: 12px"><span style="flex: none; font-size: 12px; font-weight: 700; padding: 4px 8px; border-radius: 6px; background: #F1F5F9; color: #334155">Moeilijker</span><span style="font-size: 15px; color: #3B4A5A">Handen op de rug, en wie het langst blijft glijden zonder af te zetten.</span></div>
+<div style="display: flex; gap: 12px; align-items: flex-start; border-top: 1px solid #E2E8F0; padding-top: 12px"><span style="flex: none; font-size: 12px; font-weight: 700; padding: 4px 8px; border-radius: 6px; background: #FFEDD5; color: #7C2D12">Als spel</span><span style="font-size: 15px; color: #3B4A5A">Schaatsstoplicht: bij rood zit iedereen in stoeltje.</span></div>
+</div>
+
+<div style="background: #0F1E2E; color: #FFFFFF; border-radius: 20px; padding: 24px; display: flex; flex-direction: column; gap: 14px">
+<h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 22px">Plek in de leerlijn</h2>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<a href="Oefening-IJsgewenning.dc.html" style="text-decoration: none; color: #CBD5E1; border: 1px solid #334155; border-radius: 12px; padding: 12px 14px; font-size: 15px">← Vorige stap · IJsgewenning</a>
+<div style="border: 2px solid #F97316; border-radius: 12px; padding: 12px 14px; font-size: 15px; font-weight: 700">Nu · Stoeltje-glijden</div>
+<a href="Oefening-Achterop-zitten.dc.html" style="text-decoration: none; color: #CBD5E1; border: 1px solid #334155; border-radius: 12px; padding: 12px 14px; font-size: 15px">Volgende stap · Achterop zitten, gewicht in de hakken →</a>
+</div>
+<p style="margin: 0; font-size: 14px; line-height: 1.5; color: #CBD5E1">Klaar als: een kind 3 pionnen lang in stoeltje glijdt zonder rechtop te komen.</p>
+</div>
+</section>
+
+</main>
+</div>
+</x-dc>
+<script>
+(function () {
+  var explanations = {
+    fun: {
+      praatje: 'We gaan zitten op een onzichtbaar krukje… en dan glijden!',
+      plaatje: 'Doe het zelf voor en zak heel overdreven. Vraag: „Wie kan er nóg lager?” Laat daarna de animatie zien.',
+      daadje: 'Zet af tussen de eerste pionnen, ga op je krukje zitten en glij zo ver als je kunt. Wie komt het verst?',
+      waarom: 'Jonge kinderen leren via beelden en spel, niet via lichaamsdelen. Eén beeld (het krukje) onthouden ze; vijf aanwijzingen niet.'
+    },
+    ls: {
+      praatje: 'Diep zitten is de basis van alles. Hoe lager je zit, hoe langer je kunt afzetten.',
+      plaatje: 'Laat de animatie zien en tel samen de 5 punten. Kies vandaag er één: knieën naar voren.',
+      daadje: 'Rijd in tweetallen. Je maatje kijkt of je knie voorbij de neus van je schaats komt en roept „ja!” als het lukt.',
+      waarom: 'Eén focuspunt per keer voorkomt overload, en kinderen die elkaar beoordelen kijken scherper naar hun eigen houding.'
+    },
+    lt: {
+      praatje: 'Een lagere zit geeft een langere afzetweg. Daar komt je snelheid vandaan, niet uit harder duwen.',
+      plaatje: 'Film elkaar 5 seconden met de telefoon en leg het beeld naast de animatie. Wat zie je bij jezelf?',
+      daadje: 'Drie ronden stoeltje-glijden met handen op de rug, daarna één ronde op tempo met dezelfde zit. Merk je het verschil?',
+      waarom: 'Oudere schaatsers willen weten waarom. Zelf ontdekken via video maakt ze eigenaar van hun techniek.'
+    }
+  };
+  var tabs = document.querySelectorAll('.age-tab');
+  var animationToggle = document.getElementById('animationToggle');
+  var scenes = document.querySelectorAll('.scene');
+  var track = document.querySelector('.track');
+
+  function showExplanation(age) {
+    var explanation = explanations[age];
+    document.getElementById('explanationTalk').textContent = explanation.praatje;
+    document.getElementById('explanationShow').textContent = explanation.plaatje;
+    document.getElementById('explanationDo').textContent = explanation.daadje;
+    document.getElementById('explanationWhy').textContent = explanation.waarom;
+    tabs.forEach(function (tab) {
+      var selected = tab.getAttribute('data-age') === age;
+      tab.classList.toggle('on', selected);
+      tab.setAttribute('aria-selected', String(selected));
+    });
+  }
+
+  tabs.forEach(function (tab) {
+    tab.addEventListener('click', function () {
+      showExplanation(tab.getAttribute('data-age'));
+    });
+  });
+
+  animationToggle.addEventListener('click', function () {
+    var playing = animationToggle.getAttribute('aria-pressed') !== 'true';
+    animationToggle.setAttribute('aria-pressed', String(playing));
+    animationToggle.textContent = playing ? 'Pauzeer animatie' : 'Speel animatie af';
+    scenes.forEach(function (scene) {
+      scene.classList.toggle('anim-running', playing);
+      scene.classList.toggle('anim-paused', !playing);
+    });
+    track.classList.toggle('anim-running', playing);
+    track.classList.toggle('anim-paused', !playing);
+  });
+}());
+</script>
+</body>
+</html>

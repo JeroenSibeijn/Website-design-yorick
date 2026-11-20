@@ -2,74 +2,743 @@
 <html lang="nl">
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Schaatskompas – IJsmodus</title>
-<script src="./support.js"></script>
+<script src="exercise-catalog.js"></script>
+<style>
+:root{font-family:Inter,system-ui,sans-serif;color:#FFFFFF;background:#0F1E2E;font-synthesis:none}
+*{box-sizing:border-box}
+body{margin:0;background:#0F1E2E;color:#FFFFFF}
+button,select{font:inherit}
+.ice-shell{max-width:1080px;min-height:100vh;margin:0 auto;padding:24px clamp(16px,4vw,36px) 40px}
+.ice-header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:22px;border-bottom:1px solid #334155}
+.brand-mark{display:flex;align-items:center;gap:10px;min-width:0}
+.brand-mark svg{flex:none}
+.brand-mark strong{font:700 19px 'Space Grotesk',sans-serif}
+.brand-mark span{display:block;color:#CBD5E1;font-size:13px}
+.header-actions{display:flex;align-items:center;gap:8px;margin-left:auto}
+.return-link{display:inline-flex;align-items:center;justify-content:center;min-height:42px;margin-left:auto;padding:9px 14px;border:1px solid #475569;border-radius:999px;background:#14263A;color:#FFFFFF;font-weight:700;text-decoration:none;white-space:nowrap}
+.return-link:hover{background:#1F3247;color:#FDBA74}
+.selection-panel,.training-intro,.phase-card{border:1px solid #334155;border-radius:20px;background:#14263A}
+.selection-panel{margin:24px 0;padding:20px}
+.section-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:16px}
+.section-heading h2{margin:0;font:700 21px 'Space Grotesk',sans-serif}
+.section-heading p{margin:5px 0 0;color:#CBD5E1;font-size:14px;line-height:1.5}
+.select-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.field{display:flex;flex-direction:column;gap:7px;min-width:0}
+.field label{font-size:13px;font-weight:700;color:#CBD5E1}
+.field select{width:100%;min-height:46px;padding:10px 12px;border:1px solid #64748B;border-radius:10px;background:#FFFFFF;color:#0F1E2E}
+.screen-status{min-height:20px;margin:12px 0 0;color:#FDBA74;font-size:14px}
+.training-view[hidden],.empty-state[hidden]{display:none}
+.training-intro{margin:24px 0 18px;padding:24px;background:linear-gradient(135deg,#1F3247,#14263A)}
+.training-meta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.training-meta span,.duration-pill{padding:6px 10px;border-radius:999px;background:#223B55;color:#E2E8F0;font-size:13px;font-weight:700}
+.duration-pill{background:#FDBA74;color:#0F1E2E}
+h1{margin:0;font:700 clamp(28px,5vw,42px)/1.08 'Space Grotesk',sans-serif}
+.training-notes{margin:12px 0 0;color:#CBD5E1;line-height:1.55}
+.primary-button{display:inline-flex;align-items:center;justify-content:center;min-height:46px;margin-top:18px;padding:11px 18px;border:0;border-radius:12px;background:#F97316;color:#0F1E2E;font-weight:800;cursor:pointer}
+.primary-button:hover{background:#FDBA74}
+#overviewContent[hidden],#guidedView[hidden]{display:none}
+.phase-nav{display:flex;gap:8px;overflow-x:auto;padding:2px 0 14px;scrollbar-color:#64748B transparent}
+.phase-nav button,.secondary-button{min-height:42px;padding:9px 14px;border:1px solid #475569;border-radius:999px;background:#14263A;color:#FFFFFF;font-weight:700;white-space:nowrap;cursor:pointer}
+.phase-nav button:hover,.secondary-button:hover{background:#1F3247}
+.phase-list{display:flex;flex-direction:column;gap:16px}
+.phase-card{padding:20px;scroll-margin-top:16px}
+.phase-note-preview{margin:12px 0 0;padding:12px;border-left:3px solid #FDBA74;border-radius:0 10px 10px 0;background:#1F3247;color:#E2E8F0;line-height:1.5;white-space:pre-wrap}
+.phase-header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding-bottom:14px;border-bottom:1px solid #334155}
+.phase-kicker{display:block;margin-bottom:4px;color:#FDBA74;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.phase-header h2{margin:0;font:700 21px 'Space Grotesk',sans-serif}
+.phase-duration{color:#CBD5E1;font-size:13px;font-weight:700;white-space:nowrap}
+.exercise-list{display:flex;flex-direction:column;gap:12px;padding-top:14px}
+.exercise-card{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;padding:16px;border:1px solid #334155;border-radius:16px;background:#0F1E2E}
+.exercise-card h3{margin:0;font:700 18px 'Space Grotesk',sans-serif}
+.exercise-description{margin:8px 0 0;color:#CBD5E1;font-size:14px;line-height:1.55}
+.exercise-duration{display:inline-block;margin-top:10px;color:#FDBA74;font-size:13px;font-weight:800}
+.exercise-media{display:flex;flex-direction:column;gap:10px;min-width:0}
+.animation-launch-button{align-self:flex-start;min-height:42px;padding:10px 14px;border:1px solid #F97316;border-radius:10px;background:#223B55;color:#FFFFFF;font-weight:800;cursor:pointer}
+.animation-launch-button:hover{background:#F97316;color:#0F1E2E}
+.media-item{display:flex;flex-direction:column;gap:6px}
+.media-item strong{color:#CBD5E1;font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+.media-item iframe,.media-item video,.media-item img{display:block;width:100%;aspect-ratio:16/9;max-width:100%;border:0;border-radius:12px;background:#1F3247;object-fit:contain}
+.media-item iframe{min-height:180px}
+.media-item iframe.built-in-animation{height:320px}
+.media-item iframe.built-in-animation-stoeltje{height:440px}
+.media-item a{color:#7DD3FC;overflow-wrap:anywhere}
+.empty-phase,.empty-state{padding:16px;border:1px dashed #64748B;border-radius:12px;color:#CBD5E1;line-height:1.5}
+.empty-state{margin:24px 0}
+.empty-state h2{margin:0 0 6px;font:700 21px 'Space Grotesk',sans-serif;color:#FFFFFF}
+.empty-state p{margin:0}
+.guided-view{margin-top:20px;padding:20px;border:1px solid #334155;border-radius:20px;background:#14263A}
+.guided-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+.guided-heading h2{margin:0;font:700 clamp(22px,4vw,30px)/1.15 'Space Grotesk',sans-serif}
+.guided-progress-label{margin:0 0 6px;color:#FDBA74;font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+.guided-training-note{margin:16px 0;padding:12px 14px;border-radius:12px;background:#1F3247;color:#E2E8F0;line-height:1.55;white-space:pre-wrap}
+.guided-progress{display:block;width:100%;height:8px;margin:16px 0 20px;overflow:hidden;border:0;border-radius:999px;background:#334155;accent-color:#F97316}
+.guided-progress::-webkit-progress-bar{border-radius:999px;background:#334155}
+.guided-progress::-webkit-progress-value{border-radius:999px;background:#F97316}
+.guided-progress::-moz-progress-bar{border-radius:999px;background:#F97316}
+.guided-phase-content .phase-card{padding:18px}
+.phase-note-panel{display:flex;flex-direction:column;gap:8px;margin-top:16px;padding:16px;border:1px solid #475569;border-radius:14px;background:#0F1E2E}
+.phase-note-panel label{font-weight:800}
+.phase-note-panel textarea{width:100%;min-height:100px;padding:12px;border:1px solid #64748B;border-radius:10px;background:#FFFFFF;color:#0F1E2E;font:inherit;line-height:1.5;resize:vertical}
+.phase-note-panel p{min-height:18px;margin:0;color:#CBD5E1;font-size:13px}
+.guided-controls{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:16px}
+.guided-controls button:disabled{opacity:.5;cursor:not-allowed}
+.guided-step-count{color:#CBD5E1;font-size:13px;font-weight:700}
+.mode-footer{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:20px;padding-top:16px;border-top:1px solid #334155;color:#94A3B8;font-size:13px}
+.animation-overlay[hidden]{display:none}
+.animation-overlay{position:fixed;inset:0;z-index:10000;display:flex;flex-direction:column;gap:14px;padding:clamp(12px,3vw,32px);background:#07111D;color:#FFFFFF}
+.animation-overlay:fullscreen{width:100vw;height:100vh;height:100dvh;max-width:none;padding:clamp(12px,3vw,32px)}
+.animation-viewer-header{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.animation-viewer-header h2{margin:0;font:700 clamp(20px,4vw,30px)/1.2 'Space Grotesk',sans-serif}
+.animation-viewer-actions{display:flex;align-items:center;gap:8px}
+.animation-viewer-media{display:flex;flex:1;min-height:0;align-items:center;justify-content:center}
+.animation-viewer-media iframe,.animation-viewer-media video,.animation-viewer-media img{display:block;width:100%;height:100%;max-width:100%;max-height:100%;min-height:0;aspect-ratio:auto;border:0;border-radius:12px;object-fit:contain}
+.animation-viewer-status{min-height:18px;margin:0;color:#CBD5E1;font-size:13px}
+body.animation-open{overflow:hidden}
+:fullscreen .ice-shell{width:100%;max-width:none;min-height:100vh;padding:24px clamp(20px,5vw,80px) 40px}
+html.app-fullscreen-fallback,html.app-fullscreen-fallback body{height:100%;min-height:100%}
+html.app-fullscreen-fallback .ice-shell{width:100%;max-width:none;min-height:100vh}
+.secondary-button:focus-visible,.primary-button:focus-visible,.return-link:focus-visible,.animation-launch-button:focus-visible,.phase-nav button:focus-visible,.field select:focus-visible,.phase-note-panel textarea:focus-visible{outline:3px solid #7DD3FC;outline-offset:3px}
+@media(max-width:680px){.ice-shell{padding-top:16px}.ice-header{flex-wrap:wrap}.header-actions{width:100%;justify-content:flex-end;flex-wrap:wrap}.selection-panel{padding:16px}.select-grid,.exercise-card{grid-template-columns:1fr}.phase-card{padding:16px}.training-intro{padding:20px}.phase-header{flex-direction:column}.mode-footer{align-items:flex-start;flex-direction:column}.guided-view{padding:16px}.guided-heading{flex-direction:column}.guided-controls{flex-wrap:wrap}.guided-step-count{order:-1;width:100%;text-align:center}.animation-viewer-header{align-items:flex-start;flex-direction:column}.animation-viewer-actions{width:100%;justify-content:space-between}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important}}
+</style>
 </head>
 <body>
-<x-dc>
-<helmet>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap">
-<style>
-body{margin:0}
-a{color:#7DD3FC}a:hover{color:#BAE6FD}
-</style>
-</helmet>
-<div style="width: 390px; height: 844px; box-sizing: border-box; background: #0F1E2E; color: #FFFFFF; font-family: Inter, system-ui, sans-serif; padding: 24px 20px 28px; display: flex; flex-direction: column; gap: 18px">
-
-<div style="display: flex; justify-content: space-between; align-items: center">
-<a href="Builder.dc.html" aria-label="Terug naar de training" style="width: 44px; height: 44px; border-radius: 12px; background: #1F3247; display: flex; align-items: center; justify-content: center; color: #FFFFFF">
-<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
-</a>
-<span style="font-size: 14px; color: #CBD5E1">Week 8 · Inzet schaats</span>
-<span style="font-size: 14px; font-weight: 700; color: #FDBA74">3 / 5</span>
+<div class="ice-shell">
+  <header class="ice-header">
+    <div class="brand-mark" aria-label="Schaatskompas op het ijs">
+      <svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="14" fill="none" stroke="#7DD3FC" stroke-width="2.5"></circle><path d="M9 20 C13 12, 19 12, 23 20" fill="none" stroke="#FDBA74" stroke-width="2.5" stroke-linecap="round"></path></svg>
+      <div><strong>Schaatskompas</strong><span>Op het ijs · trainingsmodus</span></div>
+    </div>
+    <div class="header-actions">
+      <button id="appFullscreenButton" class="secondary-button" type="button" aria-pressed="false">Volledig scherm</button>
+      <a class="return-link" href="Main.dc.html">Terug naar de website</a>
+    </div>
+  </header>
+  <main>
+    <section class="selection-panel" aria-labelledby="selectionTitle">
+      <div class="section-heading">
+        <div><h2 id="selectionTitle">Kies je training</h2><p>Je blijft in de ijsmodus. De volledige training en beschikbare animaties staan hieronder.</p></div>
+      </div>
+      <div class="select-grid">
+        <div class="field"><label for="groupSelect">Groep</label><select id="groupSelect"></select></div>
+        <div class="field"><label for="trainingSelect">Training</label><select id="trainingSelect"></select></div>
+      </div>
+      <p id="screenStatus" class="screen-status" role="status" aria-live="polite"></p>
+    </section>
+    <section id="emptyState" class="empty-state" aria-live="polite" hidden>
+      <h2>Geen training beschikbaar</h2>
+      <p id="emptyMessage">Sla eerst een training met oefeningen op bij een groep. Daarna kun je die hier volledig bekijken.</p>
+    </section>
+    <section id="trainingView" class="training-view" aria-live="polite" hidden>
+      <header class="training-intro">
+        <div id="trainingMeta" class="training-meta"></div>
+        <h1 id="trainingTitle"></h1>
+        <p id="trainingNotes" class="training-notes" hidden></p>
+        <button id="startTraining" class="primary-button" type="button">Training starten</button>
+      </header>
+      <div id="overviewContent">
+        <nav id="phaseNav" class="phase-nav" aria-label="Trainingsonderdelen"></nav>
+        <div id="phaseList" class="phase-list"></div>
+        <footer class="mode-footer">
+          <span>Je blijft in de trainingsmodus; onderdelen en animaties openen niet op een andere pagina.</span>
+          <button id="refreshTraining" class="secondary-button" type="button">Training opnieuw laden</button>
+        </footer>
+      </div>
+      <section id="guidedView" class="guided-view" aria-label="Training stap voor stap" hidden>
+        <div class="guided-heading">
+          <div><p id="guidedProgressLabel" class="guided-progress-label"></p><h2 id="guidedPhaseTitle"></h2></div>
+          <button id="exitGuided" class="secondary-button" type="button">Terug naar overzicht</button>
+        </div>
+        <progress id="guidedProgress" class="guided-progress" max="1" value="0" aria-label="Voortgang van de training"></progress>
+        <p id="guidedTrainingNote" class="guided-training-note" hidden></p>
+        <div id="guidedPhaseContent" class="guided-phase-content"></div>
+        <div class="phase-note-panel">
+          <label for="guidedPhaseNotes">Notities bij dit onderdeel</label>
+          <textarea id="guidedPhaseNotes" placeholder="Schrijf hier aandachtspunten of observaties..."></textarea>
+          <p id="phaseNoteStatus" role="status" aria-live="polite">Notities worden automatisch bij deze training opgeslagen.</p>
+        </div>
+        <div class="guided-controls">
+          <button id="previousPhase" class="secondary-button" type="button">Vorig onderdeel</button>
+          <span id="guidedStepCount" class="guided-step-count"></span>
+          <button id="nextPhase" class="primary-button" type="button">Volgend onderdeel</button>
+        </div>
+      </section>
+    </section>
+  </main>
+  <section id="animationOverlay" class="animation-overlay" role="dialog" aria-modal="true" aria-labelledby="animationViewerTitle" hidden>
+    <div class="animation-viewer-header">
+      <h2 id="animationViewerTitle">Animatie</h2>
+      <div class="animation-viewer-actions">
+        <button id="animationFullscreenButton" class="secondary-button" type="button" aria-pressed="false">Volledig scherm</button>
+        <button id="closeAnimationButton" class="secondary-button" type="button">Sluiten</button>
+      </div>
+    </div>
+    <div id="animationViewerMedia" class="animation-viewer-media"></div>
+    <p id="animationViewerStatus" class="animation-viewer-status" role="status" aria-live="polite"></p>
+  </section>
 </div>
+<script>
+(function () {
+  'use strict';
 
-<div aria-hidden="true" style="display: flex; gap: 4px">
-<span style="flex: 10; height: 6px; border-radius: 999px; background: #7DD3FC"></span>
-<span style="flex: 10; height: 6px; border-radius: 999px; background: #7DD3FC"></span>
-<span style="flex: 20; height: 6px; border-radius: 999px; background: #F97316"></span>
-<span style="flex: 20; height: 6px; border-radius: 999px; background: #334155"></span>
-<span style="flex: 8; height: 6px; border-radius: 999px; background: #334155"></span>
-</div>
+  var STORAGE_KEY = 'schaatskompas-groepen-v1';
+  var catalog = window.SchaatskompasExerciseCatalog;
+  var groupSelect = document.getElementById('groupSelect');
+  var trainingSelect = document.getElementById('trainingSelect');
+  var screenStatus = document.getElementById('screenStatus');
+  var emptyState = document.getElementById('emptyState');
+  var emptyMessage = document.getElementById('emptyMessage');
+  var trainingView = document.getElementById('trainingView');
+  var overviewContent = document.getElementById('overviewContent');
+  var guidedView = document.getElementById('guidedView');
+  var animationOverlay = document.getElementById('animationOverlay');
+  var animationViewerMedia = document.getElementById('animationViewerMedia');
+  var animationTrigger = null;
+  var animationWasFullscreen = false;
+  var currentTraining = null;
+  var guidedPhaseIndex = 0;
+  var guidedMode = false;
+  var guidedNotesDirty = {};
 
-<div style="display: flex; flex-direction: column; gap: 4px">
-<span style="font-size: 14px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #FDBA74">Kern 1 · techniek</span>
-<h1 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 34px; line-height: 1.05">Inzet op de lijn</h1>
-</div>
+  function escapeHtml(value) {
+    return String(value == null ? '' : value).replace(/[&<>"']/g, function (char) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char];
+    });
+  }
 
-<div style="display: flex; align-items: baseline; gap: 10px">
-<span style="font-family: 'Space Grotesk', sans-serif; font-size: 96px; font-weight: 700; line-height: 1; letter-spacing: -0.02em">7:42</span>
-<span style="font-size: 16px; color: #CBD5E1">van 10 min</span>
-</div>
+  function readGroups() {
+    var stored = localStorage.getItem(STORAGE_KEY);
+    if (!stored) return { activeGroupId: '', groups: [] };
+    var data;
+    try {
+      data = JSON.parse(stored);
+    } catch (error) {
+      throw new Error('De opgeslagen groepsgegevens zijn beschadigd en kunnen niet worden gelezen.');
+    }
+    if (!data || !Array.isArray(data.groups)) {
+      throw new Error('De opgeslagen groepsgegevens hebben een ongeldig formaat.');
+    }
+    return data;
+  }
 
-<div style="background: #FFFFFF; color: #0F1E2E; border-radius: 20px; padding: 20px; display: flex; flex-direction: column; gap: 10px">
-<span style="font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #1E3A8A">Roep dit</span>
-<p style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 28px; font-weight: 700; line-height: 1.15">„Half voetje voor, op de buitenkant!”</p>
-<p style="margin: 0; font-size: 15px; line-height: 1.45; color: #3B4A5A">Let op: zet niemand de voet vóór de ander. Dan valt het gewicht naar achteren.</p>
-</div>
+  function getTrainings(group) {
+    return (Array.isArray(group.trainings) ? group.trainings : [])
+      .filter(function (training) {
+        return training && training.id && training.workout && Array.isArray(training.workout.phases);
+      })
+      .sort(function (a, b) {
+        return String(a.date || '').localeCompare(String(b.date || ''));
+      });
+  }
 
-<a href="Oefening.dc.html" style="display: flex; align-items: center; gap: 12px; background: #1F3247; border-radius: 16px; padding: 14px 16px; text-decoration: none; color: #FFFFFF">
-<span style="width: 44px; height: 44px; border-radius: 999px; background: #F97316; display: flex; align-items: center; justify-content: center; color: #0F1E2E; flex: none">
-<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="7 4 20 12 7 20 7 4"></polygon></svg>
-</span>
-<span style="display: flex; flex-direction: column; gap: 2px"><strong style="font-size: 16px">Toon animatie aan de groep</strong><span style="font-size: 14px; color: #CBD5E1">8 sec · zo niet / zo wel</span></span>
-</a>
+  function formatDate(value) {
+    if (!value) return 'Datum niet ingesteld';
+    var date = new Date(value + 'T12:00:00');
+    return Number.isNaN(date.getTime()) ? 'Datum niet ingesteld' :
+      date.toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' });
+  }
 
-<div style="margin-top: auto; display: flex; flex-direction: column; gap: 10px">
-<span style="font-size: 14px; color: #CBD5E1">Hierna: <strong style="color: #FFFFFF">Kern 2 · Estafette in teams</strong></span>
-<div style="display: flex; gap: 10px">
-<button type="button" style="flex: 1; font: inherit; font-size: 17px; font-weight: 700; height: 64px; border-radius: 16px; border: 2px solid #475569; background: transparent; color: #FFFFFF; cursor: pointer">+2 min</button>
-<button type="button" style="flex: 2; font: inherit; font-size: 17px; font-weight: 700; height: 64px; border-radius: 16px; border: none; background: #F97316; color: #0F1E2E; cursor: pointer">Volgend blok</button>
-</div>
-</div>
+  function showEmpty(message) {
+    trainingView.hidden = true;
+    guidedMode = false;
+    guidedView.hidden = true;
+    emptyState.hidden = false;
+    emptyMessage.textContent = message;
+  }
 
-</div>
-</x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
-class Component extends DCLogic {
-  renderVals() { return {}; }
-}
+  function renderTraining(data) {
+    var group = data.groups.filter(function (item) { return item.id === groupSelect.value; })[0];
+    var training = group && getTrainings(group).filter(function (item) { return item.id === trainingSelect.value; })[0];
+    if (!training) {
+      currentTraining = null;
+      showEmpty('Er staat geen opgeslagen training met oefeningen klaar. Sla eerst een training op bij een groep en laad deze pagina opnieuw.');
+      return;
+    }
+
+    var phases = training.workout.phases;
+    var exerciseCount = phases.reduce(function (total, phase) {
+      return total + (Array.isArray(phase.exercises) ? phase.exercises.length : 0);
+    }, 0);
+    if (!exerciseCount) {
+      currentTraining = null;
+      showEmpty('Deze training bevat nog geen oefeningen. Voeg oefeningen toe in de trainingbouwer en sla de training opnieuw op.');
+      return;
+    }
+    currentTraining = training;
+    guidedPhaseIndex = 0;
+    guidedMode = false;
+    guidedView.hidden = true;
+    overviewContent.hidden = false;
+
+    var minutes = Number(training.workout.totalMinutes) || phases.reduce(function (total, phase) {
+      return total + (Array.isArray(phase.exercises) ? phase.exercises.reduce(function (sum, exercise) {
+        return sum + (Number(exercise.minutes) || 0);
+      }, 0) : 0);
+    }, 0);
+    document.getElementById('trainingMeta').innerHTML =
+      '<span>' + escapeHtml(group.name) + '</span><span>' + escapeHtml(formatDate(training.date)) + '</span>' +
+      '<span>' + exerciseCount + (exerciseCount === 1 ? ' oefening' : ' oefeningen') + '</span>' +
+      '<span class="duration-pill">' + minutes + ' minuten</span>';
+    document.getElementById('trainingTitle').textContent = training.topic || 'Training';
+    var notes = document.getElementById('trainingNotes');
+    notes.textContent = training.notes || '';
+    notes.hidden = !training.notes;
+    document.getElementById('startTraining').hidden = false;
+
+    document.getElementById('phaseNav').innerHTML = phases.map(function (phase, index) {
+      var label = phase.label || 'Onderdeel ' + (index + 1);
+      return '<button type="button" data-phase-target="phase-' + index + '">' + escapeHtml(label) + '</button>';
+    }).join('');
+    renderPhaseCards(phases);
+
+    screenStatus.textContent = '';
+    emptyState.hidden = true;
+    trainingView.hidden = false;
+  }
+
+  function renderPhaseCards(phases) {
+    document.getElementById('phaseList').innerHTML = phases.map(function (phase, phaseIndex) {
+      return renderPhaseCard(phase, phaseIndex, 'phase', false, true);
+    }).join('');
+  }
+
+  function renderPhaseCard(phase, phaseIndex, idPrefix, eagerMedia, showNotes) {
+    var exercises = Array.isArray(phase.exercises) ? phase.exercises : [];
+    var phaseMinutes = exercises.reduce(function (total, exercise) {
+      return total + (Number(exercise.minutes) || 0);
+    }, 0);
+    var titleId = idPrefix + '-title-' + phaseIndex;
+    var cards = exercises.map(function (exercise, exerciseIndex) {
+      var details = exercise.details || exercise.explanation || '';
+      var media = renderExerciseMedia(exercise, eagerMedia);
+      return '<article class="exercise-card"><div><span class="phase-kicker">Oefening ' + (exerciseIndex + 1) + '</span>' +
+        '<h3>' + escapeHtml(exercise.name || 'Oefening') + '</h3>' +
+        (details ? '<p class="exercise-description">' + escapeHtml(details) + '</p>' : '') +
+        (Number(exercise.minutes) > 0 ? '<span class="exercise-duration">' + escapeHtml(exercise.minutes) + ' min</span>' : '') +
+        '</div>' + (media ? '<div class="exercise-media">' + media + '</div>' : '') + '</article>';
+    }).join('');
+    var notes = showNotes && phase.notes ?
+      '<p class="phase-note-preview"><strong>Notities:</strong> ' + escapeHtml(phase.notes) + '</p>' : '';
+    return '<section id="' + idPrefix + '-' + phaseIndex + '" class="phase-card" aria-labelledby="' + titleId + '">' +
+      '<header class="phase-header"><div><span class="phase-kicker">Onderdeel ' + (phaseIndex + 1) + '</span>' +
+      '<h2 id="' + titleId + '">' + escapeHtml(phase.label || 'Onderdeel ' + (phaseIndex + 1)) + '</h2></div>' +
+      '<span class="phase-duration">' + phaseMinutes + ' min</span></header>' + notes +
+      (cards ? '<div class="exercise-list">' + cards + '</div>' : '<p class="empty-phase">Voor dit onderdeel zijn nog geen oefeningen ingepland.</p>') +
+      '</section>';
+  }
+
+  function renderExerciseMedia(exercise, eager) {
+    var html = '';
+    var name = exercise.name || 'Oefening';
+    if (exercise.animationUrl) {
+      html += renderAnimationButton(name, exercise.animationUrl, '');
+    }
+    if (exercise.videoUrl) {
+      html += renderMediaItem(exercise.videoUrl, 'Uitlegvideo · ' + name, eager);
+    }
+    if (!exercise.animationUrl) {
+      var key = builtInAnimationKey(exercise);
+      if (key) {
+        html += renderAnimationButton(name, '', key);
+      }
+    }
+    return html;
+  }
+
+  function renderAnimationButton(name, url, key) {
+    return '<div class="media-item"><strong>Animatie</strong><button class="animation-launch-button" type="button" data-open-animation' +
+      ' data-animation-title="' + escapeHtml(name) + '" data-animation-url="' + escapeHtml(url) +
+      '" data-animation-key="' + escapeHtml(key) + '">Animatie op volledig scherm</button></div>';
+  }
+
+  function renderMediaItem(url, label, eager) {
+    try {
+      var media = catalog.mediaMarkup(url, label);
+      if (eager) media = media.replace(/loading="lazy"/g, 'loading="eager"');
+      return '<div class="media-item"><strong>' + escapeHtml(label) + '</strong>' +
+        media + '</div>';
+    } catch (error) {
+      return '<p class="exercise-description" role="alert">' + escapeHtml(error.message || 'Media kon niet worden geladen.') + '</p>';
+    }
+  }
+
+  function openAnimationViewer(button) {
+    var title = button.getAttribute('data-animation-title') || 'Animatie';
+    var url = button.getAttribute('data-animation-url') || '';
+    var key = button.getAttribute('data-animation-key') || '';
+    var html;
+    try {
+      if (url) {
+        html = catalog.mediaMarkup(url, title).replace(/loading="lazy"/g, 'loading="eager"');
+      } else if (['stoeltje', 'slalom', 'eenbeen', 'bocht', 'start'].indexOf(key) >= 0) {
+        html = '<iframe title="' + escapeHtml('Animatie: ' + title) + '" allowfullscreen src="Oefeningen/Oefening.dc.html?embed=' + key + '"></iframe>';
+      } else {
+        throw new Error('De animatie heeft geen geldige link.');
+      }
+    } catch (error) {
+      document.getElementById('animationViewerStatus').textContent =
+        error.message || 'De animatie kon niet worden geopend.';
+      return;
+    }
+
+    animationTrigger = button;
+    animationWasFullscreen = false;
+    document.getElementById('animationViewerTitle').textContent = title;
+    animationViewerMedia.innerHTML = html;
+    document.getElementById('animationViewerStatus').textContent = '';
+    animationOverlay.hidden = false;
+    document.body.classList.add('animation-open');
+    document.getElementById('closeAnimationButton').focus();
+    requestFullscreenFor(animationOverlay, function () {
+      document.getElementById('animationViewerStatus').textContent =
+        'Browser-fullscreen is niet beschikbaar; de animatie blijft schermvullend in dit venster.';
+    }, function () {
+      animationWasFullscreen = document.fullscreenElement === animationOverlay;
+      document.getElementById('animationViewerStatus').textContent =
+        'Druk op Esc of Sluiten om terug te gaan naar de training.';
+      updateFullscreenButtons();
+    });
+  }
+
+  function requestFullscreenFor(element, onError, onSuccess) {
+    if (!element || typeof element.requestFullscreen !== 'function') {
+      onError();
+      return;
+    }
+    var request;
+    try {
+      request = element.requestFullscreen();
+    } catch (error) {
+      onError();
+      return;
+    }
+    if (request && typeof request.then === 'function') {
+      request.then(function () {
+        if (onSuccess) onSuccess();
+        updateFullscreenButtons();
+      }).catch(onError);
+    } else {
+      if (onSuccess) onSuccess();
+      updateFullscreenButtons();
+    }
+  }
+
+  function updateFullscreenButtons() {
+    var appButton = document.getElementById('appFullscreenButton');
+    var animationButton = document.getElementById('animationFullscreenButton');
+    var appFullscreen = document.fullscreenElement === document.documentElement ||
+      document.documentElement.classList.contains('app-fullscreen-fallback');
+    var animationFullscreen = document.fullscreenElement === animationOverlay;
+    appButton.textContent = appFullscreen ? 'Venster herstellen' : 'Volledig scherm';
+    appButton.setAttribute('aria-pressed', String(appFullscreen));
+    animationButton.textContent = animationFullscreen ? 'Venster herstellen' : 'Volledig scherm';
+    animationButton.setAttribute('aria-pressed', String(animationFullscreen));
+  }
+
+  function toggleAppFullscreen() {
+    if (document.fullscreenElement === document.documentElement) {
+      document.exitFullscreen().then(updateFullscreenButtons).catch(function () {
+        screenStatus.textContent = 'Browser-fullscreen kon niet worden afgesloten. Druk op Esc om terug te keren.';
+      });
+      return;
+    }
+    if (document.documentElement.classList.contains('app-fullscreen-fallback')) {
+      document.documentElement.classList.remove('app-fullscreen-fallback');
+      screenStatus.textContent = '';
+      updateFullscreenButtons();
+      return;
+    }
+    requestFullscreenFor(document.documentElement, function () {
+      document.documentElement.classList.add('app-fullscreen-fallback');
+      screenStatus.textContent = 'Browser-fullscreen is niet beschikbaar; de ijsmodus gebruikt het volledige beschikbare venster.';
+      updateFullscreenButtons();
+    }, function () {
+      document.documentElement.classList.remove('app-fullscreen-fallback');
+      screenStatus.textContent = '';
+    });
+  }
+
+  function toggleAnimationFullscreen() {
+    if (document.fullscreenElement === animationOverlay) {
+      document.exitFullscreen().then(updateFullscreenButtons).catch(function () {
+        document.getElementById('animationViewerStatus').textContent =
+          'Browser-fullscreen kon niet worden afgesloten. Druk op Esc of Sluiten om terug te gaan.';
+      });
+      return;
+    }
+    requestFullscreenFor(animationOverlay, function () {
+      document.getElementById('animationViewerStatus').textContent =
+        'Browser-fullscreen is niet beschikbaar; de animatie blijft schermvullend in dit venster.';
+    }, function () {
+      animationWasFullscreen = document.fullscreenElement === animationOverlay;
+      document.getElementById('animationViewerStatus').textContent =
+        'Druk op Esc of Sluiten om terug te gaan naar de training.';
+    });
+  }
+
+  function closeAnimationViewer() {
+    var exitFullscreen = document.fullscreenElement === animationOverlay;
+    var focusTarget = animationTrigger;
+    animationOverlay.hidden = true;
+    document.body.classList.remove('animation-open');
+    animationViewerMedia.innerHTML = '';
+    animationWasFullscreen = false;
+    animationTrigger = null;
+    function restoreFocus() {
+      if (focusTarget && document.contains(focusTarget)) focusTarget.focus();
+      updateFullscreenButtons();
+    }
+    if (exitFullscreen) {
+      var exitRequest;
+      try {
+        exitRequest = document.exitFullscreen();
+      } catch (error) {
+        screenStatus.textContent = 'Browser-fullscreen kon niet worden afgesloten. Druk op Esc om terug te keren.';
+        restoreFocus();
+        return;
+      }
+      if (exitRequest && typeof exitRequest.then === 'function') {
+        exitRequest.then(restoreFocus).catch(function () {
+          screenStatus.textContent = 'Browser-fullscreen kon niet worden afgesloten. Druk op Esc om terug te keren.';
+          restoreFocus();
+        });
+        return;
+      }
+    }
+    restoreFocus();
+  }
+
+  function builtInAnimationKey(exercise) {
+    var name = String(exercise.name || exercise.id || '').toLowerCase();
+    if (name.indexOf('stoeltje') >= 0) return 'stoeltje';
+    if (name.indexOf('slalom') >= 0) return 'slalom';
+    if (name.indexOf('eenbeen') >= 0) return 'eenbeen';
+    if (name.indexOf('bocht') >= 0 || name.indexOf('kruispas') >= 0) return 'bocht';
+    if (name.indexOf('start') >= 0) return 'start';
+    return '';
+  }
+
+  function renderGuidedPhase() {
+    var phases = currentTraining.workout.phases;
+    var phase = phases[guidedPhaseIndex];
+    var phaseName = phase.label || 'Onderdeel ' + (guidedPhaseIndex + 1);
+    document.getElementById('guidedProgressLabel').textContent =
+      'Onderdeel ' + (guidedPhaseIndex + 1) + ' van ' + phases.length;
+    document.getElementById('guidedPhaseTitle').textContent = phaseName;
+    document.getElementById('guidedProgress').max = phases.length;
+    document.getElementById('guidedProgress').value = guidedPhaseIndex + 1;
+    var trainingNote = document.getElementById('guidedTrainingNote');
+    trainingNote.textContent = currentTraining.notes || '';
+    trainingNote.hidden = !currentTraining.notes;
+    document.getElementById('guidedPhaseContent').innerHTML =
+      renderPhaseCard(phase, guidedPhaseIndex, 'guided-phase', true, false);
+
+    var notesField = document.getElementById('guidedPhaseNotes');
+    notesField.value = phase.notes || '';
+    document.getElementById('phaseNoteStatus').textContent =
+      guidedNotesDirty[guidedPhaseIndex] ? 'Deze notitie is nog niet opgeslagen.' : 'Notities worden automatisch bij deze training opgeslagen.';
+    document.getElementById('previousPhase').disabled = guidedPhaseIndex === 0;
+    document.getElementById('nextPhase').textContent =
+      guidedPhaseIndex === phases.length - 1 ? 'Training afronden' : 'Volgend onderdeel';
+    document.getElementById('guidedStepCount').textContent =
+      (guidedPhaseIndex + 1) + ' / ' + phases.length;
+    guidedView.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function saveGuidedNotes() {
+    if (!guidedMode || !currentTraining) return true;
+    var notesField = document.getElementById('guidedPhaseNotes');
+    var note = notesField.value;
+    var phaseIndex = guidedPhaseIndex;
+    var phase = currentTraining.workout.phases[phaseIndex];
+    if (!guidedNotesDirty[phaseIndex] && note === (phase.notes || '')) return true;
+    if (note.trim()) phase.notes = note;
+    else delete phase.notes;
+    guidedNotesDirty[phaseIndex] = true;
+
+    try {
+      var data = readGroups();
+      var group = data.groups.filter(function (item) { return item.id === groupSelect.value; })[0];
+      var training = group && getTrainings(group).filter(function (item) { return item.id === trainingSelect.value; })[0];
+      if (!training || !Array.isArray(training.workout.phases)) {
+        throw new Error('De geselecteerde training bestaat niet meer in de opgeslagen groepsgegevens.');
+      }
+      Object.keys(guidedNotesDirty).forEach(function (index) {
+        var savedPhase = training.workout.phases[Number(index)];
+        var draftPhase = currentTraining.workout.phases[Number(index)];
+        if (!savedPhase || !draftPhase) {
+          throw new Error('Een trainingsonderdeel kon niet worden teruggevonden.');
+        }
+        if (draftPhase.notes && draftPhase.notes.trim()) savedPhase.notes = draftPhase.notes;
+        else delete savedPhase.notes;
+      });
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      currentTraining = training;
+      guidedNotesDirty = {};
+      document.getElementById('phaseNoteStatus').textContent = 'Notitie opgeslagen bij deze training.';
+      return true;
+    } catch (error) {
+      document.getElementById('phaseNoteStatus').textContent =
+        'Notitie kon niet worden opgeslagen. Controleer de browseropslag en probeer opnieuw.' +
+        (error && error.message ? ' (' + error.message + ')' : '');
+      return false;
+    }
+  }
+
+  function startGuidedTraining() {
+    if (!currentTraining || !currentTraining.workout.phases.length) return;
+    guidedMode = true;
+    guidedPhaseIndex = 0;
+    guidedNotesDirty = {};
+    overviewContent.hidden = true;
+    guidedView.hidden = false;
+    document.getElementById('startTraining').hidden = true;
+    document.getElementById('trainingNotes').hidden = true;
+    renderGuidedPhase();
+  }
+
+  function showTrainingOverview(message) {
+    var notesSaved = saveGuidedNotes();
+    guidedMode = false;
+    guidedView.hidden = true;
+    overviewContent.hidden = false;
+    document.getElementById('startTraining').hidden = false;
+    document.getElementById('trainingNotes').hidden = !currentTraining.notes;
+    renderPhaseCards(currentTraining.workout.phases);
+    screenStatus.textContent = notesSaved ? message : 'De training is gesloten, maar een of meer notities konden niet worden opgeslagen.';
+    if (message) screenStatus.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  function fillTrainingSelect(group, preferredId) {
+    var trainings = getTrainings(group);
+    trainingSelect.innerHTML = trainings.map(function (training) {
+      var status = training.status === 'planned' ? 'Gepland' : 'Gegeven';
+      return '<option value="' + escapeHtml(training.id) + '">' + escapeHtml(training.topic || 'Training') +
+        ' · ' + escapeHtml(formatDate(training.date)) + ' · ' + status + '</option>';
+    }).join('');
+    if (preferredId && trainings.some(function (training) { return training.id === preferredId; })) {
+      trainingSelect.value = preferredId;
+    } else {
+      var nextTraining = trainings.filter(function (training) { return training.status === 'planned'; })[0];
+      trainingSelect.value = nextTraining ? nextTraining.id : (trainings[0] ? trainings[0].id : '');
+    }
+    trainingSelect.disabled = trainings.length === 0;
+  }
+
+  function loadAndRender(preferredGroupId, preferredTrainingId) {
+    guidedMode = false;
+    guidedNotesDirty = {};
+    guidedView.hidden = true;
+    overviewContent.hidden = false;
+    var data;
+    try {
+      data = readGroups();
+    } catch (error) {
+      groupSelect.innerHTML = '';
+      trainingSelect.innerHTML = '';
+      screenStatus.textContent = error.message;
+      showEmpty(error.message);
+      return;
+    }
+
+    var eligibleGroups = data.groups.filter(function (group) { return getTrainings(group).length > 0; });
+    groupSelect.innerHTML = eligibleGroups.map(function (group) {
+      return '<option value="' + escapeHtml(group.id) + '">' + escapeHtml(group.name || 'Groep') + '</option>';
+    }).join('');
+    if (!eligibleGroups.length) {
+      currentTraining = null;
+      groupSelect.disabled = true;
+      trainingSelect.disabled = true;
+      screenStatus.textContent = 'Er zijn nog geen opgeslagen groepstrainingen.';
+      showEmpty('Sla een training met oefeningen op in de trainingbouwer om deze hier te tonen.');
+      return;
+    }
+
+    groupSelect.disabled = false;
+    var groupId = preferredGroupId || data.activeGroupId;
+    if (!eligibleGroups.some(function (group) { return group.id === groupId; })) {
+      groupId = eligibleGroups[0].id;
+    }
+    groupSelect.value = groupId;
+    var group = eligibleGroups.filter(function (item) { return item.id === groupId; })[0];
+    fillTrainingSelect(group, preferredTrainingId);
+    renderTraining(data);
+  }
+
+  groupSelect.addEventListener('change', function () {
+    loadAndRender(groupSelect.value, '');
+  });
+
+  trainingSelect.addEventListener('change', function () {
+    loadAndRender(groupSelect.value, trainingSelect.value);
+  });
+
+  document.getElementById('startTraining').addEventListener('click', startGuidedTraining);
+
+  document.getElementById('guidedPhaseNotes').addEventListener('input', saveGuidedNotes);
+
+  document.getElementById('previousPhase').addEventListener('click', function () {
+    saveGuidedNotes();
+    if (guidedPhaseIndex > 0) {
+      guidedPhaseIndex -= 1;
+      renderGuidedPhase();
+    }
+  });
+
+  document.getElementById('nextPhase').addEventListener('click', function () {
+    saveGuidedNotes();
+    if (guidedPhaseIndex < currentTraining.workout.phases.length - 1) {
+      guidedPhaseIndex += 1;
+      renderGuidedPhase();
+    } else {
+      showTrainingOverview('Training afgerond. Je bent weer bij het trainingsoverzicht.');
+    }
+  });
+
+  document.getElementById('exitGuided').addEventListener('click', function () {
+    showTrainingOverview('Je bent terug bij het trainingsoverzicht.');
+  });
+
+  document.getElementById('appFullscreenButton').addEventListener('click', toggleAppFullscreen);
+  document.getElementById('animationFullscreenButton').addEventListener('click', toggleAnimationFullscreen);
+  document.getElementById('closeAnimationButton').addEventListener('click', closeAnimationViewer);
+  document.addEventListener('click', function (event) {
+    var button = event.target.closest('[data-open-animation]');
+    if (button) openAnimationViewer(button);
+  });
+  animationOverlay.addEventListener('click', function (event) {
+    if (event.target === animationOverlay) closeAnimationViewer();
+  });
+  document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape' && !animationOverlay.hidden) closeAnimationViewer();
+  });
+  document.addEventListener('fullscreenchange', function () {
+    updateFullscreenButtons();
+    if (animationWasFullscreen && document.fullscreenElement !== animationOverlay && !animationOverlay.hidden) {
+      closeAnimationViewer();
+    }
+  });
+  window.addEventListener('resize', updateFullscreenButtons);
+
+  document.getElementById('phaseNav').addEventListener('click', function (event) {
+    var button = event.target.closest('[data-phase-target]');
+    if (!button) return;
+    var section = document.getElementById(button.dataset.phaseTarget);
+    if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  document.getElementById('refreshTraining').addEventListener('click', function () {
+    loadAndRender(groupSelect.value, trainingSelect.value);
+  });
+
+  window.addEventListener('storage', function (event) {
+    if (event.key === STORAGE_KEY) loadAndRender(groupSelect.value, trainingSelect.value);
+  });
+
+  loadAndRender('', '');
+}());
 </script>
 </body>
 </html>

@@ -2,8 +2,8 @@
 <html lang="nl">
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Schaatskompas – Home</title>
-<script src="./support.js"></script>
 </head>
 <body>
 <x-dc>
@@ -13,11 +13,94 @@
 <style>
 body{margin:0;background:#F3F6F8}
 a{color:#1D4ED8}a:hover{color:#1E3A8A}
-.week-box{border-radius:12px;padding:12px;min-height:92px;display:flex;flex-direction:column;gap:6px;box-sizing:border-box}
-.week-box.done{background:#1D4ED8;border:none}.week-box.now{background:#F97316;border:none}.week-box.future{background:#F1F5F9;border:1px solid #CBD5E1}
-.week-num{font-size:12px;font-weight:700;letter-spacing:.04em}.week-num.done{color:#DBEAFE}.week-num.now,.week-num.future{color:#0F1E2E}
-.week-title{font-size:14px;font-weight:600;line-height:1.3}.week-title.done{color:#FFFFFF}.week-title.now,.week-title.future{color:#0F1E2E}
-.week-tag{align-self:flex-start;font-size:11px;font-weight:700;padding:3px 8px;border-radius:999px;background:#FFFFFF;color:#334155}.week-tag.done{background:#1E3A8A;color:#FFFFFF}
+[hidden]{display:none!important}
+.season-status{margin:0;padding:12px 14px;border-radius:10px;background:#EAF3FF;color:#1E3A8A;font-size:14px;line-height:1.5}
+.season-status.error{background:#FFF4E8;color:#7C2D12}
+.season-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+.season-stat{background:#FFFFFF;color:#0F1E2E;border:1px solid #DCE3EA;border-radius:12px;padding:12px}
+.season-stat strong{display:block;color:#1E40AF;font:700 22px 'Space Grotesk',sans-serif}
+.season-stat span{font-size:13px;color:#64748B}
+.season-intro-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(250px,.9fr) minmax(280px,1.05fr);gap:16px;align-items:stretch}
+.season-intro-card,.next-training-card,.weekly-tip-card{min-width:0;border-radius:20px;padding:24px;border:1px solid #DCE3EA}
+.season-intro-card{background:#1E3A8A;border-color:#1E3A8A;color:#FFFFFF}
+.next-training-card{background:#FFFFFF;border-color:#F97316;border-left:4px solid #F97316;color:#0F1E2E}
+.season-intro-card{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:14px}
+.season-intro-card h1{margin:0;color:#FFFFFF;font:700 36px/1.1 'Space Grotesk',sans-serif}
+.season-intro-card p{margin:0;color:#DBEAFE;font-size:15px;line-height:1.5}
+.next-training-card{display:flex;flex-direction:column;gap:12px}
+.next-training-card h2,.weekly-tip-card h2{margin:0;font:700 20px 'Space Grotesk',sans-serif}
+.next-training-card h2,.next-training-card p{color:#0F1E2E}
+.next-training-card p{margin:0;font-size:14px;line-height:1.5}
+.next-training-topic{font-weight:700;color:#0F1E2E!important;font-size:17px!important}
+.next-training-meta{display:flex;flex-wrap:wrap;gap:8px}
+.next-training-meta span{padding:6px 9px;border-radius:999px;background:#1E40AF;color:#FFFFFF;font-size:12px;font-weight:700}
+.next-training-meta span:nth-child(2){background:#0F1E2E;color:#FFFFFF}
+.next-training-card > a{align-self:flex-start;padding:8px 11px;border-radius:9px;background:#0F1E2E;color:#FFFFFF;text-decoration:none;font-size:13px;font-weight:700}
+.next-training-card > a:hover{background:#1E3A8A;color:#FFFFFF}
+.weekly-tip-card{background:linear-gradient(145deg,#0F1E2E,#1D4ED8);color:#FFFFFF;display:flex;flex-direction:column;gap:12px;border-color:#1E40AF}
+.weekly-tip-card .tip-kicker{color:#DBEAFE;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.next-training-kicker{color:#C2410C;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.weekly-tip-card .tip-theme{font-size:15px;font-weight:700}
+.weekly-tip-list{display:flex;flex-direction:column;gap:9px}
+.weekly-tip-row{display:grid;grid-template-columns:27px minmax(0,1fr);gap:9px;align-items:start}
+.weekly-tip-number{width:26px;height:26px;border-radius:50%;background:#F97316;color:#0F1E2E;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
+.weekly-tip-row p{margin:0;color:#E2E8F0;font-size:13px;line-height:1.4}
+.weekly-tip-row strong{color:#FFFFFF}
+.season-learning-line{background:#FFFFFF;border:1px solid #DCE3EA;border-radius:20px;padding:28px;display:flex;flex-direction:column;gap:16px}
+.season-learning-heading{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+.season-learning-heading h2{margin:0;font:700 24px 'Space Grotesk',sans-serif}
+.season-learning-heading p{margin:5px 0 0;color:#64748B;font-size:14px}
+.learning-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.learning-card{background:#FFFFFF;border:1px solid #DCE3EA;border-left:4px solid #1E40AF;border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:9px;color:#0F1E2E}
+.learning-group{font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#1E40AF}
+.learning-card h3{margin:0;color:#0F1E2E;font:700 17px 'Space Grotesk',sans-serif}
+.learning-period{font-size:13px;color:#64748B}
+.learning-goals{margin:0;color:#475569;font-size:13px;line-height:1.5;white-space:pre-line}
+.learning-card a{color:#1E40AF;font-weight:700}
+.learning-card a:hover{color:#1E3A8A}
+.learning-progress{height:7px;background:#E2E8F0;border-radius:999px;overflow:hidden}
+.learning-progress span{display:block;height:100%;background:#F97316;border-radius:inherit}
+.learning-counts{font-size:12px;color:#64748B}
+.learning-empty{margin:0;color:#64748B;font-size:14px;line-height:1.5}
+.season-overview{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px;align-items:start}
+.season-panel{min-width:0;background:#FFFFFF;border:1px solid #DCE3EA;border-radius:20px;padding:24px}
+.season-panel-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:16px}
+.season-panel-heading h2{margin:0;font:700 22px 'Space Grotesk',sans-serif}
+.season-panel-heading p{margin:4px 0 0;color:#64748B;font-size:13px}
+.season-group-list,.upcoming-list{display:flex;flex-direction:column}
+.season-group-row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:13px 0 13px 10px;border-top:1px solid #E2E8F0;border-left:3px solid #BFDBFE}
+.season-group-row:first-child,.upcoming-row:first-child{border-top:0;padding-top:0}
+.season-group-row:last-child,.upcoming-row:last-child{padding-bottom:0}
+.season-group-row strong,.upcoming-row strong{display:block;font-size:15px}
+.season-group-row span,.upcoming-row span{display:block;margin-top:4px;color:#64748B;font-size:13px}
+.season-group-row a{flex:none;font-size:13px;font-weight:600}
+.upcoming-row{display:grid;grid-template-columns:70px minmax(0,1fr);gap:12px;padding:13px 0;border-top:1px solid #E2E8F0}
+.upcoming-date{align-self:start;padding:7px 8px;background:#EAF3FF;border-radius:9px;color:#1E3A8A;text-align:center;font-size:12px;font-weight:700}
+.season-empty{margin:0;padding:14px;background:#F8FAFC;border-radius:12px;color:#64748B;font-size:14px;line-height:1.5}
+.season-more{margin:14px 0 0;font-size:13px;color:#64748B}
+@media(max-width:980px){.season-intro-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.season-intro-card{grid-column:1/-1}}
+@media(max-width:760px){.season-overview{grid-template-columns:1fr}}
+@media(max-width:620px){.season-intro-grid{grid-template-columns:1fr}.season-intro-card{grid-column:auto}.season-intro-card h1{font-size:30px}}
+.season-shortcut-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.season-shortcut{display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:20px;background:#FFFFFF;border:1px solid #DCE3EA;border-radius:16px}
+.season-shortcut:first-child{border-left:4px solid #1E40AF}
+.season-shortcut:last-child{border-left:4px solid #F97316}
+.season-shortcut h2{margin:0;color:#0F1E2E;font:700 20px 'Space Grotesk',sans-serif}
+.season-shortcut p{margin:0;color:#475569;font-size:14px;line-height:1.5}
+.season-shortcut a{color:#1E40AF;font-weight:700}
+.season-shortcut a:hover{color:#1E3A8A}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.knowledge-card{display:flex;flex-direction:column;align-items:flex-start;gap:11px;padding:20px;border:1px solid;border-radius:16px}
+.knowledge-card.knsb{background:#FFFFFF;border-color:#DCE3EA;border-top:3px solid #1E40AF;color:#0F1E2E}
+.knowledge-card.yvg{background:#FFFFFF;border-color:#DCE3EA;border-top:3px solid #F97316;color:#0F1E2E}
+.knowledge-label{padding:5px 9px;border-radius:999px;font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase}
+.knowledge-card.knsb .knowledge-label{background:#EAF3FF;color:#1E40AF}
+.knowledge-card.yvg .knowledge-label{background:#FFF4E8;color:#9A3412}
+.knowledge-card h3{margin:0;color:#0F1E2E;font:700 19px 'Space Grotesk',sans-serif}
+.knowledge-card p{margin:0;color:#475569;font-size:14px;line-height:1.55}
+.knowledge-links{display:flex;flex-wrap:wrap;gap:10px;margin-top:auto;padding-top:4px}
+.knowledge-links a{color:#1E40AF;font-size:13px;font-weight:700}
+.knowledge-links a:hover{color:#1E3A8A}
 </style>
 </helmet>
 <div style="font-family: Inter, system-ui, sans-serif; color: #0F1E2E; background: #F3F6F8; min-height: 100vh">
@@ -25,14 +108,15 @@ a{color:#1D4ED8}a:hover{color:#1E3A8A}
 <header style="background: #0F1E2E; color: #FFFFFF">
 <div style="max-width: 1280px; margin: 0 auto; padding: 16px 32px; display: flex; flex-wrap: wrap; align-items: center; gap: 24px">
 <div style="display: flex; align-items: center; gap: 10px">
-<svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="14" fill="none" stroke="#7DD3FC" stroke-width="2.5"></circle><path d="M9 20 C13 12, 19 12, 23 20" fill="none" stroke="#FDBA74" stroke-width="2.5" stroke-linecap="round"></path></svg>
+<svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="14" fill="none" stroke="#60A5FA" stroke-width="2.5"></circle><path d="M9 20 C13 12, 19 12, 23 20" fill="none" stroke="#FDBA74" stroke-width="2.5" stroke-linecap="round"></path></svg>
 <span style="font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 20px">Schaatskompas</span>
 </div>
 <nav aria-label="Hoofdmenu" style="display: flex; flex-wrap: wrap; gap: 4px; flex: 1 1 auto">
 <a href="Main.dc.html" style="color: #FFFFFF; text-decoration: none; padding: 10px 14px; border-radius: 8px; background: #1F3247; font-weight: 600; font-size: 15px">Seizoen</a>
 <a href="Builder.dc.html" style="color: #CBD5E1; text-decoration: none; padding: 10px 14px; border-radius: 8px; font-size: 15px">Training bouwen</a>
-<a href="Oefening.dc.html" style="color: #CBD5E1; text-decoration: none; padding: 10px 14px; border-radius: 8px; font-size: 15px">Oefeningen</a>
-<a href="#groepen" style="color: #CBD5E1; text-decoration: none; padding: 10px 14px; border-radius: 8px; font-size: 15px">Mijn groepen</a>
+<a href="Oefeningen/Oefeningen.dc.html" style="color: #CBD5E1; text-decoration: none; padding: 10px 14px; border-radius: 8px; font-size: 15px">Oefeningen</a>
+<a href="Groepen.dc.html" style="color: #CBD5E1; text-decoration: none; padding: 10px 14px; border-radius: 8px; font-size: 15px">Mijn groepen</a>
+<a href="Inloggen.dc.html" style="color: #CBD5E1; text-decoration: none; padding: 10px 14px; border-radius: 8px; font-size: 15px">Inloggen</a>
 </nav>
 <a href="OpHetIjs.dc.html" style="display: inline-flex; align-items: center; gap: 8px; background: #F97316; color: #0F1E2E; text-decoration: none; font-weight: 700; padding: 12px 18px; border-radius: 999px; font-size: 15px">
 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><polygon points="6 4 20 12 6 20 6 4"></polygon></svg>
@@ -42,131 +126,334 @@ Op het ijs</a>
 
 <main style="max-width: 1280px; margin: 0 auto; padding: 40px 32px 64px; display: flex; flex-direction: column; gap: 40px">
 
-<section style="display: flex; flex-wrap: wrap; gap: 24px; align-items: stretch">
-<div style="flex: 999 1 560px; min-width: 0; background: #FFFFFF; border-radius: 20px; padding: 32px; display: flex; flex-direction: column; gap: 20px; border: 1px solid #DCE3EA">
-<div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center">
-<span style="background: #E0ECFF; color: #1E3A8A; font-weight: 600; font-size: 13px; padding: 6px 10px; border-radius: 999px">Volgende training · donderdag 17:30</span>
-<span style="background: #F1F5F9; color: #334155; font-weight: 600; font-size: 13px; padding: 6px 10px; border-radius: 999px">Groep: Leren schaatsen</span>
+<section class="season-intro-grid">
+<div class="season-intro-card">
+<h1 id="seasonTitle">Seizoensoverzicht</h1>
+<p id="seasonDescription">Je groepen en geplande trainingen overzichtelijk bij elkaar.</p>
+<p id="seasonStatus" class="season-status" role="status" aria-live="polite" hidden></p>
+<a href="OpHetIjs.dc.html" style="background:#FFFFFF;color:#0F1E2E;text-decoration:none;font-weight:600;padding:12px 16px;border-radius:12px;font-size:14px;border:1px solid #94A3B8">Start ijsmodus</a>
 </div>
-<h1 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 44px; line-height: 1.05; letter-spacing: -0.01em">Week 8 · Inzet schaats</h1>
-<p style="margin: 0; font-size: 17px; line-height: 1.55; color: #3B4A5A; max-width: 640px">Net als de armzwaai zorgt een actieve inzet voor een actieve afzet. Je training staat al klaar volgens de clubopbouw — je hoeft alleen nog te kiezen welke spelvorm je groep vandaag nodig heeft.</p>
-<div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center; background: #FFF4E8; border-radius: 12px; padding: 14px 16px">
-<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9A3412" stroke-width="2" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"></path><polyline points="3 3 3 9 9 9"></polyline></svg>
-<span style="font-size: 15px; color: #7C2D12"><strong>Eerst herhalen:</strong> bijhaal uit week 7 — de schaats hangt loodrecht, pas dan kun je recht inzetten.</span>
-</div>
-<div aria-label="Opbouw van de training" style="display: flex; gap: 4px; height: 52px; border-radius: 12px; overflow: hidden">
-<div style="flex: 10; background: #CBD5E1; display: flex; flex-direction: column; justify-content: center; padding: 0 10px"><span style="font-size: 12px; font-weight: 700; color: #1E293B">Inlopen</span><span style="font-size: 12px; color: #334155">10 min</span></div>
-<div style="flex: 10; background: #93C5FD; display: flex; flex-direction: column; justify-content: center; padding: 0 10px"><span style="font-size: 12px; font-weight: 700; color: #0F1E2E">Warming-up</span><span style="font-size: 12px; color: #0F1E2E">10 min</span></div>
-<div style="flex: 20; background: #1D4ED8; display: flex; flex-direction: column; justify-content: center; padding: 0 10px"><span style="font-size: 12px; font-weight: 700; color: #FFFFFF">Kern 1 · techniek</span><span style="font-size: 12px; color: #DBEAFE">20 min</span></div>
-<div style="flex: 20; background: #F97316; display: flex; flex-direction: column; justify-content: center; padding: 0 10px"><span style="font-size: 12px; font-weight: 700; color: #0F1E2E">Kern 2 · spelvorm</span><span style="font-size: 12px; color: #0F1E2E">20 min</span></div>
-<div style="flex: 8; background: #CBD5E1; display: flex; flex-direction: column; justify-content: center; padding: 0 10px"><span style="font-size: 12px; font-weight: 700; color: #1E293B">Afsluiten</span><span style="font-size: 12px; color: #334155">5–10</span></div>
-</div>
-<div style="display: flex; flex-wrap: wrap; gap: 12px">
-<a href="Builder.dc.html" style="background: #0F1E2E; color: #FFFFFF; text-decoration: none; font-weight: 600; padding: 14px 20px; border-radius: 12px; font-size: 15px">Training openen en aanpassen</a>
-<a href="OpHetIjs.dc.html" style="background: #FFFFFF; color: #0F1E2E; text-decoration: none; font-weight: 600; padding: 13px 19px; border-radius: 12px; font-size: 15px; border: 1px solid #94A3B8">Start ijsmodus</a>
-</div>
-</div>
-
-<aside style="flex: 1 1 320px; background: #0F1E2E; color: #FFFFFF; border-radius: 20px; padding: 28px; display: flex; flex-direction: column; gap: 16px">
-<span style="font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #7DD3FC">Uitlegtip van de week</span>
-<h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 28px; line-height: 1.15">Praatje · Plaatje · Daadje</h2>
-<div style="display: flex; flex-direction: column; gap: 12px">
-<div style="display: flex; gap: 12px; align-items: flex-start"><span style="flex: none; width: 32px; height: 32px; border-radius: 999px; background: #1F3247; display: flex; align-items: center; justify-content: center; font-weight: 700">1</span><p style="margin: 0; font-size: 15px; line-height: 1.5; color: #E2E8F0"><strong style="color: #FFFFFF">Praatje</strong> — één zin, één doel. „Vandaag zetten we de schaats recht onder je neer.”</p></div>
-<div style="display: flex; gap: 12px; align-items: flex-start"><span style="flex: none; width: 32px; height: 32px; border-radius: 999px; background: #1F3247; display: flex; align-items: center; justify-content: center; font-weight: 700">2</span><p style="margin: 0; font-size: 15px; line-height: 1.5; color: #E2E8F0"><strong style="color: #FFFFFF">Plaatje</strong> — doe het zelf voor, of laat de animatie op je telefoon zien.</p></div>
-<div style="display: flex; gap: 12px; align-items: flex-start"><span style="flex: none; width: 32px; height: 32px; border-radius: 999px; background: #1F3247; display: flex; align-items: center; justify-content: center; font-weight: 700">3</span><p style="margin: 0; font-size: 15px; line-height: 1.5; color: #E2E8F0"><strong style="color: #FFFFFF">Daadje</strong> — binnen 60 seconden rijden ze. Corrigeer onderweg, niet aan de kant.</p></div>
-</div>
-</aside>
+<article class="next-training-card" aria-labelledby="nextTrainingTitle">
+<span class="next-training-kicker">Eerstvolgende training</span>
+<h2 id="nextTrainingTitle">Nog geen training gepland</h2>
+<div id="nextTrainingSummary"></div>
+<a id="nextTrainingLink" href="Groepen.dc.html">Bekijk groep</a>
+</article>
+<article class="weekly-tip-card" aria-labelledby="weeklyTipTitle">
+<span id="weeklyTipWeek" class="tip-kicker">Uitlegtip van de week</span>
+<h2 id="weeklyTipTitle">Praatje · Plaatje · Daadje</h2>
+<div id="weeklyTipContent" class="weekly-tip-list"></div>
+</article>
 </section>
 
-<section aria-labelledby="leerlijn" style="background: #FFFFFF; border-radius: 20px; padding: 32px; border: 1px solid #DCE3EA; display: flex; flex-direction: column; gap: 24px">
-<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px">
-<div style="display: flex; flex-direction: column; gap: 6px">
-<h2 id="leerlijn" style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 28px">Seizoensleerlijn</h2>
-<p style="margin: 0; font-size: 15px; color: #4A5B6C">Jaarplanning van de club · fase 2 en 3: Leren schaatsen &amp; Leren trainen</p>
-</div>
-<div style="display: flex; gap: 16px; flex-wrap: wrap; font-size: 13px; color: #334155">
-<span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 12px; height: 12px; border-radius: 3px; background: #1D4ED8"></span>Gegeven</span>
-<span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 12px; height: 12px; border-radius: 3px; background: #F97316"></span>Deze week</span>
-<span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 12px; height: 12px; border-radius: 3px; background: #E2E8F0; border: 1px solid #94A3B8"></span>Komt nog</span>
-</div>
-</div>
-<div style="overflow-x: auto; padding-bottom: 8px">
-<div style="display: grid; grid-template-columns: repeat(10, minmax(110px, 1fr)); gap: 10px; min-width: 1100px">
-<sc-for list="{{weeks}}" as="w" hint-placeholder-count="20">
-<div class="week-box {{w.state}}">
-<span class="week-num {{w.state}}">Week {{w.n}}</span>
-<span class="week-title {{w.state}}">{{w.title}}</span>
-<sc-if value="{{w.herhaling}}" hint-placeholder-val="{{ false }}">
-<span class="week-tag {{w.state}}">Herhaling</span>
-</sc-if>
-</div>
-</sc-for>
-</div>
-</div>
-<p style="margin: 0; font-size: 14px; color: #4A5B6C">Elke week bouwt voort op de vorige. Het platform zet automatisch een herhaalblok van de vorige les in je warming-up.</p>
+<section aria-labelledby="seasonStatsTitle" style="background:#FFFFFF;border-radius:20px;padding:28px;border:1px solid #DCE3EA;display:flex;flex-direction:column;gap:14px">
+<h2 id="seasonStatsTitle" style="margin:0;font-family:'Space Grotesk',sans-serif;font-size:24px">In cijfers</h2>
+<p id="seasonStatsIntro" style="margin:0;color:#4A5B6C;font-size:14px;line-height:1.5">Totaal van alle groepen.</p>
+<div id="seasonStats" class="season-stats"></div>
 </section>
 
-<section style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px">
-<div style="background: #FFFFFF; border-radius: 20px; padding: 28px; border: 1px solid #DCE3EA; display: flex; flex-direction: column; gap: 14px">
-<span style="font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #9A3412">Fase 1 · FUNdament</span>
-<h3 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 22px">Maandblokken voor de jongsten</h3>
-<sc-for list="{{fun}}" as="f" hint-placeholder-count="5">
-<div style="display: flex; gap: 12px; align-items: baseline; border-top: 1px solid #E2E8F0; padding-top: 10px">
-<span style="flex: none; width: 72px; font-weight: 700; font-size: 14px; color: #0F1E2E">{{f.maand}}</span>
-<span style="font-size: 15px; color: #334155">{{f.thema}}</span>
+<section class="season-learning-line" aria-labelledby="seasonLearningTitle">
+<div class="season-learning-heading">
+<div><h2 id="seasonLearningTitle">Seizoensleerlijn · alle groepen</h2><p id="seasonLearningSummary">Jaar- en periodeplannen met hun trainingen.</p></div>
+<a href="Groepen.dc.html">Plannen beheren</a>
 </div>
-</sc-for>
-</div>
+<div id="seasonLearningLine" class="learning-grid"></div>
+</section>
 
-<div id="groepen" style="background: #FFFFFF; border-radius: 20px; padding: 28px; border: 1px solid #DCE3EA; display: flex; flex-direction: column; gap: 14px">
-<span style="font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #1E3A8A">Mijn groepen</span>
-<h3 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 22px">Wie kan wat?</h3>
-<p style="margin: 0; font-size: 15px; line-height: 1.5; color: #4A5B6C">Vink na de training per kind af wat al lukt. Het platform stelt dan voor wie in welke subgroep rijdt en welk thema extra aandacht nodig heeft.</p>
-<div style="display: flex; flex-direction: column; gap: 8px">
-<div style="display: flex; justify-content: space-between; font-size: 14px"><span>Houding</span><span style="color: #4A5B6C">[aantal] van [groep] kinderen</span></div>
-<div style="height: 10px; border-radius: 999px; background: #E2E8F0"><div style="width: 70%; height: 10px; border-radius: 999px; background: #1D4ED8"></div></div>
-<div style="display: flex; justify-content: space-between; font-size: 14px"><span>Bijhaal</span><span style="color: #4A5B6C">[aantal] van [groep] kinderen</span></div>
-<div style="height: 10px; border-radius: 999px; background: #E2E8F0"><div style="width: 45%; height: 10px; border-radius: 999px; background: #1D4ED8"></div></div>
-<div style="display: flex; justify-content: space-between; font-size: 14px"><span>Inzet</span><span style="color: #4A5B6C">nog niet getoetst</span></div>
-<div style="height: 10px; border-radius: 999px; background: #E2E8F0"></div>
+<section class="season-overview" aria-label="Groepen en geplande trainingen">
+<div class="season-panel">
+<div class="season-panel-heading">
+<div><h2>Mijn groepen</h2><p id="seasonGroupSummary">Overzicht van je groepen.</p></div>
+<a href="Groepen.dc.html">Beheren</a>
 </div>
+<div id="seasonGroups" class="season-group-list"></div>
 </div>
+<div class="season-panel">
+<div class="season-panel-heading">
+<div><h2>Daarna op de planning</h2><p id="upcomingTrainingSummary">Andere aankomende trainingen.</p></div>
+<a href="Groepen.dc.html">Alle trainingen</a>
+</div>
+<div id="upcomingTrainingList" class="upcoming-list"></div>
+</div>
+</section>
 
-<div style="background: #FFFFFF; border-radius: 20px; padding: 28px; border: 1px solid #DCE3EA; display: flex; flex-direction: column; gap: 14px">
-<span style="font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #0F766E">Kennisbank</span>
-<h3 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 22px">Leer zelf ook bij</h3>
-<a href="Oefening.dc.html" style="text-decoration: none; color: #0F1E2E; border: 1px solid #DCE3EA; border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 4px"><strong style="font-size: 15px">Houding in 5 stappen</strong><span style="font-size: 14px; color: #4A5B6C">Animatie + hoe je het uitlegt aan 7-jarigen én aan junioren</span></a>
-<a href="#" style="text-decoration: none; color: #0F1E2E; border: 1px solid #DCE3EA; border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 4px"><strong style="font-size: 15px">Groot niveauverschil in je groep</strong><span style="font-size: 14px; color: #4A5B6C">Zo werk je met subgroepjes zonder stilstand</span></a>
-<a href="https://knsb.nl/opleidingen/" style="text-decoration: none; color: #0F1E2E; border: 1px solid #DCE3EA; border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 4px"><strong style="font-size: 15px">KNSB-trainersopleidingen</strong><span style="font-size: 14px; color: #4A5B6C">Bijscholingen en licenties bij de bond</span></a>
+<section class="season-learning-line" aria-labelledby="knowledgeTitle">
+<div class="season-learning-heading">
+<div><h2 id="knowledgeTitle">Kennisbank</h2><p>Opleidingen, bijscholing en schaatsmogelijkheden.</p></div>
 </div>
+<div class="knowledge-grid">
+<article class="knowledge-card knsb">
+<span class="knowledge-label">Trainers & officials</span>
+<h3>KNSB-opleidingen</h3>
+<p>De KNSB biedt opleidingen voor trainers en officials, bijscholingen en informatie over trainerslicenties. Bekijk ook de opleidingskalender voor 2026–2027.</p>
+<div class="knowledge-links">
+<a href="https://knsb.nl/opleidingen/" target="_blank" rel="noopener noreferrer">Opleidingen bekijken</a>
+<a href="https://knsb.nl/opleidingen/opleidingskalender/" target="_blank" rel="noopener noreferrer">Opleidingskalender</a>
+</div>
+</article>
+<article class="knowledge-card yvg">
+<span class="knowledge-label">IJsvereniging Groningen</span>
+<h3>YVG</h3>
+<p>YVG biedt onder meer jeugdschaatsen, recreatief schaatsen en wedstrijd- en marathontraining. Trainingen en wedstrijden zijn in Sportcentrum Kardinge; er zijn ook zomeractiviteiten zoals inline-skaten en droogtraining.</p>
+<div class="knowledge-links">
+<a href="https://www.yvg.nl/winterseizoen/jeugd/" target="_blank" rel="noopener noreferrer">Jeugdschaatsen</a>
+<a href="https://www.yvg.nl/schaatsen/trainingstijden/" target="_blank" rel="noopener noreferrer">Trainingstijden</a>
+</div>
+</article>
+</div>
+</section>
+
+<section aria-label="Snelle links" class="season-shortcut-grid">
+<article class="season-shortcut">
+<h2>Training bouwen</h2>
+<p>Maak een training en koppel die na het opslaan aan de juiste groep.</p>
+<a href="Builder.dc.html">Open de trainingbouwer</a>
+</article>
+<article class="season-shortcut">
+<h2>Oefeningen</h2>
+<p>Bekijk uitleg en animaties voor verschillende schaatsoefeningen.</p>
+<a href="Oefeningen/Oefeningen.dc.html">Open de oefeningenpagina</a>
+</article>
 </section>
 
 </main>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"huidigeWeek":{"editor":"int","default":8,"min":1,"max":20},"$preview":{"width":1440,"height":1560}}'>
-class Component extends DCLogic {
-  renderVals() {
-    var cur = this.props.huidigeWeek ?? 8;
-    var titles = ['IJsgewenning en houding','Diep zitten en packrace','Houding en achterop zitten','Achterop zitten + armzwaai','Houding, armzwaai en starten','Herhaling','Bijhaal','Inzet schaats','Wedstrijdvormen','Herhaling','Valbeweging','Voorbereiding bocht','Bocht','Herhaling','Ingaan bocht','Uitgaan bocht','Bocht in zijn geheel','Wedstrijdvormen','Eigen invulling','Echt trainen'];
-    var weeks = titles.map(function (t, i) {
-      var n = i + 1;
-      var done = n < cur, now = n === cur;
-      return {
-        n: n, title: t, herhaling: t === 'Herhaling',
-        state: now ? 'now' : (done ? 'done' : 'future')
-      };
+<script>
+(function () {
+  'use strict';
+  var STORAGE_KEY = 'schaatskompas-groepen-v1';
+  var WEEKLY_TIPS = [
+    { theme: 'Houding en balans', say: 'Kijk vooruit en maak je rug lang.', show: 'Laat eerst een rustige glijhouding zien.', do: 'Rijd drie korte glijmomenten met dezelfde houding.' },
+    { theme: 'Balans op één been', say: 'Blijf zacht door je knie en houd je schouders rustig.', show: 'Glijd zelf kort op één been en zet je andere voet rustig bij.', do: 'Laat kinderen links en rechts even lang proberen.' },
+    { theme: 'Afzetten', say: 'Duw schuin opzij en kom ontspannen terug.', show: 'Wijs de richting van de afzet aan terwijl je het voordoet.', do: 'Oefen eerst zonder snelheid en voeg daarna glijden toe.' },
+    { theme: 'Bocht rijden', say: 'Kijk de bocht in en houd je handen rustig voor je.', show: 'Rijd een ruime bocht voor en laat zien waar je naartoe kijkt.', do: 'Maak de bocht eerst groot; verklein hem pas als het lukt.' },
+    { theme: 'Starten', say: 'Buig licht door je knieën en zet kracht naar achteren.', show: 'Doe één langzame start voor, stap voor stap.', do: 'Laat iedereen drie starts doen en kies één duidelijke aanwijzing.' },
+    { theme: 'Veilig remmen', say: 'Kijk vooruit, houd ruimte en bouw de druk rustig op.', show: 'Laat zien hoe je snelheid vermindert voordat je stopt.', do: 'Oefen op een afgesproken plek met voldoende afstand.' },
+    { theme: 'Kijken en ruimte maken', say: 'Kijk voor je en houd afstand tot de schaatser voor je.', show: 'Wijs de rijrichting en stopplek aan voor de oefening start.', do: 'Laat kinderen op een teken veilig uitwijken naar een vrije plek.' },
+    { theme: 'Iedereen op eigen niveau', say: 'Geef één oefening met een makkelijke en een uitdagende variant.', show: 'Doe beide varianten kort voor.', do: 'Laat kinderen zelf kiezen en wissel na een paar minuten.' }
+  ];
+  var data;
+  var storageReadError = false;
+
+  function escapeHtml(value) {
+    return String(value == null ? '' : value).replace(/[&<>"']/g, function (char) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char];
     });
-    var fun = [
-      { maand: 'Okt–nov', thema: 'Wennen aan het ijs, balans, glijden' },
-      { maand: 'Dec', thema: 'Afzet & sturen' },
-      { maand: 'Jan', thema: 'Remmen & bochten' },
-      { maand: 'Feb', thema: 'Spel & variatie' },
-      { maand: 'Maart', thema: 'Herhaling & afsluiting' }
-    ];
-    return { weeks: weeks, fun: fun };
   }
-}
+
+  function dateValue(date) {
+    return [date.getFullYear(), String(date.getMonth() + 1).padStart(2, '0'), String(date.getDate()).padStart(2, '0')].join('-');
+  }
+
+  function todayValue() {
+    return dateValue(new Date());
+  }
+
+  function formatDate(value) {
+    if (!value) return 'datum onbekend';
+    var date = new Date(value + 'T12:00:00');
+    return isNaN(date.getTime()) ? 'datum onbekend' : date.toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' });
+  }
+
+  function formatShortDate(value) {
+    if (!value) return '—';
+    var date = new Date(value + 'T12:00:00');
+    return isNaN(date.getTime()) ? '—' : date.toLocaleDateString('nl-NL', { day: 'numeric', month: 'short' });
+  }
+
+  function isoWeekNumber(date) {
+    var target = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+    var day = target.getUTCDay() || 7;
+    target.setUTCDate(target.getUTCDate() + 4 - day);
+    var yearStart = new Date(Date.UTC(target.getUTCFullYear(), 0, 1));
+    return Math.ceil(((target - yearStart) / 86400000 + 1) / 7);
+  }
+
+  function renderWeeklyTip() {
+    var week = isoWeekNumber(new Date());
+    var tip = WEEKLY_TIPS[(week - 1) % WEEKLY_TIPS.length];
+    document.getElementById('weeklyTipWeek').textContent = 'Uitlegtip van de week · week ' + week;
+    document.getElementById('weeklyTipTitle').textContent = tip.theme;
+    document.getElementById('weeklyTipContent').innerHTML = [
+      ['Praatje', tip.say],
+      ['Plaatje', tip.show],
+      ['Daadje', tip.do]
+    ].map(function (item, index) {
+      return '<div class="weekly-tip-row"><span class="weekly-tip-number">' + (index + 1) +
+        '</span><p><strong>' + item[0] + '</strong> — ' + escapeHtml(item[1]) + '</p></div>';
+    }).join('');
+  }
+
+  function renderSeasonLearningLine(groups) {
+    var items = [];
+    groups.slice().sort(function (a, b) { return a.name.localeCompare(b.name); }).forEach(function (group) {
+      var plans = group.trainingPlans.slice().sort(function (a, b) { return a.startsOn.localeCompare(b.startsOn); });
+      if (!plans.length) items.push({ group: group, plan: null });
+      plans.forEach(function (plan) { items.push({ group: group, plan: plan }); });
+    });
+
+    var plansCount = items.filter(function (item) { return item.plan; }).length;
+    document.getElementById('seasonLearningSummary').textContent = plansCount ?
+      plansCount + (plansCount === 1 ? ' plan verdeeld over ' : ' plannen verdeeld over ') +
+      groups.length + (groups.length === 1 ? ' groep.' : ' groepen.') :
+      'Er zijn nog geen jaar- of periodeplannen opgeslagen.';
+    document.getElementById('seasonLearningLine').innerHTML = items.length ? items.map(function (entry) {
+      var group = entry.group;
+      var plan = entry.plan;
+      if (!plan) {
+        return '<article class="learning-card"><span class="learning-group">' + escapeHtml(group.name) +
+          '</span><h3>Nog geen seizoensplan</h3><p class="learning-goals">Voeg een jaar- of periodeplan toe om de leerlijn voor deze groep te tonen.</p>' +
+          '<a href="Groepen.dc.html">Plan toevoegen</a></article>';
+      }
+
+      var linked = group.trainings.filter(function (training) {
+        return training.planId === plan.id || (training.date >= plan.startsOn && training.date <= plan.endsOn);
+      });
+      var completed = linked.filter(function (training) { return training.status !== 'planned'; }).length;
+      var planned = linked.filter(function (training) {
+        return training.status === 'planned' && training.date >= todayValue();
+      }).length;
+      var total = completed + planned;
+      var percentage = total ? Math.round(completed / total * 100) : 0;
+      var progress = total ?
+        '<div class="learning-progress" role="progressbar" aria-label="' + escapeHtml(group.name + ' · ' + plan.name) +
+        '" aria-valuemin="0" aria-valuemax="' + total + '" aria-valuenow="' + completed + '"><span style="width:' + percentage + '%"></span></div>' +
+        '<span class="learning-counts">' + completed + ' gegeven · ' + planned + ' gepland</span>' :
+        '<span class="learning-counts">Nog geen trainingen aan dit plan gekoppeld.</span>';
+      return '<article class="learning-card"><span class="learning-group">' + escapeHtml(group.name) +
+        '</span><h3>' + escapeHtml(plan.name) + '</h3><span class="learning-period">' +
+        escapeHtml(formatDate(plan.startsOn)) + ' – ' + escapeHtml(formatDate(plan.endsOn)) + '</span>' +
+        (plan.goals ? '<p class="learning-goals">' + escapeHtml(plan.goals) + '</p>' : '') + progress +
+        '<a href="Groepen.dc.html">Bekijk leerlijn</a></article>';
+    }).join('') : '<p class="learning-empty">Maak een groep aan om de seizoensleerlijn te vullen.</p>';
+  }
+
+  function showStatus(message, isError) {
+    var status = document.getElementById('seasonStatus');
+    status.textContent = message;
+    status.className = isError ? 'season-status error' : 'season-status';
+    status.hidden = !message;
+  }
+
+  function loadData() {
+    storageReadError = false;
+    try {
+      var stored = localStorage.getItem(STORAGE_KEY);
+      if (!stored) return { groups: [] };
+      var parsed = JSON.parse(stored);
+      if (!parsed || !Array.isArray(parsed.groups)) throw new Error('Ongeldige opgeslagen groepsgegevens');
+      parsed.groups.forEach(function (group) {
+        group.children = Array.isArray(group.children) ? group.children : [];
+        group.trainings = Array.isArray(group.trainings) ? group.trainings : [];
+        group.trainingPlans = Array.isArray(group.trainingPlans) ? group.trainingPlans : [];
+        group.children.forEach(function (child) { child.progress = child.progress || {}; });
+        group.trainings.forEach(function (training) {
+          training.results = Array.isArray(training.results) ? training.results : [];
+        });
+      });
+      return parsed;
+    } catch (error) {
+      storageReadError = true;
+      return { groups: [] };
+    }
+  }
+
+  function render() {
+    var groups = data.groups;
+    var plansCount = groups.reduce(function (total, group) { return total + group.trainingPlans.length; }, 0);
+    var trainings = groups.reduce(function (all, group) { return all.concat(group.trainings); }, []);
+    var childrenCount = groups.reduce(function (total, group) { return total + group.children.length; }, 0);
+    if (storageReadError) {
+      showStatus('De opgeslagen gegevens konden niet worden gelezen. Controleer de browseropslag.', true);
+    } else if (!data.groups.length) {
+      showStatus('Er zijn nog geen groepen. Maak eerst een groep aan via Mijn groepen.', false);
+    } else {
+      showStatus('', false);
+    }
+
+    var upcomingEntries = [];
+    groups.forEach(function (group) {
+      group.trainings.forEach(function (training) {
+        if (training.status === 'planned' && training.date >= todayValue()) upcomingEntries.push({ group: group, training: training });
+      });
+    });
+    upcomingEntries.sort(function (a, b) {
+      return a.training.date.localeCompare(b.training.date) || a.group.name.localeCompare(b.group.name);
+    });
+    document.getElementById('seasonTitle').textContent = 'Seizoensoverzicht';
+    document.getElementById('seasonDescription').textContent = 'Je groepen en geplande trainingen overzichtelijk bij elkaar.';
+    renderWeeklyTip();
+    renderSeasonLearningLine(groups);
+    var next = upcomingEntries[0] || null;
+    var nextTitle = document.getElementById('nextTrainingTitle');
+    var nextSummary = document.getElementById('nextTrainingSummary');
+    var nextLink = document.getElementById('nextTrainingLink');
+    if (next) {
+      var plan = next.training.planId && next.group.trainingPlans.filter(function (item) {
+        return item.id === next.training.planId;
+      })[0];
+      nextTitle.textContent = next.training.topic || 'Training';
+      nextSummary.innerHTML = '<div class="next-training-meta"><span>' + escapeHtml(next.group.name) +
+        '</span><span>' + escapeHtml(formatDate(next.training.date)) + '</span></div>' +
+        (plan ? '<p>Onderdeel van ' + escapeHtml(plan.name) + '.</p>' : '');
+      nextLink.href = 'Groepen.dc.html';
+      nextLink.textContent = 'Bekijk deze groep';
+    } else {
+      nextTitle.textContent = 'Nog geen training gepland';
+      nextSummary.innerHTML = '<p>Plan een training om hier het eerstvolgende moment te zien.</p>';
+      nextLink.href = 'Builder.dc.html';
+      nextLink.textContent = 'Training bouwen';
+    }
+
+    document.getElementById('seasonStatsIntro').textContent = 'Totaal van ' + groups.length + (groups.length === 1 ? ' groep.' : ' groepen.');
+    document.getElementById('seasonStats').innerHTML = [
+      ['Groepen', groups.length], ['Kinderen', childrenCount], ['Plannen', plansCount],
+      ['Trainingen', trainings.length]
+    ].map(function (item) {
+      return '<div class="season-stat"><strong>' + item[1] + '</strong><span>' + item[0] + '</span></div>';
+    }).join('');
+
+    document.getElementById('seasonGroupSummary').textContent = groups.length ?
+      groups.length + (groups.length === 1 ? ' groep · ' : ' groepen · ') + childrenCount + (childrenCount === 1 ? ' kind' : ' kinderen') :
+      'Nog geen groepen';
+    document.getElementById('seasonGroups').innerHTML = groups.length ? groups.slice().sort(function (a, b) {
+      return a.name.localeCompare(b.name);
+    }).map(function (group) {
+      var scheduledCount = group.trainings.filter(function (training) {
+        return training.status === 'planned' && training.date >= todayValue();
+      }).length;
+      return '<article class="season-group-row"><div><strong>' + escapeHtml(group.name) + '</strong><span>' +
+        group.children.length + (group.children.length === 1 ? ' kind' : ' kinderen') + ' · ' +
+        scheduledCount + (scheduledCount === 1 ? ' geplande training' : ' geplande trainingen') +
+        '</span></div><a href="Groepen.dc.html">Open</a></article>';
+    }).join('') : '<p class="season-empty">Nog geen groepen. <a href="Groepen.dc.html">Maak een groep aan</a>.</p>';
+
+    var followingEntries = upcomingEntries.slice(1);
+    document.getElementById('upcomingTrainingSummary').textContent = followingEntries.length ?
+      followingEntries.length + (followingEntries.length === 1 ? ' volgende training' : ' volgende trainingen') :
+      'Geen andere trainingen gepland';
+    document.getElementById('upcomingTrainingList').innerHTML = followingEntries.length ?
+      followingEntries.slice(0, 3).map(function (entry) {
+        return '<article class="upcoming-row"><time class="upcoming-date" datetime="' + escapeHtml(entry.training.date) +
+          '" aria-label="' + escapeHtml(formatDate(entry.training.date)) + '">' + escapeHtml(formatShortDate(entry.training.date)) +
+          '</time><div><strong>' + escapeHtml(entry.training.topic || 'Training') + '</strong><span>' +
+          escapeHtml(entry.group.name) + '</span></div></article>';
+      }).join('') + (upcomingEntries.length > 4 ?
+        '<p class="season-more">En nog ' + (upcomingEntries.length - 4) + ' geplande ' +
+        (upcomingEntries.length - 4 === 1 ? 'training' : 'trainingen') + '. <a href="Groepen.dc.html">Bekijk alles</a></p>' : '') :
+      '<p class="season-empty">' + (next ? 'Er zijn nog geen andere trainingen gepland.' : 'Er staan nog geen trainingen op de planning.') + '</p>';
+  }
+
+  window.addEventListener('storage', function (event) {
+    if (event.key !== STORAGE_KEY && event.key !== null) return;
+    data = loadData();
+    render();
+  });
+
+  data = loadData();
+  render();
+})();
 </script>
 </body>
 </html>
