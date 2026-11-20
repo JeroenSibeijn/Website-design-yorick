@@ -1,15 +1,10 @@
 # Schaatskompas
 
-Schaatskompas is a Dutch-language skating coaching and training planner built with static HTML, CSS, and JavaScript.
+Schaatskompas is a Dutch-language skating coaching and training planner built with HTML, CSS, JavaScript, PHP, and MySQL/MariaDB.
 
-## Getting started
+## Run the website
 
-There is no build step or package installation.
-
-1. Open `Main.dc.html` in a modern browser.
-2. Use the navigation to manage groups, build trainings, browse exercises, or open the ice mode.
-
-If your browser restricts local-file storage or navigation, serve the repository root with a local static web server and open `Main.dc.html` through that server. Keep the repository root as the web root: the exercise pages use `../` paths to load shared files and top-level pages.
+There is no JavaScript build step or package installation. Open `Main.dc.html` for the local browser-only mode, or configure Apache to serve the repository root for PHP accounts and server synchronization. Keep the repository root as the document root; exercise pages load shared files and the API through relative paths.
 
 ## Main pages
 
@@ -19,12 +14,22 @@ If your browser restricts local-file storage or navigation, serve the repository
 - `Oefeningen/Oefeningen.dc.html` - exercise catalogue index.
 - `Oefeningen/` - exercise categories and exercise detail pages.
 - `OpHetIjs.dc.html` - guided training mode, per-part notes, and fullscreen animations.
-- `Inloggen.dc.html` - login and registration portal mockup.
+- `Inloggen.dc.html` - account registration, login, sync, backup download, and sign-out.
 
-Shared exercise-page styling and catalogue behavior live in `exercise-pages.css` and `exercise-catalog.js` at the repository root.
+## Configure the self-hosted server
 
-## Data and backend status
+1. Use Apache with PHP 7.4+ and the `pdo_mysql` extension enabled.
+2. Create a MySQL/MariaDB database and an application database user with access only to that database. Run `database/schema.sql`.
+3. Configure Apache's PHP environment with `SCHAAKSKOMPAS_DB_HOST`, `SCHAAKSKOMPAS_DB_NAME`, `SCHAAKSKOMPAS_DB_USER`, `SCHAAKSKOMPAS_DB_PASSWORD`, and optionally `SCHAAKSKOMPAS_DB_PORT` (defaults to `3306`). Set these outside the website files; do not commit database credentials.
+4. Serve the repository over HTTPS in production, with PHP enabled for the `api/` directory. The website and `/api/` must use the same origin so the session cookie is sent securely.
+5. Open `Inloggen.dc.html` through Apache and create an account.
 
-Group, child, progress, and training data are stored in the browser's local storage under `schaatskompas-groepen-v1`. Custom exercise catalogue data uses `schaatskompas-exercise-catalog-v1`. This data is local to the browser profile and is not synced between users or devices.
+The old Supabase-specific schema is retained as `database/schema-supabase-legacy.sql` for reference only. Do not run it for this Apache/MySQL setup.
 
-The login page is a prototype and does not send or store credentials. `database/schema.sql` contains starter PostgreSQL/Supabase schema and policies, but live authentication and database synchronization are not connected to the website.
+## Accounts and data
+
+The PHP API uses prepared PDO queries, `password_hash`/`password_verify`, HttpOnly SameSite session cookies, CSRF tokens, and per-account login attempt limits. The browser never supplies the owner ID for data access. Groups, children, training records, guided-training notes, and custom exercise categories are stored as the existing app data snapshot in `user_app_data`, keyed to the authenticated server-side user. A revision check detects concurrent edits instead of silently replacing a newer server copy.
+
+On first login, the site asks whether to upload existing browser data to an account with no server copy. If the account already has data, that copy is loaded and differing local data is kept as a downloadable browser backup. Local browser storage remains enabled as a fallback if the server is unavailable.
+
+Email verification and password-reset email delivery are not configured in this self-hosted version. Without Apache/PHP/MySQL or an account, the existing website continues to use browser storage: `schaatskompas-groepen-v1` for groups and trainings, and `schaatskompas-exercise-catalog-v1` for custom exercises and categories. Browser-only data is not shared across devices.

@@ -7,6 +7,7 @@
 <title>Schaatskompas – Mijn groepen</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap">
+<script src="api/app-sync.js"></script>
 <style>
 :root{font-family:Inter,system-ui,sans-serif;color:#0F1E2E;background:#F3F6F8;font-synthesis:none}
 *{box-sizing:border-box}
@@ -17,12 +18,11 @@ button,a{touch-action:manipulation}
 a{color:#1D4ED8}
 a:hover{color:#1E3A8A}
 .topbar{background:#0F1E2E;color:#fff}
-.topbar-inner{max-width:1280px;margin:auto;padding:16px 32px;display:flex;flex-wrap:wrap;align-items:center;gap:20px}
+.topbar-inner{max-width:1280px;margin:auto;padding:16px 32px;display:flex;flex-wrap:wrap;align-items:center;gap:24px}
 .brand{display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none;font:700 20px 'Space Grotesk',sans-serif}
 .nav{display:flex;flex:1 1 auto;flex-wrap:wrap;gap:4px}
-.nav a{padding:10px 12px;border-radius:8px;color:#CBD5E1;text-decoration:none;font-size:14px}
+.nav a{padding:10px 14px;border-radius:8px;color:#CBD5E1;text-decoration:none;font-size:15px}
 .nav a[aria-current=page]{background:#1F3247;color:#fff;font-weight:600}
-.nav .login-link{border:1px solid #475569}
 main{max-width:1280px;margin:auto;padding:36px 32px 64px;display:flex;flex-direction:column;gap:24px}
 h1,h2,h3,p{margin-top:0}
 h1,h2,h3{font-family:'Space Grotesk',sans-serif}
@@ -94,14 +94,16 @@ h2{font-size:22px;margin-bottom:0}
 .attendance label{display:flex;align-items:center;gap:7px;padding:8px 10px;border:1px solid #DCE3EA;border-radius:999px;font-size:14px}
 @media(max-width:640px){.topbar-inner{padding:12px 16px}main{padding:24px 16px 48px}.panel{padding:18px}.nav{order:3;flex-basis:100%}}
 </style>
+<link rel="stylesheet" href="header-nav.css">
 </head>
 <body>
-<header class="topbar">
+<header class="topbar site-header">
 <div class="topbar-inner">
-<a class="brand" href="Main.dc.html"><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="14" fill="none" stroke="#7DD3FC" stroke-width="2.5"></circle><path d="M9 20 C13 12, 19 12, 23 20" fill="none" stroke="#FDBA74" stroke-width="2.5" stroke-linecap="round"></path></svg>Schaatskompas</a>
+<a class="brand" href="Main.dc.html"><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="14" fill="none" stroke="#60A5FA" stroke-width="2.5"></circle><path d="M9 20 C13 12, 19 12, 23 20" fill="none" stroke="#FDBA74" stroke-width="2.5" stroke-linecap="round"></path></svg>Schaatskompas</a>
 <nav class="nav" aria-label="Hoofdmenu">
 <a href="Main.dc.html">Seizoen</a><a href="Builder.dc.html">Training bouwen</a><a href="Oefeningen/Oefeningen.dc.html">Oefeningen</a><a href="Groepen.dc.html" aria-current="page">Mijn groepen</a><a class="login-link" href="Inloggen.dc.html">Inloggen</a>
 </nav>
+<a href="OpHetIjs.dc.html" style="display:inline-flex;align-items:center;gap:8px;background:#F97316;color:#0F1E2E;text-decoration:none;font-weight:700;padding:12px 18px;border-radius:999px;font-size:15px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><polygon points="6 4 20 12 6 20 6 4"></polygon></svg>Op het ijs</a>
 </div>
 </header>
 <main>
@@ -110,7 +112,7 @@ h2{font-size:22px;margin-bottom:0}
 <button id="toggleGroupForm" class="button" type="button">+ Nieuwe groep</button>
 </section>
 
-<p class="notice info">Demo-opslag: je gegevens worden alleen in deze browser bewaard. Overdracht naar een andere trainer gebruikt eenmalige codes en werkt pas zodra server en accounts zijn gekoppeld. Gebruik voor kinderen bij voorkeur alleen voornamen.</p>
+<p class="notice info">Je gegevens blijven lokaal beschikbaar. Na inloggen synchroniseren ze automatisch met je account zodra de database is ingesteld. Overdracht naar een andere trainer is nog niet aangesloten. Gebruik voor kinderen bij voorkeur alleen voornamen.</p>
 <p id="status" role="status" aria-live="polite" class="notice" hidden></p>
 
 <section id="groupPicker" class="panel" aria-labelledby="pickerTitle">
@@ -192,6 +194,7 @@ h2{font-size:22px;margin-bottom:0}
 </div>
 </main>
 <script>
+window.SchaatskompasSync.ready.then(function () {
 (function () {
   'use strict';
   var STORAGE_KEY = 'schaatskompas-groepen-v1';
@@ -408,7 +411,7 @@ h2{font-size:22px;margin-bottom:0}
   function saveData() {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-      showStatus('Opgeslagen in deze browser.', false);
+      showStatus('Opgeslagen in deze browser. Met een account synchroniseert dit automatisch met de database.', false);
       return true;
     } catch (error) {
       showStatus('Opslaan is niet gelukt. Controleer de browseropslag en probeer opnieuw.', true);
@@ -656,7 +659,7 @@ h2{font-size:22px;margin-bottom:0}
           '<form class="form-panel" data-child-edit-form="' + escapeHtml(child.id) + '" hidden><div class="form-grid"><div class="field"><label for="child-name-' + escapeHtml(child.id) + '">Nieuwe naam</label><input id="child-name-' + escapeHtml(child.id) + '" name="name" required maxlength="60" autocomplete="off"></div>' +
           '<div style="display:flex;align-items:flex-end;gap:8px"><button class="button primary small" type="submit">Naam opslaan</button><button class="button small" type="button" data-cancel-child-edit="' + escapeHtml(child.id) + '">Annuleren</button></div></div></form>' +
           movePanel +
-          '<div class="form-panel" data-transfer-info="' + escapeHtml(child.id) + '" hidden><p style="margin:0;font-size:14px;line-height:1.5;color:#334155">Overdracht naar een andere trainer verloopt met een eenmalige code die de ontvangende trainer accepteert. Deze demo heeft nog geen server of accounts; de veilige codeflow is voorbereid in de database, maar kan hier nog niet worden uitgevoerd.</p></div>' +
+          '<div class="form-panel" data-transfer-info="' + escapeHtml(child.id) + '" hidden><p style="margin:0;font-size:14px;line-height:1.5;color:#334155">Overdracht naar een andere trainer verloopt met een eenmalige code die de ontvangende trainer accepteert. De codeflow staat voorbereid in de database, maar is nog niet aangesloten op de website.</p></div>' +
           progress + '</article>';
       }).join('') + '</div>' : '<p class="empty">Nog geen kinderen toegevoegd aan deze groep.</p>');
 
@@ -1176,6 +1179,7 @@ h2{font-size:22px;margin-bottom:0}
   }
   render();
 })();
+});
 </script>
 </body>
 </html>

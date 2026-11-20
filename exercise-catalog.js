@@ -155,11 +155,14 @@
     });
   }
 
-  if (global.document.readyState === 'loading') {
-    global.document.addEventListener('DOMContentLoaded', initializeCategoryLists);
-  } else {
-    initializeCategoryLists();
-  }
+  var serverReady = global.SchaatskompasSync ? global.SchaatskompasSync.ready : Promise.resolve();
+  serverReady.then(function () {
+    if (global.document.readyState === 'loading') {
+      global.document.addEventListener('DOMContentLoaded', initializeCategoryLists);
+    } else {
+      initializeCategoryLists();
+    }
+  });
 
   global.SchaatskompasExerciseCatalog = {
     storageKey: STORAGE_KEY,
