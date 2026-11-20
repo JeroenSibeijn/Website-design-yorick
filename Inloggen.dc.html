@@ -133,7 +133,7 @@ h1{font:700 34px 'Space Grotesk',sans-serif;letter-spacing:-.02em;margin:0 0 8px
         window.SchaatskompasSync.signIn(email, password.value);
     }).then(function () {
       return window.SchaatskompasSync.syncNow({ askBeforeImport: true }).then(function () {
-        window.location.href = 'Main.dc.html';
+        window.location.href = 'index.html';
       });
     }).catch(function (error) {
       showNotice(error.message || 'Inloggen is niet gelukt. Controleer je gegevens en database-instellingen.', true);
